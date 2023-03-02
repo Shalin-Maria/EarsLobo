@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
+  get 'pages/home'
   get 'home', to: 'pages#home', as: 'home'
+  get "/users/new", to: "users#new"
+  get 'users', to: 'users#index'
+  get 'users/:id/edit', to: 'users#edit', as: 'edit_user'
 
-end
+
+  resources :users
+  end
+
+
