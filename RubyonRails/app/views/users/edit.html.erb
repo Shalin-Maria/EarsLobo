@@ -1,0 +1,63 @@
+<h1>Edit User</h1>
+<%= bootstrap_form_with model: @user do |f| %>
+
+  <div>
+    <%= f.text_field :first_name %>
+  </div>
+  <div>
+    <%= f.text_field :last_name %>
+  </div>
+  <div>
+    <%= f.email_field :email %>
+  </div>
+  <div>
+    <%= f.date_field :date_of_birth %>
+  </div>
+  <div>
+    <%= f.text_field :mgmt_ref %>
+  </div>
+  <div>
+    <%= f.select :gender, ['Male', 'Female', 'Other'] %>
+  </div>
+  <div>
+    <%= f.text_field :address1 %>
+  </div>
+  <div>
+    <%= f.text_field :country %>
+  </div>
+  <div>
+    <%= f.text_field :state %>
+  </div>
+  <div>
+    <%= f.text_field :city %>
+  </div>
+  <div>
+    <%= f.text_field :zip %>
+  </div>
+  <div>
+    <%= f.text_field :phone1 %>
+  </div>
+  <div>
+    <%= f.text_field :phone2 %>
+  </div>
+  <h2>Emergency Contact Info</h2>
+  <div>
+    <%= f.text_field :emergency_contact_first_name %>
+  </div>
+  <div>
+    <%= f.text_field :emergency_contact_last_name %>
+  </div>
+  <div>
+    <%= f.text_field :emergency_contact_phone1 %>
+  </div>
+  <div>
+    <%= f.text_field :emergency_contact_phone2 %>
+  </div>
+  <div>
+    <%= f.text_field :emergency_contact_address1 %>
+  </div>
+  <div>
+    <%= f.text_field :emergency_contact_city %>
+  </div>
+<%= f.submit "Save Changes" %>
+<% end %>
