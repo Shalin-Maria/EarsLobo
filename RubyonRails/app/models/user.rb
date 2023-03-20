@@ -26,6 +26,7 @@
 #  updated_at                   :datetime         not null
 #
 class User < ActiveRecord::Base
+    has_many :emergency_contacts
     validates :first_name, :last_name, :email, :date_of_birth, :address1, :country, :state, :city, :zip, :phone1, presence: true
     validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
     validates :phone1, numericality: { only_integer: true }
@@ -34,7 +35,7 @@ class User < ActiveRecord::Base
 
 
     attribute :mgmt_ref, :string
-    attribute :phone2, :integer
+    attribute :phone2, :string
     attribute :emergency_contact_first_name, :string
     attribute :emergency_contact_last_name, :string
     attribute :emergency_contact_phone1, :string

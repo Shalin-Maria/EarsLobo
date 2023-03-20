@@ -5,10 +5,11 @@ class UsersController < ApplicationController
   
     def create
       @user = User.new(user_params)
+      @emergency_contact = @user.emergency_contacts.build
   
       if @user.save
         flash[:success] = "User successfully added!"
-        redirect_to home_path, notice: "User created successfully."
+        redirect_to users_path, notice: "User created successfully."
       else
         flash.now[:error] = "User creation failed"
         render :new
@@ -26,6 +27,13 @@ class UsersController < ApplicationController
             redirect_to edit_user_path(@user), notice: "User was not updated."
         end
     end
+    def destroy
+      @user = User.find(params[:id])
+      @user.destroy
+  
+      redirect_to users_url, notice: "User was successfully deleted."
+    end
+  
 
     
 
@@ -33,11 +41,18 @@ class UsersController < ApplicationController
         @users = User.all
       end
       
+    def show
+      @user = User.find(params[:id])
+    end
   
     private
     
     def user_params
-        params.require(:user).permit(:first_name, :last_name, :email, :date_of_birth, :gender, :address1, :country, :state, :city, :zip, :phone1, :emergency_contact_first_name, :emergency_contact_last_name, :emergency_contact_phone1, :emergency_contact_phone2, :emergency_contact_address1, :emergency_contact_city, :mgmt_ref,:phone2)
+        params.require(:user).permit(:first_name, :last_name, :email, :date_of_birth, :gender, :address1, :country, :state, :city, :zip, :phone1,:mgmt_ref,:phone2, emergency_contacts_attributes: [
+          :first_name, :last_name, :phone, :address,
+          :email, :city, :state
+        ]
+  )
       end
       
       

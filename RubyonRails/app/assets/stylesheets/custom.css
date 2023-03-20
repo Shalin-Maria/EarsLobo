@@ -1,0 +1,4 @@
+.form-group input[type="text"],
+.form-group select {
+  font-size: 14px; /* Change this to a smaller value if needed */
+}
