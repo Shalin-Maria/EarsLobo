@@ -1,52 +1,50 @@
+<head>
+  <%= stylesheet_link_tag 'application', 'users' %>
+</head>
 <h1>Users</h1>
-
 <table>
   <thead>
     <tr>
+      <th>Edit</th>
       <th>First Name</th>
       <th>Last Name</th>
+      <th>Gender</th>
       <th>Email</th>
       <th>Date of Birth</th>
+      <th>Phone</th>
       <th>Address</th>
+      <th>City</th>
       <th>Country</th>
       <th>State</th>
-      <th>City</th>
-      <th>Zip</th>
-      <th>Phone 1</th>
-      <th>Phone 2</th>
-      <th>Emergency Contact First Name</th>
-      <th>Emergency Contact Last Name</th>
-      <th>Emergency Contact Phone 1</th>
-      <th>Emergency Contact Phone 2</th>
-      <th>Emergency Contact Address</th>
-      <th>Emergency Contact City</th>
-      <th>Edit</th>
       <th>Delete</th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
       <tr>
+      <td>
+        <%= link_to edit_user_path(user) do %>
+          <%= image_tag 'edit_icon.png', alt: 'Edit',width: 20 %>
+        <% end %>
+      </td>
         <td><%= user.first_name %></td>
         <td><%= user.last_name %></td>
+        <td><%= user.gender %></td>
         <td><%= user.email %></td>
         <td><%= user.date_of_birth %></td>
+        <td><%= user.phone1 %></td>
         <td><%= user.address1 %></td>
+        <td><%= user.city %></td>
         <td><%= user.country %></td>
         <td><%= user.state %></td>
-        <td><%= user.city %></td>
-        <td><%= user.zip %></td>
-        <td><%= user.phone1 %></td>
-        <td><%= user.phone2 %></td>
-        <td><%= user.emergency_contact_first_name %></td>
-        <td><%= user.emergency_contact_last_name %></td>
-        <td><%= user.emergency_contact_phone1 %></td>
-        <td><%= user.emergency_contact_phone2 %></td>
-        <td><%= user.emergency_contact_address1 %></td>
-        <td><%= user.emergency_contact_city %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Delete', user_path(user), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td>
+          <%= link_to user_path(user), method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <%= image_tag 'delete_icon.png', alt: 'Delete', width: 20 %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+<%= link_to "Create a New User", new_user_path %>
