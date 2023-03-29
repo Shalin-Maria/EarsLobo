@@ -1,5 +1,5 @@
-<h1>Edit User</h1>
-<%= bootstrap_form_with model: @user do |f| %>
+<h1>Edit client</h1>
+<%= bootstrap_form_with model: @client do |f| %>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
@@ -59,7 +59,7 @@
 
     <div class="col-md-12">
       <h2>Emergency Contact Info</h2>
-      <%= link_to "Add Emergency Contact", new_user_emergency_contact_path(@user), class: "btn btn-primary" %>
+      <%= link_to "Add Emergency Contact", new_client_emergency_contact_path(@client), class: "btn btn-primary" %>
 
       <table class="table table-striped">
         <thead>
@@ -76,7 +76,7 @@
           </tr>
         </thead>
           <tbody>
-            <% @user.emergency_contacts.each do |contact| %>
+            <% @client.emergency_contacts.each do |contact| %>
               <tr>
                 <td><%= contact.first_name.present? ? contact.first_name : "&nbsp;".html_safe %></td>
                 <td><%= contact.last_name.present? ? contact.last_name : "&nbsp;".html_safe %></td>
@@ -85,14 +85,14 @@
                 <td><%= contact.city.present? ? contact.city : "&nbsp;".html_safe %></td>
                 <td><%= contact.state.present? ? contact.state : "&nbsp;".html_safe %></td>
                 <td>
-                  <%= link_to edit_user_emergency_contact_path(@user, contact) do %>
+                  <%= link_to edit_client_emergency_contact_path(@client, contact) do %>
                     <%= image_tag 'edit_icon.png', alt: 'Edit', width: 20 %>
                   <% end %>
                 </td>
                 <td>
 
 
-                  <%= link_to user_emergency_contact_path(@user, contact), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                  <%= link_to client_emergency_contact_path(@client, contact), method: :delete, data: { confirm: 'Are you sure?' } do %>
                     <%= image_tag 'delete_icon.png', alt: 'Delete', width: 20 %>
                   <% end %>
                 </td>

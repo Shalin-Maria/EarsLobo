@@ -20,10 +20,9 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item <%= active_class(home_path) %>">
-            <%= link_to 'Home', home_path, class: 'nav-link' %>
             <%= link_to 'Calibrate', home_path, class: 'nav-link' %>
-            <%= link_to 'Clinitians', home_path, class: 'nav-link' %>
-            <%= link_to 'Clients', users_path, class: 'nav-link' %>
+            <%= link_to 'Clinicians', clinicians_path, class: 'nav-link' %>
+            <%= link_to 'Clients', clients_path, class: 'nav-link' %>
             <%= link_to 'Export Database', home_path, class: 'nav-link' %>
             <%= link_to 'Import Database', home_path, class: 'nav-link' %>
           </li>

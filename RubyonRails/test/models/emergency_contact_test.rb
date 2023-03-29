@@ -12,15 +12,15 @@
 #  state        :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
-#  user_id      :bigint           not null
+#  client_id    :bigint           not null
 #
 # Indexes
 #
-#  index_emergency_contacts_on_user_id  (user_id)
+#  index_emergency_contacts_on_client_id  (client_id)
 #
 # Foreign Keys
 #
-#  fk_rails_...  (user_id => users.id)
+#  fk_rails_...  (client_id => clients.id)
 #
 require "test_helper"
 

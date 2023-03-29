@@ -1,0 +1,40 @@
+<head>
+  <%= stylesheet_link_tag 'application', 'clinicians' %>
+</head>
+<h1>Clinicians</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Edit</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Phone</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+    <tbody>
+    <% @clinicians.each do |clinician| %>
+      <tr>
+      <td>
+        <%= link_to edit_clinician_path(clinician) do %>
+          <%= image_tag 'edit_icon.png', alt: 'Edit',width: 20 %>
+        <% end %>
+      </td>
+        <td><%= clinician.first_name %></td>
+        <td><%= clinician.last_name %></td>
+        <td><%= clinician.email %></td>
+        <td><%= clinician.phone1 %></td>
+        <td>
+          <%= link_to clinician_path(clinician), method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <%= image_tag 'delete_icon.png', alt: 'Delete', width: 20 %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Add new Clinician", new_clinician_path %>
+
+</table>
