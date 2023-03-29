@@ -6,10 +6,8 @@
         <input class="form-control" type="text" id="exampleLabel" placeholder="Enter Label">
       </div>
       <div class="form-group row">
-        <label for="clinicianSelect">Clinician</label>
-        <select class="form-control" id="clinicianSelect">
-          <option>Example clinician</option>
-        </select>
+        <label for="testType">User</label>
+        <input class="form-control" type="text" id="testType" placeholder="Example user" readonly>
       </div>
       <div class="form-group row">
         <label for="testType">Type</label>
@@ -26,434 +24,158 @@
       </div>
       <%= button_tag "Switch left/right", :onclick => "hideInput()" %>
       <hr/>
+      <label for="Notes">Notes</label>
+      <textarea class="form-control" id="Notes" rows="3"></textarea>
+      <hr/>
       <audio controls>
-        <source src="/assets/Example.mp3" type="audio/mp3">
+        <source src="assets/Track 02 Dichotic Words Test Track 1.mp3" type="audio/mpeg">
       </audio>
-    </div>
-
-
-    <div class="col-sm">
-      <table class="table table-sm table-striped ml-4" style="max-width: 15rem;">
-        <thead class="thead-dark">
+      <hr/>
+      <p>Scores ( * outside typical limits):</p>
+      <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+        <thead>
           <tr>
-            <th>Number</th>
-            <th>Left</th>
-            <th>Right</th>
+            <th scope="col">Pairs</th>
+            <th scope="col">Left</th>
+            <th scope="col">Right</th>
+            <th scope="col">Ear Adv</th>
           </tr>
-        </thead>
           <tbody>
-            <div id="normalCol" class='hidden'>
-              <tr>
-                <td>1</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>2</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>3</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>4</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>5</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>6</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>7</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>8</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>9</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>10</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>11</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>12</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>13</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>14</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>15</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>16</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>17</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>18</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>19</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>20</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>21</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>22</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>23</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-              <tr>
-                <td>24</td>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Dog
-                    </label>
-                  </div>
-                </th>
-                <th>
-                  <div class="btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-outline-primary">
-                      <input type="checkbox" autocomplete="off"> Cat
-                    </label>
-                  </div>
-                </th>
-              </tr>
-            </div>
+            <tr>
+              <th scope="row">1</th>
+              <td><span id="column1-percent">0</span>%</p></td>
+              <td><span id="column2-percent">0</span>%</td>
+              <td><span id="advantage-Diff">0</span>%</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+            </tr>
+            <tr>
+              <th scope="row">3</th>           
+            </tr>
           </tbody>
+        </thead>
       </table>
+      <label for="read-Only">Ear Advantage</label>
+      <input class="form-control" type="text" id="read-Only" value="" readonly>
+      <span hidden id="advantage-Name"></span>
     </div>
+
+    
+    <div class="col-sm">
+      <%= form_tag test_path do %>
+        <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
+          <thead class="thead-dark">
+            <tr>
+              <th>Number</th>
+              <th>Left</th>
+              <th>Right</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% 25.times do |i| %>
+              <% words = [
+                ["Fun", "Pig"],
+                ["Vine", "Sheep"],
+                ["Cake", "Buy"],
+                ["Round", "Storm"],
+                ["Say", "Tan"],
+                ["Yes", "Fast"],
+                ["Pen", "Most"],
+                ["Bet", "One"],
+                ["Green", "Booth"],
+                ["Store", "Glass"],
+                ["Soap", "Teeth"],
+                ["Bring", "Share"],
+                ["Rug", "Book"],
+                ["Want", "Soft"],
+                ["Tow", "Kite"],
+                ["Why", "Quack"],
+                ["Comb", "For"],
+                ["That", "Love"],
+                ["Bug", "Wet"],
+                ["Quiz", "Juice"],
+                ["Camp", "Light"],
+                ["Hand", "Goose"],
+                ["Lip", "Dad"],
+                ["Fall", "Room"],
+                ["Old", "Chef"]
+                ] %>
+              <tr>
+                <td><%= i + 1 %></td>
+                <td>
+                  <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-primary column1-button">
+                      <input type="checkbox" name="column1[<%= i %>][]" value="1"> <%= words[i][0] %>
+                    </label>
+                  </div>
+                </td>
+                <td>
+                  <div class="btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-outline-primary column2-button">
+                      <input type="checkbox" name="column2[<%= i %>][]" value="1"> <%= words[i][1] %>
+                    </label>
+                  </div>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+
+    <div>
+      <p><span hidden id="column1-count"></span></p>
+      <p><span id="column1-percent"></span></p>
+      <p><span hidden id="column2-count"></span></p>
+      <p><span id="column2-percent"></span></p>
+      <p><span id="advantage-Diff"></span></p>
+    </div>
+
+    <script>
+      // Get the toggle buttons and count elements
+      const column1Buttons = document.querySelectorAll(".column1-button input[type='checkbox']");
+      const column2Buttons = document.querySelectorAll(".column2-button input[type='checkbox']");
+      const allButtons = document.querySelectorAll(".column1-button input[type='checkbox'], .column2-button input[type='checkbox']");
+      const column1Count = document.getElementById("column1-count");
+      const column2Count = document.getElementById("column2-count");
+      const column1Percent = document.getElementById("column1-percent");
+      const column2Percent = document.getElementById("column2-percent");
+      const advantageDiff = document.getElementById("advantage-Diff");
+      const advantageName = document.getElementById("advantage-Name");
+      const readOnly = document.getElementById("read-Only");
+
+
+      // Update the counts when a button is clicked
+      
+      allButtons.forEach(function(button) {
+        button.addEventListener("click", function() {
+        const checkedCount1 = document.querySelectorAll(".column1-button input[type='checkbox']:checked").length;
+        const checkedCount2 = document.querySelectorAll(".column2-button input[type='checkbox']:checked").length;
+        const totalCount1 = column1Buttons.length;
+        const totalCount2 = column2Buttons.length;
+        const percent1 = ((checkedCount1 / totalCount1) * 100).toFixed(2);
+        const percent2 = ((checkedCount2 / totalCount2) * 100).toFixed(2);
+        const advantage = (percent1 - percent2).toFixed(2);
+        let direction = null;
+        if (advantage > 0) {
+          direction = "Left";
+        } else if (advantage < 0) {
+          direction = "Right";
+        } else {
+          direction = "Neutral";
+        }
+        
+        column1Count.innerText = checkedCount1.toString();
+        column1Percent.innerText = percent1.toString();
+        column2Count.innerText = checkedCount2.toString();
+        column2Percent.innerText = percent2.toString();
+        advantageDiff.innerText = advantage.toString();
+        advantageName.innerText = direction;
+        readOnly.value = advantageName.innerText;
+        })
+      })
+      
+
+    </script>
   </div>
 </div>
