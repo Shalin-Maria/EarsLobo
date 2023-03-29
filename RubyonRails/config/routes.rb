@@ -10,10 +10,12 @@ Rails.application.routes.draw do
   get "/clients/new", to: "clients#new"
   get 'clients', to: 'clients#index'
   get 'clients/:id/edit', to: 'clients#edit', as: 'edit_client'
+  get 'combined', to: 'clients#combined'
 
   get 'clinicians', to:'clinicians#index'
   get "/clinicians/new", to: "clinicians#new", as: 'new_clinician'
   get 'clinicians/:id/edit', to: 'clinicians#edit', as: 'edit_clinician'
+  
 
   
   resources :clients do

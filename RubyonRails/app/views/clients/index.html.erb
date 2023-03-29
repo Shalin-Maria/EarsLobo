@@ -1,7 +1,16 @@
-<head>
-  <%= stylesheet_link_tag 'application', 'clients' %>
+
+
+<div class="tabs-container">
+  <div class="tab active" id="users-tab">Users</div>
+  <div class="tab" id="new-client-tab">New Client</div>
+</div>
+
+<div class="tab-content-container">
+  <div class="tab-content active" id="users-content">
+  <head>
+  <%= stylesheet_link_tag 'application', 'users' %>
 </head>
-<h1>clients</h1>
+<h1>Clients</h1>
 <table>
   <thead>
     <tr>
@@ -20,25 +29,25 @@
     </tr>
   </thead>
   <tbody>
-    <% @clients.each do |client| %>
+    <% @clients.each do |user| %>
       <tr>
       <td>
-        <%= link_to edit_client_path(client) do %>
+        <%= link_to edit_user_path(user) do %>
           <%= image_tag 'edit_icon.png', alt: 'Edit',width: 20 %>
         <% end %>
       </td>
-        <td><%= client.first_name %></td>
-        <td><%= client.last_name %></td>
-        <td><%= client.gender %></td>
-        <td><%= client.email %></td>
-        <td><%= client.date_of_birth %></td>
-        <td><%= client.phone1 %></td>
-        <td><%= client.address1 %></td>
-        <td><%= client.city %></td>
-        <td><%= client.country %></td>
-        <td><%= client.state %></td>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.gender %></td>
+        <td><%= user.email %></td>
+        <td><%= user.date_of_birth %></td>
+        <td><%= user.phone1 %></td>
+        <td><%= user.address1 %></td>
+        <td><%= user.city %></td>
+        <td><%= user.country %></td>
+        <td><%= user.state %></td>
         <td>
-          <%= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
+          <%= link_to user_path(user), method: :delete, data: { confirm: 'Are you sure?' } do %>
             <%= image_tag 'delete_icon.png', alt: 'Delete', width: 20 %>
           <% end %>
         </td>
@@ -47,4 +56,12 @@
   </tbody>
 </table>
 
-<%= link_to "Create a New client", new_client_path %>
+
+  </div>
+  <div class="tab-content" id="new-client-content">
+    <%= render 'new' %> 
+  </div>
+</div>
+
+
+
