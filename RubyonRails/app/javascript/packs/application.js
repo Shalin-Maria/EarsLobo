@@ -20,3 +20,14 @@ document.addEventListener("turbolinks:load", () => {
   $('[data-toggle="popover"]').popover();
   autosize(document.querySelectorAll('textarea'));
 })
+
+function hideInput() {
+  var colDiv = document.getElementById("normalCol");
+  colDiv.style.display === "block" ? colDiv.style.display = 'none' : colDiv.style.display = 'block';
+}
+
+
+
+
+
+

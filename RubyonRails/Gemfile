@@ -65,6 +65,10 @@ end
 # Replaces Rails form helpers with bootstrap-specific form helpers
 gem "bootstrap_form", "~> 4.0"
 
+
+gem 'image_processing', '~> 1.12', '>= 1.12.2'
+
+gem 'carrierwave', '~> 0.11.2'
 #Provides popper.js assets as Ruby gem
 gem 'popper_js', '~> 2.11.5'
 
