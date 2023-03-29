@@ -84,10 +84,10 @@ ActiveRecord::Schema.define(version: 2023_03_26_193044) do
     t.string "email"
     t.string "city"
     t.string "state"
-    t.bigint "client_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["client_id"], name: "index_emergency_contacts_on_client_id"
+    t.index ["user_id"], name: "index_emergency_contacts_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
