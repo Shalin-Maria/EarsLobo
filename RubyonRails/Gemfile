@@ -72,4 +72,6 @@ gem 'carrierwave', '~> 0.11.2'
 #Provides popper.js assets as Ruby gem
 gem 'popper_js', '~> 2.11.5'
 
+gem 'devise'
+
 

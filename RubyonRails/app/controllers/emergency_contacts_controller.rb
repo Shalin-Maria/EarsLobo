@@ -1,15 +1,15 @@
 class EmergencyContactsController < ApplicationController
   def new
-    @user = User.find(params[:user_id])
+    @client = Client.find(params[:client_id])
     @emergency_contact = EmergencyContact.new
   end
 
   def create
-    @user = User.find(params[:user_id])
-    @emergency_contact = @user.emergency_contacts.build(emergency_contact_params)
+    @client = Client.find(params[:client_id])
+    @emergency_contact = @client.emergency_contacts.build(emergency_contact_params)
 
     if @emergency_contact.save
-      redirect_to edit_user_path(@user), notice: "Emergency Contact created successfully."
+      redirect_to edit_client_path(@client), notice: "Emergency Contact created successfully."
     else
       flash.now[:error] = "Emergency Contact creation failed"
       render :new
@@ -17,16 +17,16 @@ class EmergencyContactsController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:user_id])
-    @emergency_contact = @user.emergency_contacts.find(params[:id])
+    @client = Client.find(params[:client_id])
+    @emergency_contact = @client.emergency_contacts.find(params[:id])
   end
 
   def update
-    @user = User.find(params[:user_id])
-    @emergency_contact = @user.emergency_contacts.find(params[:id])
+    @client = Client.find(params[:client_id])
+    @emergency_contact = @client.emergency_contacts.find(params[:id])
 
     if @emergency_contact.update(emergency_contact_params)
-      redirect_to edit_user_path(@user), notice: "Emergency Contact updated successfully."
+      redirect_to edit_client_path(@client), notice: "Emergency Contact updated successfully."
     else
       flash.now[:error] = "Emergency Contact update failed"
       render :edit
@@ -34,10 +34,10 @@ class EmergencyContactsController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:user_id])
-    @emergency_contact = @user.emergency_contacts.find(params[:id])
+    @client = Client.find(params[:client_id])
+    @emergency_contact = @client.emergency_contacts.find(params[:id])
     @emergency_contact.destroy
-    redirect_to edit_user_path(@user), notice: "Emergency contact successfully deleted."
+    redirect_to edit_client_path(@client), notice: "Emergency contact successfully deleted."
   end
 
   private

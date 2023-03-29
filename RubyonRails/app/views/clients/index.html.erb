@@ -1,0 +1,50 @@
+<head>
+  <%= stylesheet_link_tag 'application', 'clients' %>
+</head>
+<h1>clients</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Edit</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Gender</th>
+      <th>Email</th>
+      <th>Date of Birth</th>
+      <th>Phone</th>
+      <th>Address</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>State</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @clients.each do |client| %>
+      <tr>
+      <td>
+        <%= link_to edit_client_path(client) do %>
+          <%= image_tag 'edit_icon.png', alt: 'Edit',width: 20 %>
+        <% end %>
+      </td>
+        <td><%= client.first_name %></td>
+        <td><%= client.last_name %></td>
+        <td><%= client.gender %></td>
+        <td><%= client.email %></td>
+        <td><%= client.date_of_birth %></td>
+        <td><%= client.phone1 %></td>
+        <td><%= client.address1 %></td>
+        <td><%= client.city %></td>
+        <td><%= client.country %></td>
+        <td><%= client.state %></td>
+        <td>
+          <%= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
+            <%= image_tag 'delete_icon.png', alt: 'Delete', width: 20 %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Create a New client", new_client_path %>

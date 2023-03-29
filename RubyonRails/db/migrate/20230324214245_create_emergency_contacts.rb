@@ -8,7 +8,7 @@ class CreateEmergencyContacts < ActiveRecord::Migration[6.1]
       t.string :email
       t.string :city
       t.string :state
-      t.references :user, null: false, foreign_key: true
+      t.references :client, null: false, foreign_key: true
 
       t.timestamps
     end
