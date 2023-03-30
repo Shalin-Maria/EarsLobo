@@ -30,7 +30,6 @@ class Client < ApplicationRecord
     validates :first_name, :last_name, :email, :date_of_birth, :address1, :country, :state, :city, :zip, :phone1, presence: true
     validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
     validates :phone1, numericality: { only_integer: true }
-    validates :emergency_contact_first_name, :emergency_contact_last_name, :emergency_contact_phone1, presence: true
   
 
 

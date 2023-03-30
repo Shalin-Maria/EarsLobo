@@ -32,7 +32,7 @@
     <% @clients.each do |user| %>
       <tr>
       <td>
-        <%= link_to edit_user_path(user) do %>
+        <%= link_to edit_client_path(user) do %>
           <%= image_tag 'edit_icon.png', alt: 'Edit',width: 20 %>
         <% end %>
       </td>
@@ -47,7 +47,7 @@
         <td><%= user.country %></td>
         <td><%= user.state %></td>
         <td>
-          <%= link_to user_path(user), method: :delete, data: { confirm: 'Are you sure?' } do %>
+          <%= link_to client_path(user), method: :delete, data: { confirm: 'Are you sure?' } do %>
             <%= image_tag 'delete_icon.png', alt: 'Delete', width: 20 %>
           <% end %>
         </td>
