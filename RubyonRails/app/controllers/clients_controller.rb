@@ -39,9 +39,6 @@ class ClientsController < ApplicationController
       redirect_to clients_url, notice: "client was successfully deleted."
     end
   
-
-    
-
     def index
         @clients = Client.all
       end

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <title>Dichotics Inc</title>
     <%= stylesheet_link_tag 'tabs', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'tabs', 'data-turbolinks-track': 'reload' %>
 
@@ -11,32 +12,68 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     
-    <script src="https://kit.fontawesome.com/c6d6fb874e.js" crossorigin="anonymous"></script>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <script type="text/javascript" src="js/jquery-1.8.0.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <style id= "complied-css" type="text/css">
+  .navbardrop::after{
+    float:left;
+  }
+  </style>
+
   </head>
   <body>
-    <nav class="navbar navbar-expand-xxl navbar-light bg-light">
-      <a class="navbar-brand" href="/home">Dichotics Inc</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item <%= active_class(home_path) %>">
-            <%= link_to 'Calibrate', home_path, class: 'nav-link' %>
-            <%= link_to 'Clinicians', clinicians_path, class: 'nav-link' %>
-            <%= link_to 'Clients', clients_path, class: 'nav-link' %>
-            <%= link_to 'Export Database', home_path, class: 'nav-link' %>
-            <%= link_to 'Import Database', home_path, class: 'nav-link' %>
-          </li>
-        </ul>
-        <ul class="navbar-nav">
-          
-        </ul>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/home">
+    <%= image_tag 'AUDIA_RGB_single_letter.png', style: "width: 70px", class:"d-inline-block"%>
+    </a>
+    <ul class="navbar-nav">
+      <h4><small><li class='nav-item'>
+        <%= link_to 'Calibrate', home_path, class: 'nav-link ' %></small></h4>
+      </li>
+      <li>
+       <%#<%= image_tag 'AUDIA_RGB_LOGO.png', style: "width: 175px", class:"d-inline-block"%>
+      </li>
+        <h4><small><li class='nav-item'>
+         <%= link_to 'Clients', clients_path, class: 'nav-link ' %></small></h4>
+      </li>
+</ul>
+
+    <form class="d-flex" role="search">
+      
+</div>
+      <% if user_signed_in? %>
+      <div class="nav-item dropdown dropleft">
+      <a class="nav-link btn btn-primary dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+         <h4 class= "text-white"><small><%= current_user.fname + " " + current_user.lname%></small></h4>
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item"><%= link_to 'View all Users', users_path, class: 'text-white nav-link'%></a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#"><%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'nav-link text-white text-decoration-none' %></a>
       </div>
-    </nav>
+    </div>
+      
+      <%else%>
+    <div class="nav-item dropdown dropleft">
+      <a class="nav-link btn btn-primary dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+         <h4 class= "text-white"><small>Users</small></h4>
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item"><%= link_to 'View all Users', users_path, class: 'text-white nav-link'%></a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item"><%= link_to 'Sign In', new_user_session_path, class: "text-white nav-link #{active_class(new_user_session_path)}"%></a>
+      </div>
+    </div>
+      <%end %>
+    </form>
+  </div>
+</nav>
     <main role="main" class="container">
       <%= yield %>
     </main>
