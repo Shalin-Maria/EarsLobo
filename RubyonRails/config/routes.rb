@@ -15,10 +15,13 @@ Rails.application.routes.draw do
   
   
   get 'users', to:'users#index'
+  get 'combined', to: 'clients#combined'
+
   get 'clinicians', to:'clinicians#index'
 
   get "/clinicians/new", to: "clinicians#new", as: 'new_clinician'
   get 'clinicians/:id/edit', to: 'clinicians#edit', as: 'edit_clinician'
+  
 
   
   resources :clients do

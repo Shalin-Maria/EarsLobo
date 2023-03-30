@@ -18,10 +18,6 @@
 #
 #  index_emergency_contacts_on_client_id  (client_id)
 #
-# Foreign Keys
-#
-#  fk_rails_...  (client_id => clients.id)
-#
 require "test_helper"
 
 class EmergencyContactTest < ActiveSupport::TestCase
