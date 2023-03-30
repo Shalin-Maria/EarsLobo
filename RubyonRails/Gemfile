@@ -76,4 +76,6 @@ gem 'popper_js', '~> 2.11.5'
 
 gem 'devise'
 
+gem 'faker'
+
 
