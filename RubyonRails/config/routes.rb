@@ -17,10 +17,9 @@ Rails.application.routes.draw do
   get 'clinicians/:id/edit', to: 'clinicians#edit', as: 'edit_clinician'
   
 
-  
   resources :clients do
     resources :emergency_contacts, only: [:create, :destroy, :new, :edit, :update]
-
+    get 'test_new', on: :collection
   end
 end
 

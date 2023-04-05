@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_30_011152) do
+ActiveRecord::Schema.define(version: 2023_04_05_230346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,12 +57,6 @@ ActiveRecord::Schema.define(version: 2023_03_30_011152) do
     t.string "zip"
     t.string "phone1"
     t.string "phone2"
-    t.string "emergency_contact_first_name"
-    t.string "emergency_contact_last_name"
-    t.string "emergency_contact_phone1"
-    t.string "emergency_contact_phone2"
-    t.string "emergency_contact_address1"
-    t.string "emergency_contact_city"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
