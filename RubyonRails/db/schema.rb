@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2023_04_05_230346) do
 
+
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,6 +86,8 @@ ActiveRecord::Schema.define(version: 2023_04_05_230346) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "fname"
+    t.string "lname"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -98,4 +101,5 @@ ActiveRecord::Schema.define(version: 2023_04_05_230346) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "emergency_contacts", "clients"
 end

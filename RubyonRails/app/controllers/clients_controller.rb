@@ -38,9 +38,6 @@ class ClientsController < ApplicationController
       redirect_to clients_url, notice: "client was successfully deleted."
     end
   
-
-    
-
     def index
         @clients = Client.all
       end
@@ -56,8 +53,5 @@ class ClientsController < ApplicationController
         emergency_contacts_attributes: [:id, :first_name, :last_name, :phone_number, :address, :email, :city, :state])
     end
     
-  
-      
-      
   end
   
