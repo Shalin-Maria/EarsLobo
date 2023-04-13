@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_05_230346) do
-
+ActiveRecord::Schema.define(version: 2023_04_13_222543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,16 +71,16 @@ ActiveRecord::Schema.define(version: 2023_04_05_230346) do
   end
 
   create_table "emergency_contacts", force: :cascade do |t|
+    t.string "address"
+    t.string "city"
+    t.string "email"
     t.string "first_name"
     t.string "last_name"
     t.string "phone_number"
-    t.string "address"
-    t.string "email"
-    t.string "city"
     t.string "state"
-    t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "client_id"
     t.index ["client_id"], name: "index_emergency_contacts_on_client_id"
   end
 
