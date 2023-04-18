@@ -13,7 +13,7 @@ Turbolinks.start()
 ActiveStorage.start()
 
 import 'bootstrap'
-import 'autosize'
+import autosize from 'autosize'
 
 document.addEventListener("turbolinks:load", () => {
   $('[data-toggle="tooltip"]').tooltip();

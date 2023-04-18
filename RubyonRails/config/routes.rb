@@ -32,4 +32,3 @@ Rails.application.routes.draw do
   resources :tests, only: [:edit, :update, :destroy]
 
 end
-
