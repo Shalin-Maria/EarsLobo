@@ -1,18 +1,19 @@
 class ClientsController < ApplicationController
     def new
       @client = Client.new
-      @client.emergency_contacts.build
     end
+
   
     def create
       @client = Client.new(client_params)
+      @emergency_contact = @client.emergency_contacts.build
   
       if @client.save
         flash[:success] = "client successfully added!"
         redirect_to clients_path, notice: "client created successfully."
       else
         flash.now[:error] = "client creation failed"
-        redirect_to clients_path, notice: "client created unsuccessfully."
+        render :new
       end
     end
 
@@ -49,9 +50,14 @@ class ClientsController < ApplicationController
     private
     
     def client_params
-      params.require(:client).permit(:first_name, :last_name, :date_of_birth, :email, :gender, :mgmt_ref, :address1, :country, :state, :city, :zip, :phone1, :phone2,
-        emergency_contacts_attributes: [:id, :first_name, :last_name, :phone_number, :address, :email, :city, :state])
-    end
-    
+        params.require(:client).permit(:first_name, :last_name, :email, :date_of_birth, :gender, :address1, :country, :state, :city, :zip, :phone1,:mgmt_ref,:phone2, emergency_contacts: [
+          :first_name, :last_name, :phone, :address,
+          :email, :city, :state
+        ]
+  )
+      end
+      
+      
   end
+
   

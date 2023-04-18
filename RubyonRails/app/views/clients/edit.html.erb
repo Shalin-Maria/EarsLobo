@@ -1,4 +1,16 @@
-<h1>Edit client</h1>
+
+
+<div class="tabs-container">
+  <div class="tab active" id="users-tab">Client</div>
+  <div class="tab" id="new-client-tab">Testing</div>
+</div>
+
+<div class="tab-content-container">
+  <div class="tab-content active" id="users-content">
+  <head>
+  <%= stylesheet_link_tag 'application', 'users' %>
+  <h1>Edit client</h1>
+
 <%= bootstrap_form_with model: @client do |f| %>
   <div class="row">
     <div class="col-md-6">
@@ -105,12 +117,22 @@
 
     </div>
 
-
-
-
  
     <%= f.submit "Save" %>
 <% end %>
+      <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary" %>
+
+    
+
+
+</head>
+
+  </div>
+  <div class="tab-content" id="new-client-content">
+      <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary" %>
+
+  </div>
+</div>
 
 
 
@@ -121,4 +143,9 @@
 
 
 
-   
+
+
+
+
+
+
