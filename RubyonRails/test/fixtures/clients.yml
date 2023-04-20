@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: clients
+#
+#  id            :bigint           not null, primary key
+#  address1      :string
+#  city          :string
+#  country       :string
+#  date_of_birth :date
+#  email         :string
+#  first_name    :string
+#  gender        :string
+#  last_name     :string
+#  mgmt_ref      :string
+#  name          :string
+#  phone1        :string
+#  phone2        :string
+#  state         :string
+#  zip           :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+
+# This model initially had no columns defined. If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one: {}
+# column: value
+#
+two: {}
+# column: value

@@ -6,5 +6,6 @@ class PagesController < ApplicationController
     def test
         render :test
     end
+
     
 end

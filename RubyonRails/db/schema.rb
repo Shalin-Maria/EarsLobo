@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_24_212944) do
+
+ActiveRecord::Schema.define(version: 2023_04_13_222543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,22 +42,9 @@ ActiveRecord::Schema.define(version: 2023_03_24_212944) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-end
-  create_table "emergency_contacts", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "phone_number"
-    t.string "address"
-    t.string "email"
-    t.string "city"
-    t.string "state"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_emergency_contacts_on_user_id"
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "clients", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "email"
@@ -70,17 +58,62 @@ end
     t.string "zip"
     t.string "phone1"
     t.string "phone2"
-    t.string "emergency_contact_first_name"
-    t.string "emergency_contact_last_name"
-    t.string "emergency_contact_phone1"
-    t.string "emergency_contact_phone2"
-    t.string "emergency_contact_address1"
-    t.string "emergency_contact_city"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
+  end
+
+  create_table "clinicians", force: :cascade do |t|
+    t.string "fname"
+    t.string "lname"
+    t.string "email"
+    t.string "phone"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "emergency_contacts", force: :cascade do |t|
+    t.string "address"
+    t.string "city"
+    t.string "email"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone_number"
+    t.string "state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_emergency_contacts_on_client_id"
+  end
+
+  create_table "tests", force: :cascade do |t|
+    t.string "label"
+    t.string "test_type"
+    t.string "client_name"
+    t.text "notes"
+    t.string "ear_advantage"
+    t.float "left_score"
+    t.float "right_score"
+    t.float "ear_advantage_score"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_tests_on_client_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "emergency_contacts", "users"
+  add_foreign_key "tests", "clients"
 end

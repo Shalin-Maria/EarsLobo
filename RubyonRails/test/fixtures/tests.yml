@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  label: MyString
+  test_type: MyString
+  client_name: MyString
+  notes: MyText
+  ear_advantage: MyString
+  left_score: 1.5
+  right_score: 1.5
+  ear_advantage_score: 1.5
+  client: one
+
+two:
+  label: MyString
+  test_type: MyString
+  client_name: MyString
+  notes: MyText
+  ear_advantage: MyString
+  left_score: 1.5
+  right_score: 1.5
+  ear_advantage_score: 1.5
+  client: two
