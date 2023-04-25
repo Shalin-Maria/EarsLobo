@@ -1,12 +1,13 @@
 class TestsController < ApplicationController
     def new
       @client = Client.find(params[:client_id])
-      @test = Test.new
+      @test = @client.tests.build
+
     end
   
     def create
       @client = Client.find(params[:client_id])
-      @test = Test.new(test_params)
+      @test = @client.tests.build(test_params)
       @test.client = @client
   
       if @test.save
@@ -15,6 +16,8 @@ class TestsController < ApplicationController
         render 'new'
       end
     end
+
+    
   
     private
   
