@@ -1,0 +1,27 @@
+
+<!--This page shows all of the test's that are associated with a client !-->
+<h1>Saved Test Results for <%= @client.first_name %> <%= @client.last_name %></h1>
+<table>
+  <thead>
+    <tr>
+      <th>Test ID</th>
+      <th>Test Type</th>
+      <th>Label</th>
+      <th>Date</th>
+      <th>View</th>
+    </tr>
+  </thead>
+  <tbody>
+<!--For each test, output the id,test_type, etc !-->
+
+    <% @client.tests.each do |test| %>
+      <tr>
+        <td><%= test.id %></td>
+        <td><%= test.test_type %></td>
+        <td><%= test.label %></td>
+        <td><%= test.created_at.to_date %></td>
+        <td><%= link_to 'View', test_path(test) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

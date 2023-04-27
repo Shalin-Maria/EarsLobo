@@ -45,6 +45,9 @@ class ClientsController < ApplicationController
       
     def show
       @client = Client.find(params[:id])
+      @tests = @client.tests
+      end
+      
     end
   
     private
@@ -58,6 +61,6 @@ class ClientsController < ApplicationController
       end
       
       
-  end
+  
 
   

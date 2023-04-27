@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   
   resources :clients do
     resources :emergency_contacts, only: [:create, :destroy, :new, :edit, :update]
-    resources :tests, only: [:new, :create]
+    resources :tests
 
   end
   resources :tests, only: [:edit, :update, :destroy]
