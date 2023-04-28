@@ -12,7 +12,6 @@
 #  gender        :string
 #  last_name     :string
 #  mgmt_ref      :string
-#  name          :string
 #  phone1        :string
 #  phone2        :string
 #  state         :string

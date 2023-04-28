@@ -59,7 +59,6 @@ ActiveRecord::Schema.define(version: 2023_04_13_222543) do
     t.string "phone2"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "name"
   end
 
   create_table "clinicians", force: :cascade do |t|
@@ -101,6 +100,8 @@ ActiveRecord::Schema.define(version: 2023_04_13_222543) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.string "fname"
+    t.string "lname"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -114,5 +115,6 @@ ActiveRecord::Schema.define(version: 2023_04_13_222543) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "emergency_contacts", "clients"
   add_foreign_key "tests", "clients"
 end
