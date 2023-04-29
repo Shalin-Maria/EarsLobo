@@ -1,6 +1,10 @@
-<h1>Users</h1>
+<body class= "bg-light center">
+<div class="container p-5 my-3 w-100 border rounded bg-white">
+<h1 class= "display-1", style= 'padding-bottom:20px' ><strong>Users</strong></h1>
 
-<%= link_to 'Add New User', new_user_registration_path, class: 'btn btn-primary'%>
+<%= link_to 'Add New User', new_user_registration_path, class: 'btn btn-primary btn-lg btn-block'%>
+
+<div>
 <table>
   <thead>
     <tr>
@@ -12,10 +16,18 @@
     <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
+      <td>
+        <%= link_to new_user_session_path do %>
+          <%= image_tag 'edit_icon.png', alt: 'Edit',width: 20 %>
+        <% end %>
+        <%= user.fname %>
+      </td>
+        
+        <td><%= user.lname %></td>
         <td><%= user.email %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+</div>
+</body>
