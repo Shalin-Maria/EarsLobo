@@ -1,14 +1,20 @@
 class TestsController < ApplicationController
+    
+
+  # uses @dob to call the DOB from client and pass it so it can be used on test page
     def new
       @client = Client.find(params[:client_id])
       @test = @client.tests.build
-
+      @dob = @client.date_of_birth
+      
     end
+
   
     def create
       @client = Client.find(params[:client_id])
       @test = @client.tests.build(test_params)
       @test.client = @client
+      
   
       if @test.save
         redirect_to edit_client_path(@client)
@@ -16,6 +22,8 @@ class TestsController < ApplicationController
         render 'new'
       end
     end
+
+
 
     
   

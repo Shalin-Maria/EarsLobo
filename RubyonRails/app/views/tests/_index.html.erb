@@ -19,7 +19,7 @@
     <% client.tests.each do |test| %>
       <tr>
         <td><%= test.id %></td>
-        <td><%= test.client_name %></td>
+        <td><%= @client.first_name + ' ' + @client.last_name %>
         <td><%= test.test_type %></td>
         <td><%= test.left_score %></td>
         <td><%= test.right_score %></td>

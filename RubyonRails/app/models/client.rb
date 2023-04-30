@@ -12,7 +12,6 @@
 #  gender        :string
 #  last_name     :string
 #  mgmt_ref      :string
-#  name          :string
 #  phone1        :string
 #  phone2        :string
 #  state         :string
@@ -30,7 +29,15 @@ class Client < ApplicationRecord
     validates :phone1, numericality: { only_integer: true }
 
     def full_name
-      "#{first_name} #{last_name}"
+      "#{first_name}#{last_name}"
+    end
+#age in years method that calculates a clients age based on DOB then passes it to the script test page
+    def age_in_years
+      now = Time.now.utc.to_date
+      dob = date_of_birth
+      age = now.year - dob.year
+      age -= 1 if now < dob + age.years # for days before birthday
+      age
     end
 end
   

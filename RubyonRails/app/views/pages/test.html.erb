@@ -7,7 +7,7 @@
       </div>
       <div class="form-group row">
         <label for="testType">User</label>
-        <input class="form-control" type="text" id="testType" placeholder="Example user" readonly>
+        <input class="form-control" type="text" id="testType" placeholder="<%= @client.first_name + ' ' + @client.last_name %>" readonly>
       </div>
       <div class="form-group row">
         <label for="testType">Type</label>
@@ -32,6 +32,7 @@
       </audio>
       <hr/>
       <p>Scores ( * outside typical limits):</p>
+
       <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
         <thead>
           <tr>
@@ -133,6 +134,7 @@
       <p><span id="column2-percent"></span></p>
       <p><span id="advantage-Diff"></span></p>
     </div>
+    <p>Date of Birth: <%= @dob %></p>
 
     <script>
       // Get the toggle buttons and count elements
