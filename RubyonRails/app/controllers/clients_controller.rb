@@ -3,12 +3,12 @@ class ClientsController < ApplicationController
   
   def new
       @client = Client.new
+      @client.emergency_contacts.build
     end
 
   
     def create
       @client = Client.new(client_params)
-      @emergency_contact = @client.emergency_contacts.build
   
       if @client.save
         flash[:success] = "client successfully added!"
@@ -42,21 +42,27 @@ class ClientsController < ApplicationController
     end
   
     def index
-        @clients = Client.all
-      end
+      @clients = params[:search].present? ? Client.where("first_name ILIKE ? OR last_name ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%") : Client.all
+    end
       
     def show
       @client = Client.find(params[:id])
       @tests = @client.tests
       end
-      
+    def search
+      if params[:search].blank?
+        @clients = Client.all
+      else
+        @clients = Client.where("first_name ILIKE ? OR last_name ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+      end
     end
+  end
   
     private
     
     def client_params
-        params.require(:client).permit(:first_name, :last_name, :email, :date_of_birth, :gender, :address1, :country, :state, :city, :zip, :phone1,:mgmt_ref,:phone2, emergency_contacts: [
-          :first_name, :last_name, :phone, :address,
+        params.require(:client).permit(:first_name, :last_name, :email, :date_of_birth, :gender, :address1, :country, :state, :city, :zip, :phone1,:mgmt_ref,:phone2, emergency_contacts_attributes: [
+           :first_name, :last_name, :phone_number, :address,
           :email, :city, :state
         ]
   )

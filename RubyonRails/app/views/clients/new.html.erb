@@ -59,45 +59,50 @@
       </div>
     </div>
 
-    <div class="col-md-12">
-    </div>
-
-<h2>Emergency Contact Info</h2>
-  </div>
-
-  <div class="col-md-6">
-    <%= client_fields.fields_for :emergency_contacts do |ec| %>
-      <div class="form-group">
-        <%= ec.text_field :first_name, class: "form-control" %>
+<div class="col-md-12">
+        <h2>Emergency Contact Info</h2>
       </div>
 
-      <div class="form-group">
-        <%= ec.text_field :last_name, class: "form-control" %>
-      </div>
+      <div class="col-md-6">
 
-      <div class="form-group">
-        <%= ec.text_field :phone, class: "form-control" %>
-      </div>
+        <%= client_fields.fields_for :emergency_contacts do |ec| %>
+          <div class="form-group">
+            <%= ec.text_field :first_name, class: "form-control" %>
+          </div>
 
-      <div class="form-group">
-        <%= ec.text_field :address, class: "form-control" %>
-      </div>
+          <div class="form-group">
+            <%= ec.text_field :last_name, class: "form-control" %>
+          </div>
 
-      <div class="form-group">
-        <%= ec.text_field :email, class: "form-control" %>
-      </div>
+          <div class="form-group">
+            <%= ec.text_field :phone_number, class: "form-control" %>
+          </div>
 
-      <div class="form-group">
-        <%= ec.text_field :city, class: "form-control" %>
+          <div class="form-group">
+            <%= ec.text_field :address, class: "form-control" %>
+          </div>
       </div>
+      
+      <div class="col-md-6">
+          <div class="form-group">
+            <%= ec.text_field :email, class: "form-control" %>
+          </div>
 
-      <div class="form-group">
-        <%= ec.text_field :state, class: "form-control" %>
+          <div class="form-group">
+            <%= ec.text_field :city, class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <%= ec.text_field :state, class: "form-control" %>
+          </div>
       </div>
-    <% end %>
-  </div>
+      </div>
+        <% end %>
 
-  <%= client_fields.submit "Save" %>
-<% end %>
+    </div> <!-- This is the closing tag for the main "row" div -->
+
+
+    <%= client_fields.submit "Save" %>
+  <% end %>
 <% end %>
 
