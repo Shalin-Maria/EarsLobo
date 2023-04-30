@@ -1,16 +1,6 @@
 
-
-<div class="tabs-container">
-  <div class="tab active" id="users-tab">Users</div>
-  <div class="tab" id="new-client-tab">New Client</div>
-</div>
-
-<div class="tab-content-container">
-  <div class="tab-content active" id="users-content">
-  <head>
-  <%= stylesheet_link_tag 'application', 'users' %>
-</head>
 <h1>Clients</h1>
+<button class="add-client-btn" onclick="location.href='<%= new_client_path %>';">Add Client</button>
 <table>
   <thead>
     <tr>
@@ -57,11 +47,6 @@
 </table>
 
 
-  </div>
-  <div class="tab-content" id="new-client-content">
-    <%= render 'new' %> 
-  </div>
-</div>
 
 
 
