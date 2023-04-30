@@ -122,6 +122,7 @@
     <tr>
       <th>ID</th>
       <th>Client Name</th>
+      <th>Test Giver</th>
       <th>Test Type</th>
       <th>Left Score</th>
       <th>Right Score</th>
@@ -135,6 +136,8 @@
       <tr>
         <td><%= test.id %></td>
         <td><%= @client.first_name + ' ' + @client.last_name %>
+        <td><%= test.user.fname %> <%= test.user.lname %></td>
+
         <td><%= test.test_type %></td>
         <td><%= test.left_score %></td>
         <td><%= test.right_score %></td>
