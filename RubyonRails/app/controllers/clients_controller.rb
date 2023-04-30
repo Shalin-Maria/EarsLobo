@@ -1,5 +1,7 @@
 class ClientsController < ApplicationController
-    def new
+ before_action:authenticate_user!, except: [:index]  
+  
+  def new
       @client = Client.new
     end
 
