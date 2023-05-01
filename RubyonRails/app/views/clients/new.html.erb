@@ -1,7 +1,11 @@
-<h1>New Client</h1>
+<body class= "bg-light center">
+<div class="container p-5 my-3 w-100 border rounded bg-white border-0 ">
+<h1 class= "display-3", style= 'padding-bottom:20px' ><strong>New Client</strong></h1> 
 
 <%= bootstrap_form_with url: clients_path, local: true do |f| %>
+
   <%= f.fields :client, model: @client do |client_fields| %>
+<%= f.submit "Save", class: "btn btn-block btn-secondary" %>
   <div class="row">
     <div class="col-md-6">
       <div class="form-group">
@@ -27,6 +31,7 @@
       <div class="form-group">
         <%= client_fields.select :gender, ['Male', 'Female', 'Other'], {}, class: "form-control" %>
       </div>
+ 
     </div>
 
     <div class="col-md-6">
@@ -57,10 +62,11 @@
       <div class="form-group">
         <%= client_fields.text_field :phone2, class: "form-control" %>
       </div>
+
     </div>
 
 <div class="col-md-12">
-        <h2>Emergency Contact Info</h2>
+        <h2 class= "display-4", style= 'padding-bottom:20px' ><strong>Emergency Contact Info</strong></h2>
       </div>
 
       <div class="col-md-6">
@@ -95,6 +101,7 @@
           <div class="form-group">
             <%= ec.text_field :state, class: "form-control" %>
           </div>
+            <%= f.submit "Save", class: "btn btn-block btn-secondary" %>
       </div>
       </div>
         <% end %>
@@ -102,7 +109,8 @@
     </div> <!-- This is the closing tag for the main "row" div -->
 
 
-    <%= client_fields.submit "Save" %>
   <% end %>
 <% end %>
+</div>
+</body>
 

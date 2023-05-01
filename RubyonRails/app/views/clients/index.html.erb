@@ -1,6 +1,9 @@
-
-<h1>Clients</h1>
-<button class="add-client-btn" onclick="location.href='<%= new_client_path %>';">Add Client</button>
+<body class= "bg-light center">
+<div class="container p-5 my-3 w-100 border rounded bg-white border-0">
+<h1 class= "display-2", style= 'padding-bottom:20px' ><strong>Clients<strong></h1>
+<%#<button class="add-client-btn" onclick="location.href='<%= new_client_path ';">Add Client</button> %>
+<%= link_to 'Add New Client', new_client_path, class: 'btn btn-primary btn-lg btn-block'%>
+<div class= "justify-content-center">
 <table>
   <thead>
     <tr>
@@ -45,6 +48,9 @@
     <% end %>
   </tbody>
 </table>
+</div>
+</div>
+</body>
 
 
 
