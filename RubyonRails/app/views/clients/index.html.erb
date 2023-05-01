@@ -4,6 +4,7 @@
 <%#<button class="add-client-btn" onclick="location.href='<%= new_client_path ';">Add Client</button> %>
 <%= link_to 'Add New Client', new_client_path, class: 'btn btn-primary btn-lg btn-block'%>
 <div class= "justify-content-center">
+<div class="table-responsive">
 <table>
   <thead>
     <tr>
@@ -15,9 +16,6 @@
       <th>Date of Birth</th>
       <th>Phone</th>
       <th>Address</th>
-      <th>City</th>
-      <th>Country</th>
-      <th>State</th>
       <th>Delete</th>
     </tr>
   </thead>
@@ -36,9 +34,6 @@
         <td><%= user.date_of_birth %></td>
         <td><%= user.phone1 %></td>
         <td><%= user.address1 %></td>
-        <td><%= user.city %></td>
-        <td><%= user.country %></td>
-        <td><%= user.state %></td>
         <td>
           <%= link_to client_path(user), method: :delete, data: { confirm: 'Are you sure?' } do %>
             <%= image_tag 'delete_icon.png', alt: 'Delete', width: 20 %>
@@ -48,6 +43,7 @@
     <% end %>
   </tbody>
 </table>
+</div>
 </div>
 </div>
 </body>
