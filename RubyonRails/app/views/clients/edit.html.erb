@@ -1,9 +1,12 @@
-  
-<h1>Edit client</h1>
+<body class= "bg-light center">
+<div class="container p-5 my-3 w-100 border rounded bg-white border-0">
+<h1 class= "display-3", style= 'padding-bottom:20px' ><strong><%= @client.first_name + " " + @client.last_name%></strong></h1>
 
+        <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary btn-block btn-lg" %>
+<div class="container p-5 my-3 w-100 border rounded bg-white border-primary">
 <%= bootstrap_form_with model: @client do |f| %>
   <div class="row">
-  
+      <%= f.submit "Save", class: "btn btn-block btn-secondary" %>
     <div class="col-md-6">
       <div class="form-group">
 
@@ -30,6 +33,7 @@
       <div class="form-group">
         <%= f.select :gender, ['Male', 'Female', 'Other'], {}, class: "form-control" %>
       </div>
+
     </div>
 
     <div class="col-md-6">
@@ -60,11 +64,13 @@
       <div class="form-group">
         <%= f.text_field :phone2, class: "form-control" %>
       </div>
+
     </div>
 
     <div class="col-md-12">
-      <h2>Emergency Contact Info</h2>
-      <%= link_to "Add Emergency Contact", new_client_emergency_contact_path(@client), class: "btn btn-primary" %>
+ 
+      <h2 class= "display-5", style= 'padding-bottom:20px' ><strong>Emergency Contact Info</strong></h2>
+      <%= link_to "Add Emergency Contact", new_client_emergency_contact_path(@client), class: "btn btn-primary btn-lg btn-block" %>
 
       <table class="table table-striped">
         <thead>
@@ -109,14 +115,17 @@
       </table>
 
     </div>
+    </div>
+    </div>
 
  
-    <%= f.submit "Save" %>
+
 <% end %>
 
+<div class="container p-5 my-3 w-100 border rounded bg-white border-primary">
 <div class="col-md-12">
-      <h2>Tests</h2>
-      <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary" %>
+      <h2  class= "display-4", style= 'padding-bottom:20px' ><strong>Tests</h2>
+      <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary btn-block btn-lg" %>
 <table>
   <thead>
     <tr>
@@ -148,6 +157,9 @@
     <% end %>
   </tbody>
 </table>
+</div>
+
+</body>
 
     
 

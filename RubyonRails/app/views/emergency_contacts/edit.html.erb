@@ -1,4 +1,7 @@
-<h1>Edit Emergency Contact</h1>
+
+<body class= "bg-light center">
+<div class="container p-5 my-3 w-100 border rounded bg-white ">
+<h1 class= "display-4", style= 'padding-bottom:20px' ><strong>Edit Emergency Contact</strong></h1>
 
 <%= form_with(model: [@client, @emergency_contact], local: true) do |form| %>
 
@@ -45,6 +48,8 @@
     <%= form.text_field :state, class: "form-control" %>
   </div>
   <div class="actions">
-    <%= form.submit "Update", class: "btn btn-primary" %>
+    <%= form.submit "Update", class: "btn btn-primary btn-block" %>
   </div>
 <% end %> 
+</div>
+</body>
