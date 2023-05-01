@@ -1,92 +1,86 @@
-<body class= "bg-light center">
-<div class="container p-5 my-3 w-100 border rounded bg-white border-0">
-<h1 class= "display-3", style= 'padding-bottom:20px' ><strong><%= @client.first_name + " " + @client.last_name%></strong></h1>
+<!-- Ruby on Rails view template for displaying client information and managing tests -->
 
-        <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary btn-block btn-lg" %>
-<div class="container p-5 my-3 w-100 border rounded bg-white border-primary">
-<%= bootstrap_form_with model: @client do |f| %>
-  <div class="row">
-      <%= f.submit "Save", class: "btn btn-block btn-secondary" %>
-    <div class="col-md-6">
-      <div class="form-group">
+<!-- Header section with client name and button to add new test -->
+<body class="bg-light center">
+  <div class="container p-5 my-3 w-100 border rounded bg-white border-0">
+    <h1 class="display-3" style="padding-bottom:20px">
+      <!-- Display client name -->
+      <strong><%= @client.first_name + " " + @client.last_name %></strong>
+    </h1>
+    <!-- Button to add new test -->
+    <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary btn-block btn-lg" %>
 
-      
-        <%= f.text_field :first_name, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.text_field :last_name, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.date_field :date_of_birth, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.email_field :email, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.text_field :mgmt_ref, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.select :gender, ['Male', 'Female', 'Other'], {}, class: "form-control" %>
-      </div>
-
-    </div>
-
-    <div class="col-md-6">
-      <div class="form-group">
-        <%= f.text_field :address1, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.text_field :country, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.text_field :state, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.text_field :city, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.text_field :zip, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.text_field :phone1, class: "form-control" %>
-      </div>
-
-      <div class="form-group">
-        <%= f.text_field :phone2, class: "form-control" %>
-      </div>
-
-    </div>
-
-    <div class="col-md-12">
- 
-      <h2 class= "display-5", style= 'padding-bottom:20px' ><strong>Emergency Contact Info</strong></h2>
-      <%= link_to "Add Emergency Contact", new_client_emergency_contact_path(@client), class: "btn btn-primary btn-lg btn-block" %>
-
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Phone #</th>
-            <th>Address</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Edit</th>
-            <th>Delete</th>
-
-          </tr>
-        </thead>
+    <!-- Form for editing and saving client information -->
+    <div class="container p-5 my-3 w-100 border rounded bg-white border-primary">
+      <%= bootstrap_form_with model: @client do |f| %>
+        <div class="row">
+          <!-- Save button -->
+          <%= f.submit "Save", class: "btn btn-block btn-secondary" %>
+          <div class="col-md-6">
+            <!-- Personal information fields -->
+            <div class="form-group">
+              <%= f.text_field :first_name, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :last_name, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.date_field :date_of_birth, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.email_field :email, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :mgmt_ref, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.select :gender, ['Male', 'Female', 'Other'], {}, class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <!-- Address and phone number fields -->
+            <div class="form-group">
+              <%= f.text_field :address1, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :country, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :state, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :city, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :zip, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :phone1, class: "form-control" %>
+            </div>
+            <div class="form-group">
+              <%= f.text_field :phone2, class: "form-control" %>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <!-- Emergency contact information and buttons -->
+            <h2 class="display-5" style="padding-bottom:20px"><strong>Emergency Contact Info</strong></h2>
+            <%= link_to "Add Emergency Contact", new_client_emergency_contact_path(@client), class: "btn btn-primary btn-lg btn-block" %>
+            <!-- Table of existing emergency contacts -->
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>First Name</th>
+              <th>Last Name</th>
+              <th>Phone #</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
           <tbody>
+            <!-- Iterate over each emergency contact and display its details -->
             <% @client.emergency_contacts.each do |contact| %>
               <tr>
                 <td><%= contact.first_name.present? ? contact.first_name : "&nbsp;".html_safe %></td>
@@ -96,80 +90,66 @@
                 <td><%= contact.city.present? ? contact.city : "&nbsp;".html_safe %></td>
                 <td><%= contact.state.present? ? contact.state : "&nbsp;".html_safe %></td>
                 <td>
+                  <!-- Link to edit emergency contact -->
                   <%= link_to edit_client_emergency_contact_path(@client, contact) do %>
                     <%= image_tag 'edit_icon.png', alt: 'Edit', width: 20 %>
                   <% end %>
                 </td>
                 <td>
-
-
+                  <!-- Link to delete emergency contact with confirmation prompt -->
                   <%= link_to client_emergency_contact_path(@client, contact), method: :delete, data: { confirm: 'Are you sure?' } do %>
                     <%= image_tag 'delete_icon.png', alt: 'Delete', width: 20 %>
                   <% end %>
                 </td>
-
-
               </tr>
             <% end %>
           </tbody>
-      </table>
-
+        </table>
+      </div>
     </div>
-    </div>
-    </div>
-
- 
-
+  </div>
 <% end %>
 
+<!-- Tests section with button to add new test and table of existing tests -->
 <div class="container p-5 my-3 w-100 border rounded bg-white border-primary">
-<div class="col-md-12">
-      <h2  class= "display-4", style= 'padding-bottom:20px' ><strong>Tests</h2>
-      <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary btn-block btn-lg" %>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Client Name</th>
-      <th>Test Giver</th>
-      <th>Test Type</th>
-      <th>Left Score</th>
-      <th>Right Score</th>
-      <th>Ear Advantage</th>
-      <th>Ear Advantage Score</th>
-      <th>Notes</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @client.tests.each do |test| %>
-      <tr>
-        <td><%= test.id %></td>
-        <td><%= @client.first_name + ' ' + @client.last_name %>
-        <td><%= test.user.fname %> <%= test.user.lname %></td>
-
-        <td><%= test.test_type %></td>
-        <td><%= test.left_score %></td>
-        <td><%= test.right_score %></td>
-        <td><%= test.ear_advantage %></td>
-        <td><%= test.ear_advantage_score %></td>
-        <td><%= test.notes %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="col-md-12">
+    <h2 class="display-4" style="padding-bottom:20px"><strong>Tests</strong></h2>
+    <!-- Button to add new test -->
+    <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary btn-block btn-lg" %>
+    <!-- Table of existing tests -->
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Client Name</th>
+          <th>Test Giver</th>
+          <th>Test Type</th>
+          <th>Left Score</th>
+          <th>Right Score</th>
+          <th>Ear Advantage</th>
+          <th>Ear Advantage Score</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Iterate over each test and display its details -->
+        <% @client.tests.each do |test| %>
+          <tr>
+            <td><%= test.id %></td>
+            <td><%= @client.first_name + ' ' + @client.last_name %></td>
+            <td><%= test.user.fname %> <%= test.user.lname %></td>
+            <td><%= test.test_type %></td>
+            <td><%= test.left_score %></td>
+            <td><%= test.right_score %></td>
+            <td><%= test.ear_advantage %></td>
+            <td><%= test.
+                ear_advantage_score %></td>
+            <td><%= test.notes %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
-
+ </div>
 </body>
-
-    
-
-
-
-
-
-
-
-
-
-
-
