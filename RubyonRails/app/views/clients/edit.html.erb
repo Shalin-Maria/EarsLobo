@@ -1,4 +1,7 @@
 <!-- Ruby on Rails view template for displaying client information and managing tests -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 
 <!-- Header section with client name and button to add new test -->
 <body class="bg-light center">
@@ -7,8 +10,43 @@
       <!-- Display client name -->
       <strong><%= @client.first_name + " " + @client.last_name %></strong>
     </h1>
-    <!-- Button to add new test -->
-    <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary btn-block btn-lg" %>
+    <!-- Buttons and dropdowns to add new tests -->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <button class="btn btn-primary btn-block btn-lg dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Add DWT Test
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton`">
+            <a class="dropdown-item" href="<%= new_client_test_path(@client) %>">List 1</a>
+            <a class="dropdown-item" href="<%= new_dwt_list2_client_tests_path(@client) %>">List 2</a>
+            <a class="dropdown-item" href="<%= new_dwt_list3_client_tests_path(@client) %>">List 3</a>
+            <a class="dropdown-item" href="<%= new_dwt_list4_client_tests_path(@client) %>">List 4</a>            
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary btn-block btn-lg dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Add RDDT Test
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            <a class="dropdown-item" href="<%= new_rddt_list1_client_tests_path(@client) %>">List 1</a>
+            <a class="dropdown-item" href="#">List 2</a>          
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary btn-block btn-lg dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Add DNW Test
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+            <a class="dropdown-item" href="<%= new_dnw_list1_client_tests_path(@client) %>">List 1</a>
+            <a class="dropdown-item" href="<%= new_dnw_list2_client_tests_path(@client) %>">List 2</a>
+            <a class="dropdown-item" href="<%= new_dnw_list3_client_tests_path(@client) %>">List 3</a>
+            <a class="dropdown-item" href="<%= new_dnw_list4_client_tests_path(@client) %>">List 4</a>            
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <!-- Form for editing and saving client information -->
     <div class="container p-5 my-3 w-100 border rounded bg-white border-primary">
@@ -114,8 +152,42 @@
 <div class="container p-5 my-3 w-100 border rounded bg-white border-primary">
   <div class="col-md-12">
     <h2 class="display-4" style="padding-bottom:20px"><strong>Tests</strong></h2>
-    <!-- Button to add new test -->
-    <%= link_to "Add Test", new_client_test_path(@client), class: "btn btn-primary btn-block btn-lg" %>
+    <!-- Buttons and dropdowns to add new tests -->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <button class="btn btn-primary btn-block btn-lg dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Add DWT Test
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton`">
+            <a class="dropdown-item" href="<%= new_client_test_path(@client) %>">List 1</a>
+            <a class="dropdown-item" href="<%= new_dwt_list2_client_tests_path(@client) %>">List 2</a>
+            <a class="dropdown-item" href="<%= new_dwt_list3_client_tests_path(@client) %>">List 3</a>
+            <a class="dropdown-item" href="<%= new_dwt_list4_client_tests_path(@client) %>">List 4</a>            
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary btn-block btn-lg dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Add RDDT Test
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+            <a class="dropdown-item" href="<%= new_rddt_list1_client_tests_path(@client) %>">List 1</a>
+            <a class="dropdown-item" href="#">List 2</a>          
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <button class="btn btn-primary btn-block btn-lg dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Add DNW Test
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+            <a class="dropdown-item" href="<%= new_dnw_list1_client_tests_path(@client) %>">List 1</a>
+            <a class="dropdown-item" href="<%= new_dnw_list2_client_tests_path(@client) %>">List 2</a>
+            <a class="dropdown-item" href="<%= new_dnw_list3_client_tests_path(@client) %>">List 3</a>
+            <a class="dropdown-item" href="<%= new_dnw_list4_client_tests_path(@client) %>">List 4</a>             
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Table of existing tests -->
     <table>
       <thead>
@@ -142,8 +214,7 @@
             <td><%= test.left_score %></td>
             <td><%= test.right_score %></td>
             <td><%= test.ear_advantage %></td>
-            <td><%= test.
-                ear_advantage_score %></td>
+            <td><%= test.ear_advantage_score %></td>
             <td><%= test.notes %></td>
           </tr>
         <% end %>
