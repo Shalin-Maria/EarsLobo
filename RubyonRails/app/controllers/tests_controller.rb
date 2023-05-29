@@ -56,6 +56,12 @@ class TestsController < ApplicationController
       @test = @client.tests.build
       @dob = @client.date_of_birth
     end
+
+    def new_rddt_list2
+      @client = Client.find(params[:client_id])
+      @test = @client.tests.build
+      @dob = @client.date_of_birth
+    end
   
     def create
       @client = Client.find(params[:client_id])
