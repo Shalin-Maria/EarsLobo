@@ -5,7 +5,7 @@
 
   <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
 
-  <!--Test page for RDDT List 1 Contains everything for completing and submitting a test  -->
+  <!--Test page for RDDT List 2 Contains everything for completing and submitting a test  -->
   <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
   <%= form_with model: [@client, @test], local: true do |f| %>
@@ -14,7 +14,7 @@
       <div class="col-sm">
         <div class="form-group row">
           <label for="exampleLabel">Label</label>
-            <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Rddt List One" %>
+            <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Rddt List Two" %>
         </div>
         <div class="form-group row">
           <label for="testType">Client</label>
@@ -37,7 +37,7 @@
         <hr/>
         <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
         <audio controls>
-          <source src="/assets/Track 08 RDDT-DirectedAttend 1.mp3" type="audio/mpeg">
+          <source src="/assets/Track 07 RDDT-FreeRecall 1.mp3" type="audio/mpeg">
         </audio>
         <hr/>
         <!--Table for ear advantage percentage that is calculated in the script-->
@@ -96,60 +96,60 @@
             <!-- Loop for table of numbers and creation of all buttons, only loops 54 times and creates table for buttons-->
               <% 54.times do |i| %>
                 <% nums = [
-                  [[1,3],[4,9]],
-                  [[8],[6]],
-                  [[3],[9]],
-                  [[6,1,3],[5,10,2]],
-                  [[5,9,4],[6,8,1]],
-                  [[2,8],[10,3]],
-                  [[3],[1]],
-                  [[2,6,1],[5,10,4]],
-                  [[9,4,1],[6,3,10]],
-                  [[4],[1]],
-                  [[3,5],[2,8]],
-                  [[1,3],[6,5]],
-                  [[8,10,6],[3,2,1]],
-                  [[6,1],[5,10]],
-                  [[9],[6]],
-                  [[1,9,4],[3,2,5]],
-                  [[9,4],[6,3]],
-                  [[6,9,8],[4,5,10]],
-                  [[8,3],[10,4]],
-                  [[9,4,6],[3,2,5]],
-                  [[8],[4]],
-                  [[9,1],[10,2]],
-                  [[5,9],[8,10]],
-                  [[1,5,8],[10,9,6]],
-                  [[4],[9]],
-                  [[9],[2]],
-                  [[9],[5]],
-                  [[8,2,1],[5,10,9]],
-                  [[2,1],[6,3]],
-                  [[4],[8]],
-                  [[6],[2]],
-                  [[2,5],[8,3]],
-                  [[1,3,8],[4,9,5]],
-                  [[10,2],[1,9]],
-                  [[9],[10]],
-                  [[3,1,9],[6,5,10]],
-                  [[10],[8]],
-                  [[5,2],[10,3]],
-                  [[6,8,2],[10,1,4]],
-                  [[9],[3]],
-                  [[3,5],[4,10]],
-                  [[10,6,8],[3,4,9]],
-                  [[5],[3]],
-                  [[1,9,3],[2,6,5]],
-                  [[6,8],[10,1]],
-                  [[6],[9]],
-                  [[1],[4]],
-                  [[10,2],[5,1]],
-                  [[10,3,6],[9,8,2]],
-                  [[8,1,5],[6,9,2]],
-                  [[5,2],[4,6]],
-                  [[8],[1]],
-                  [[3,4],[9,8]],
-                  [[2,10,1],[3,9,6]]
+                  [[6,2,4],[8,5,9]],
+                  [[2,10],[3,9]],
+                  [[5],[6]],
+                  [[10],[6]],
+                  [[5,9,6],[1,3,10]],
+                  [[6],[4]],
+                  [[4,8],[1,9]],
+                  [[4,8],[5,6]],
+                  [[8,3,6],[10,4,9]],
+                  [[10,3],[9,8]],
+                  [[2,1,10],[6,3,9]],
+                  [[5],[2]],
+                  [[4,1,3],[9,6,10]],
+                  [[1,6,5],[8,3,4]],
+                  [[10,6,9],[8,5,4]],
+                  [[9,10,8],[4,5,3]],
+                  [[3,1,2],[10,4,8]],
+                  [[4,5,9],[3,2,1]],
+                  [[5],[10]],
+                  [[3,4,10],[9,8,5]],
+                  [[5],[4]],
+                  [[2,8],[9,10]],
+                  [[5,9],[1,3]],
+                  [[3,9],[8,4]],
+                  [[1],[5]],
+                  [[4,1],[9,6]],
+                  [[6,8,4],[2,5,3]],
+                  [[10,4],[6,9]],
+                  [[10,6],[3,4]],
+                  [[6,4,5],[1,10,8]],
+                  [[10,4,2],[6,9,5]],
+                  [[1],[2]],
+                  [[8],[5]],
+                  [[6,10,4],[3,1,2]],
+                  [[4,1,3],[2,8,9]],
+                  [[1,2],[9,4]],
+                  [[2,10],[1,8]],
+                  [[10],[9]],
+                  [[10],[2]],
+                  [[10,6,8],[4,1,2]],
+                  [[8],[9]],
+                  [[10,6],[4,1]],
+                  [[4],[10]],
+                  [[3],[10]],
+                  [[2,5,10],[8,3,4]],
+                  [[1],[3]],
+                  [[6],[8]],
+                  [[8,4],[9,6]],
+                  [[2],[8]],
+                  [[1,9],[3,2]],
+                  [[8,2],[5,10]],
+                  [[9,10],[4,5]],
+                  [[10],[1]],
+                  [[8,3],[4,2]]
                   ] %>
                 <tr>
                   <td><%= i + 1 %></td>

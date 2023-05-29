@@ -36,6 +36,7 @@ Rails.application.routes.draw do
         get 'new_dnw_list3'
         get 'new_dnw_list4'
         get 'new_rddt_list1'
+        get 'new_rddt_list2'
       end
     end
   end

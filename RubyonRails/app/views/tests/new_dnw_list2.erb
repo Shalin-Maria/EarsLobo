@@ -2,6 +2,9 @@
 <div class="container p-5 my-3 w-100 border rounded bg-white ">
 
 
+<%= javascript_include_tag 'application', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js' %>
+
+
 <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
 
 <!--Test page for DNW List 2 Contains everything for completing and submitting a test  -->
@@ -76,6 +79,7 @@
 
     
     <div class="col-sm">
+      <div class="table-responsive" style="height: 1000px; overflow-y: auto; overflow-x: hidden;">
         <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
           <thead class="thead-dark">
             <tr>
@@ -135,6 +139,7 @@
           </tbody>
           <!--Hidden table for submition items-->
         </table>
+      </div>
         <%= f.hidden_field :client_name, value: "Example user" %>
         <%= f.hidden_field :test_type, value: "DNW" %>
         <%= f.hidden_field :left_score, id: "left_score" %>
@@ -157,6 +162,14 @@
 
 
     <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+          // Disable scrolling
+          document.body.style.overflow = 'hidden';
+
+          // Enable scrolling
+          // document.body.style.overflow = 'auto';
+        });
 
     //function for keeping the buttons blue after being clicked
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');

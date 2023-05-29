@@ -1,6 +1,8 @@
 <body class= "bg-light center">
 <div class="container p-5 my-3 w-100 border rounded bg-white ">
 
+<%= javascript_include_tag 'application', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js' %>
+
 
 <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
 
@@ -40,7 +42,7 @@
       <hr/>
       <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
       <audio controls>
-        <source src="/assets/Track 04 Dichotic Words Test Track 3.mp3" type="audio/mpeg">
+        <source src="/assets/Track 05 Dichotic Words Test Track 4.mp3" type="audio/mpeg">
       </audio>
       <hr/>
       <!--Table for ear advantage percentage that is calculated in the script-->
@@ -69,7 +71,7 @@
           </tbody>
         </thead>
       </table>
-      <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
+      <!--Table for ear advantage name that is calculated in the script and ear diagnosis/interpretation-->
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
       <span hidden id="advantage-Name"></span>
@@ -80,6 +82,7 @@
 
     
     <div class="col-sm">
+      <div class="table-responsive" style="height: 1000px; overflow-y: auto; overflow-x: hidden;">
         <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
           <thead class="thead-dark">
             <tr>
@@ -139,6 +142,7 @@
           </tbody>
           <!--Hidden table for submition items-->
         </table>
+      </div>
         <%= f.hidden_field :client_name, value: "Example user" %>
         <%= f.hidden_field :test_type, value: "DWT" %>
         <%= f.hidden_field :left_score, id: "left_score" %>
@@ -161,6 +165,15 @@
 
 
     <script>
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+          // Disable scrolling
+          document.body.style.overflow = 'hidden';
+
+          // Enable scrolling
+          // document.body.style.overflow = 'auto';
+        });
 
     //function for keeping the buttons blue after being clicked
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
