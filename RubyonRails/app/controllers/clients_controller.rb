@@ -42,7 +42,22 @@ class ClientsController < ApplicationController
     end
   
     def index
-      @clients = params[:search].present? ? Client.where("first_name ILIKE ? OR last_name ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%") : Client.all
+      if params[:query]
+        split_query = params[:query].split(' ')
+        if split_query.length > 1
+          # Case when both first name and last name are typed
+          @clients = Client.where('lower(first_name) LIKE :first AND lower(last_name) LIKE :last OR phone1 LIKE :query', 
+                                  first: "#{split_query.first.downcase}%", 
+                                  last: "#{split_query.last.downcase}%", 
+                                  query: "%#{params[:query]}%")
+        else
+          # Case when either first name, last name, email, or phone number is typed
+          @clients = Client.where('lower(first_name) LIKE :query OR lower(last_name) LIKE :query OR lower(email) LIKE :query OR phone1 LIKE :query', 
+                                  query: "%#{params[:query].downcase}%")
+        end
+      else
+        @clients = Client.all
+      end
     end
       
     def show

@@ -3,9 +3,20 @@
     <!-- Heading for clients page -->
     <h1 class="display-2" style='padding-bottom:20px'><strong>Clients<strong></h1>
     
-    <!-- Link to add a new client -->
-    <%= link_to 'Add New Client', new_client_path, class: 'btn btn-primary btn-lg btn-block'%>
-    
+    <div class="row mb-3">
+      <!-- Search bar -->
+      <div class="col-md-6">
+        <%= form_with url: clients_path, method: :get, local: true, class: 'form-inline' do %>
+          <%= text_field_tag :query, params[:query], class: 'form-control mr-sm-2', placeholder: 'Search clients' %>
+          <%= submit_tag "Search", class: "btn btn-outline-info my-2 my-sm-0" %>
+        <% end %>
+      </div>
+
+    <div class="col-md-6 text-right">
+        <%= link_to 'Add New Client', new_client_path, class: 'btn btn-primary btn-lg'%>
+      </div>
+    </div>
+   
     <div class="justify-content-center">
       <div class="table-responsive">
         <table>
