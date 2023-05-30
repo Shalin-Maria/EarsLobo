@@ -1,9 +1,22 @@
-<body class= "bg-light center">
-<div class="container p-5 my-3 w-100 border rounded bg-white">
-<h1 class= "display-1", style= 'padding-bottom:20px' ><strong>Users</strong></h1>
+<body class="bg-light center">
+  <div class="container p-5 my-3 w-100 border rounded bg-white border-0">
+    <!-- Heading for clients page -->
+    <h1 class="display-1" style='padding-bottom:20px'><strong>Users<strong></h1>
 
-<%= link_to 'Add New User', new_user_registration_path, class: 'btn btn-primary btn-lg btn-block'%>
+    <div class="row mb-3">
+      <!-- Search bar -->
+      <div class="col-md-6">
+        <%= form_with url: users_path, method: :get, local: true, class: 'form-inline' do %>
+          <%= text_field_tag :query, params[:query], class: 'form-control mr-sm-2', placeholder: 'Search users' %>
+          <%= submit_tag "Search", class: "btn btn-outline-info my-2 my-sm-0" %>
+        <% end %>
+      </div>
 
+      <!-- Link to add a new user -->
+      <div class="col-md-6 text-right">
+        <%= link_to 'Add New User', new_user_registration_path, class: 'btn btn-primary btn-lg'%>
+      </div>
+    </div>
 <div>
 <table>
   <thead>
