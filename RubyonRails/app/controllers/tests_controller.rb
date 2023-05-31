@@ -1,4 +1,6 @@
 class TestsController < ApplicationController
+
+
     
 
   # uses @dob to call the DOB from client and pass it so it can be used on test page
@@ -76,6 +78,8 @@ class TestsController < ApplicationController
         render 'new'
       end
     end
+
+    
 
 
 

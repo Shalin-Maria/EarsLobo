@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+
+
   get 'users/index'
   devise_for :users
   get 'pages/home'
@@ -22,6 +24,7 @@ Rails.application.routes.draw do
   get "/clinicians/new", to: "clinicians#new", as: 'new_clinician'
   get 'clinicians/:id/edit', to: 'clinicians#edit', as: 'edit_clinician'
   
+
 
   
   resources :clients do

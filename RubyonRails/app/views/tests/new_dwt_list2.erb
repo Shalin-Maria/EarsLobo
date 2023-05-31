@@ -1,7 +1,6 @@
 <body class= "bg-light center">
 <div class="container p-5 my-3 w-100 border rounded bg-white ">
 
-<%= javascript_include_tag 'application', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js' %>
 
 
 <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
@@ -18,8 +17,8 @@
           <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Dwt List Two" %>
       </div>
       <div class="form-group row">
-        <label for="testType">Client</label>
-        <input class="form-control" type="text" id="testType" placeholder="<%= @client.first_name + ' ' + @client.last_name %>" readonly>
+        <label for="clientName">Client</label>
+        <input class="form-control" type="text" id="clientName" placeholder="<%= @client.first_name + ' ' + @client.last_name %>" readonly>
       </div>
       <div class="form-group row">
         <label for="testType">Type</label>
@@ -42,10 +41,31 @@
       <hr/>
       <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
       <audio controls>
-        <source src="/assets/Track 03 Dichotic Words Test Track 2.mp3" type="audio/mpeg">
+        <source src="<%= asset_path('Track 03 Dichotic Words Test Track 2.mp3') %>" type="audio/mpeg">
       </audio>
       <hr/>
       <!--Table for ear advantage percentage that is calculated in the script-->
+      <style>
+          .left-column {
+            background-color: lightblue;
+          }
+          
+          .right-column {
+            background-color: lightpink;
+          }
+          
+          .ear-advantage {
+            background-color: white;
+          }
+          
+          .ear-advantage.positive {
+            background-color: lightblue;
+          }
+          
+          .ear-advantage.negative {
+            background-color: lightpink;
+          }
+      </style>
       <p>Scores:</p>
       <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
         <thead>
@@ -58,9 +78,9 @@
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td><span id="column1-percent">0</span>%</p></td>
-              <td><span id="column2-percent">0</span>%</td>
-              <td><span id="advantage-Diff">0</span>%</td>
+              <td class="left-column"><span id="column1-percent">0</span>%</p></td>
+              <td class="right-column"><span id="column2-percent">0</span>%</td>
+              <td class="ear-advantage"><span id="advantage-Diff">0</span>%</td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -392,6 +412,23 @@
         testDiagnosis.innerText = interpretation;
         readOnly.value = advantageName.innerText;
         readOnlyDiag.value = testDiagnosis.innerText;
+
+          // Get the ear advantage cells
+          const earAdvantageCells = document.querySelectorAll('.ear-advantage');
+          // Loop through each ear advantage cell
+          earAdvantageCells.forEach(cell => {
+            // Get the value of the cell
+            const value = parseFloat(cell.textContent);
+
+            // Check the value and set the background color accordingly
+            if (value > 0) {
+              cell.style.backgroundColor = 'lightblue';
+            } else if (value < 0) {
+              cell.style.backgroundColor = 'lightpink';
+            } else {
+              cell.style.backgroundColor = 'white';
+            }
+          });
 
         })
       })
