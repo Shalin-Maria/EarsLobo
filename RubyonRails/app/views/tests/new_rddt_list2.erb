@@ -17,9 +17,9 @@
             <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Rddt List Two" %>
         </div>
         <div class="form-group row">
-          <label for="testType">Client</label>
-          <input class="form-control" type="text" id="testType" placeholder="<%= @client.first_name + ' ' + @client.last_name %>" readonly>
-        </div>
+        <label for="clientName">Client</label>
+        <input class="form-control" type="text" id="clientName" placeholder="<%= @client.first_name + ' ' + @client.last_name %>" readonly>
+      </div>
         <div class="form-group row">
           <label for="testType">Type</label>
           <input class="form-control" type="text" id="testType" placeholder="RDDT" readonly>
@@ -27,12 +27,12 @@
         <hr/>
         <div class="form-group row">
           <label for="conditionSelect">Condition</label>
-          <input class="form-control" type="text" id="testType" placeholder="" readonly>
+          <input class="form-control" type="text" id="conditionSelect" placeholder="" readonly>
         </div>
         <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
 
         <hr/>
-        <label for="Notes">Notes</label>
+        Notes
         <%= f.text_area :notes, class: 'form-control', rows: '3' %>
         <hr/>
         <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
@@ -41,6 +41,31 @@
         </audio>
         <hr/>
         <!--Table for ear advantage percentage that is calculated in the script-->
+        
+
+        <style>
+          .left-column {
+            background-color: lightblue;
+          }
+          
+          .right-column {
+            background-color: lightpink;
+          }
+          
+          .ear-advantage {
+            background-color: white;
+          }
+          
+          .ear-advantage.positive {
+            background-color: lightblue;
+          }
+          
+          .ear-advantage.negative {
+            background-color: lightpink;
+          }
+        </style>
+        
+
         <p>Scores:</p>
         <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
           <thead>
@@ -50,28 +75,29 @@
               <th scope="col">Right</th>
               <th scope="col">Ear Adv</th>
             </tr>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td><span id="column1Group1-percent">0</span>%</p></td>
-                <td><span id="column2Group1-percent">0</span>%</td>
-                <td><span id="Group1advantage-Diff">0</span>%</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td><span id="column1Group2-percent">0</span>%</p></td>
-                <td><span id="column2Group2-percent">0</span>%</td>
-                <td><span id="Group2advantage-Diff">0</span>%</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>  
-                <td><span id="column1Group3-percent">0</span>%</p></td>
-                <td><span id="column2Group3-percent">0</span>%</td>
-                <td><span id="Group3advantage-Diff">0</span>%</td>         
-              </tr>
-            </tbody>
           </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td class="left-column"><span id="column1Group1-percent">0</span>%</td>
+              <td class="right-column"><span id="column2Group1-percent">0</span>%</td>
+              <td class="ear-advantage"><span id="Group1advantage-Diff">0</span>%</td>
+            </tr>
+            <tr>
+              <th scope="row">2</th>
+              <td class="left-column"><span id="column1Group2-percent">0</span>%</td>
+              <td class="right-column"><span id="column2Group2-percent">0</span>%</td>
+              <td class="ear-advantage"><span id="Group2advantage-Diff">0</span>%</td>
+            </tr>
+            <tr>
+              <th scope="row">3</th>  
+              <td class="left-column"><span id="column1Group3-percent">0</span>%</td>
+              <td class="right-column"><span id="column2Group3-percent">0</span>%</td>
+              <td class="ear-advantage"><span id="Group3advantage-Diff">0</span>%</td>         
+            </tr>
+          </tbody>
         </table>
+
         <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
         <label for="read-Only">Ear Advantage</label>
         <input class="form-control" type="text" id="read-Only" value="" readonly>
@@ -215,7 +241,10 @@
 
 
 
-      <script>/*
+      <script>
+      
+      
+      /*
   
         document.addEventListener('DOMContentLoaded', function() {
           // Disable scrolling
@@ -304,16 +333,23 @@
           const group3Advantage = (percentColumn1Group3 - percentColumn2Group3).toFixed(2);
 
           let direction = null;
-          console.log(group1Advantage + group2Advantage + group3Advantage);
-          if ((parseFloat(group1Advantage) + parseFloat(group2Advantage) + parseFloat(group3Advantage)) > 0) {
+
+          
+
+          
+
+          //calcs advantage side
+          const sumAdvantage = parseFloat(group1Advantage) + parseFloat(group2Advantage) + parseFloat(group3Advantage);
+          const threshold = 0.01; // Define the threshold value for neutrality
+
+          if (Math.abs(sumAdvantage) <= threshold) {
+            direction = "Neutral";
+          } else if (sumAdvantage > 0) {
             direction = "Left";
-          }
-          else if ((parseFloat(group1Advantage) + parseFloat(group2Advantage) + parseFloat(group3Advantage)) < 0) {
+          } else {
             direction = "Right";
           }
-          else{
-            direction = "Neutral";
-          }
+
 
 
           /*
@@ -496,10 +532,27 @@
           readOnly.value = advantageName.innerText;
 
           
-          testDiagnosis.innerText = interpretation;
+          //testDiagnosis.innerText = interpretation;
           readOnly.value = advantageName.innerText;
-          readOnlyDiag.value = testDiagnosis.innerText;
-  
+          //readOnlyDiag.value = testDiagnosis.innerText;
+
+
+          // Get the ear advantage cells
+          const earAdvantageCells = document.querySelectorAll('.ear-advantage');
+          // Loop through each ear advantage cell
+          earAdvantageCells.forEach(cell => {
+            // Get the value of the cell
+            const value = parseFloat(cell.textContent);
+
+            // Check the value and set the background color accordingly
+            if (value > 0) {
+              cell.style.backgroundColor = 'lightblue';
+            } else if (value < 0) {
+              cell.style.backgroundColor = 'lightpink';
+            } else {
+              cell.style.backgroundColor = 'white';
+            }
+          });
           })
         })
       // gets the elements from hidden field submit above and populates them from the results in the script 
@@ -509,7 +562,7 @@
         document.getElementById("ear_advantage").value = advantageName.innerText;
         document.getElementById("ear_advantage_score").value = advantageDiffGroup1.innerText;
       }
-        
+
       </script>
 
       </div>

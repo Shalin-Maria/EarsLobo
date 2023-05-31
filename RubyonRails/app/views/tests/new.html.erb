@@ -2,14 +2,20 @@
 <div class="container p-5 my-3 w-100 border rounded bg-white ">
 
 
+<!--
 <%= javascript_include_tag 'application', 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js' %>
+-->
+
 
 
 <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
 
 <!--Test page for DWT LIST 1 Contains everything for completing and submitting a test  -->
+
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
 <%= form_with model: [@client, @test], local: true do |f| %>
 <div class="container">
   <div class="row">
@@ -19,8 +25,8 @@
           <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Dwt List One" %>
       </div>
       <div class="form-group row">
-        <label for="testType">Client</label>
-        <input class="form-control" type="text" id="testType" placeholder="<%= @client.first_name + ' ' + @client.last_name %>" readonly>
+        <label for="clientName">Client</label>
+        <input class="form-control" type="text" id="clientName" placeholder="<%= @client.first_name + ' ' + @client.last_name %>" readonly>
       </div>
       <div class="form-group row">
         <label for="testType">Type</label>
@@ -43,10 +49,31 @@
       <hr/>
       <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
       <audio controls>
-        <source src="/assets/Track 02 Dichotic Words Test Track 1.mp3" type="audio/mpeg">
+        <source src="<%= audio_path('Track 02 Dichotic Words Test Track 1.mp3') %>" type="audio/mpeg">
       </audio>
       <hr/>
       <!--Table for ear advantage percentage that is calculated in the script-->
+      <style>
+          .left-column {
+            background-color: lightblue;
+          }
+          
+          .right-column {
+            background-color: lightpink;
+          }
+          
+          .ear-advantage {
+            background-color: white;
+          }
+          
+          .ear-advantage.positive {
+            background-color: lightblue;
+          }
+          
+          .ear-advantage.negative {
+            background-color: lightpink;
+          }
+      </style>
       <p>Scores:</p>
       <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
         <thead>
@@ -59,9 +86,9 @@
           <tbody>
             <tr>
               <th scope="row">1</th>
-              <td><span id="column1-percent">0</span>%</p></td>
-              <td><span id="column2-percent">0</span>%</td>
-              <td><span id="advantage-Diff">0</span>%</td>
+              <td class="left-column"><span id="column1-percent">0</span>%</p></td>
+              <td class="right-column"><span id="column2-percent">0</span>%</td>
+              <td class="ear-advantage"><span id="advantage-Diff">0</span>%</td>
             </tr>
             <tr>
               <th scope="row">2</th>
@@ -166,10 +193,8 @@
 
 
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // Disable scrolling
-        document.body.style.overflow = 'hidden';
-      }); 
+
+
 
     //function for keeping the buttons blue after being clicked
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -378,6 +403,23 @@
         readOnly.value = advantageName.innerText;
         readOnlyDiag.value = testDiagnosis.innerText;
 
+
+          const earAdvantageCells = document.querySelectorAll('.ear-advantage');
+          // Loop through each ear advantage cell
+          earAdvantageCells.forEach(cell => {
+            // Get the value of the cell
+            const value = parseFloat(cell.textContent);
+
+            // Check the value and set the background color accordingly
+            if (value > 0) {
+              cell.style.backgroundColor = 'lightblue';
+            } else if (value < 0) {
+              cell.style.backgroundColor = 'lightpink';
+            } else {
+              cell.style.backgroundColor = 'white';
+            }
+          });
+
         })
       })
      // gets the elements from hidden field submit above and populates them from the results in the script 
@@ -387,7 +429,7 @@
       document.getElementById("ear_advantage").value = advantageName.innerText;
       document.getElementById("ear_advantage_score").value = advantageDiff.innerText;
     }
-
+  
     </script>
 
   </div>
