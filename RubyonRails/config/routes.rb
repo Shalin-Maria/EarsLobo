@@ -25,8 +25,8 @@ Rails.application.routes.draw do
   get 'clinicians/:id/edit', to: 'clinicians#edit', as: 'edit_clinician'
   
 
+  resources :users, only: [:index, :new, :create]
 
-  
   resources :clients do
     resources :emergency_contacts, only: [:create, :destroy, :new, :edit, :update]
     resources :tests do
