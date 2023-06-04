@@ -16,6 +16,15 @@
 
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
+
+<style>
+  div.sticky {
+      position: -webkit-sticky; /* Safari */
+      position: sticky;
+      top: 0;
+  }
+</style>
+
 <%= form_with model: [@client, @test], local: true do |f| %>
 <div class="container">
   <div class="row">
@@ -44,61 +53,63 @@
       <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
 
       <hr/>
-      <label for="Notes">Notes</label>
-      <%= f.text_area :notes, class: 'form-control', rows: '3' %>
-      <hr/>
-      <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
-      <audio controls>
-        <source src="<%= audio_path('Track 02 Dichotic Words Test Track 1.mp3') %>" type="audio/mpeg">
-      </audio>
-      <hr/>
-      <!--Table for ear advantage percentage that is calculated in the script-->
-      <style>
-          .left-column {
-            background-color: lightblue;
-          }
-          
-          .right-column {
-            background-color: lightpink;
-          }
-          
-          .ear-advantage {
-            background-color: white;
-          }
-          
-          .ear-advantage.positive {
-            background-color: lightblue;
-          }
-          
-          .ear-advantage.negative {
-            background-color: lightpink;
-          }
-      </style>
-      <p>Scores:</p>
-      <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
-        <thead>
-          <tr>
-            <th scope="col">Pairs</th>
-            <th scope="col">Left</th>
-            <th scope="col">Right</th>
-            <th scope="col">Ear Adv</th>
-          </tr>
-          <tbody>
+      <div class="sticky">
+        <label for="Notes">Notes</label>
+        <%= f.text_area :notes, class: 'form-control', rows: '3' %>
+        <hr/>
+        <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
+        <audio controls>
+          <source src="<%= audio_path('Track 02 Dichotic Words Test Track 1.mp3') %>" type="audio/mpeg">
+        </audio>
+        <hr/>
+        <!--Table for ear advantage percentage that is calculated in the script-->
+        <style>
+            .left-column {
+              background-color: lightblue;
+            }
+            
+            .right-column {
+              background-color: lightpink;
+            }
+            
+            .ear-advantage {
+              background-color: white;
+            }
+            
+            .ear-advantage.positive {
+              background-color: lightblue;
+            }
+            
+            .ear-advantage.negative {
+              background-color: lightpink;
+            }
+        </style>
+        <p>Scores:</p>
+        <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+          <thead>
             <tr>
-              <th scope="row">1</th>
-              <td class="left-column"><span id="column1-percent">0</span>%</p></td>
-              <td class="right-column"><span id="column2-percent">0</span>%</td>
-              <td class="ear-advantage"><span id="advantage-Diff">0</span>%</td>
+              <th scope="col">Pairs</th>
+              <th scope="col">Left</th>
+              <th scope="col">Right</th>
+              <th scope="col">Ear Adv</th>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-            </tr>
-            <tr>
-              <th scope="row">3</th>           
-            </tr>
-          </tbody>
-        </thead>
-      </table>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td class="left-column"><span id="column1-percent">0</span>%</p></td>
+                <td class="right-column"><span id="column2-percent">0</span>%</td>
+                <td class="ear-advantage"><span id="advantage-Diff">0</span>%</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+              </tr>
+              <tr>
+                <th scope="row">3</th>           
+              </tr>
+            </tbody>
+          </thead>
+        </table>
+      </div>
       <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
@@ -110,7 +121,6 @@
 
     
     <div class="col-sm">
-      <div class="table-responsive" style="height: 1000px; overflow-y: auto; overflow-x: hidden;">
         <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
           <thead class="thead-dark">
             <tr>
@@ -170,7 +180,7 @@
           </tbody>
           <!--Hidden table for submition items-->
         </table>
-      </div>
+      
         <%= f.hidden_field :client_name, value: "Example user" %>
         <%= f.hidden_field :test_type, value: "DWT" %>
         <%= f.hidden_field :left_score, id: "left_score" %>

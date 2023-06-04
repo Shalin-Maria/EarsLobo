@@ -3,10 +3,7 @@ class PagesController < ApplicationController
         render :home
     end
 
-    def test
-        render :test
-    end
-    
+
 
     
 end
