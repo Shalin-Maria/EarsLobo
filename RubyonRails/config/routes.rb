@@ -10,7 +10,7 @@ Rails.application.routes.draw do
 
   root to: redirect('/home')
   get 'home', to: 'pages#home', as: 'home'
-  get 'test', to: 'pages#test', as: 'test'
+  
   get "/clients/new", to: "clients#new"
   get 'clients', to: 'clients#index'
   get 'clients/:id/edit', to: 'clients#edit', as: 'edit_client'
@@ -43,6 +43,5 @@ Rails.application.routes.draw do
       end
     end
   end
-  resources :tests, only: [:edit, :update, :destroy]
 
 end

@@ -202,7 +202,7 @@
           <th>Right Score</th>
           <th>Ear Advantage</th>
           <th>Ear Advantage Score</th>
-          <th>Notes</th>
+          <th>Review</th>
         </tr>
       </thead>
       <tbody>
@@ -217,12 +217,16 @@
             <td><%= test.right_score %></td>
             <td><%= test.ear_advantage %></td>
             <td><%= test.ear_advantage_score %></td>
-            <td><%= test.notes %></td>
+            <td>
+              <%= link_to 'Review Test', client_test_path(@client, test.id) %>
+              
+            </td>
+
           </tr>
         <% end %>
       </tbody>
     </table>
   </div>
 </div>
- </div>
+</div>
 </body>

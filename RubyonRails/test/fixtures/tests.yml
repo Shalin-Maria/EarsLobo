@@ -6,6 +6,7 @@
 #  client_name         :string
 #  ear_advantage       :string
 #  ear_advantage_score :float
+#  image_path          :string
 #  label               :string
 #  left_score          :float
 #  notes               :text
