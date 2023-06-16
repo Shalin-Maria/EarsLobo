@@ -145,10 +145,10 @@
             <% end %>
           </tbody>
         </table>
+      <%end%>
       </div>
     </div>
   </div>
-<% end %>
 
 <!-- Tests section with button to add new test and table of existing tests -->
 <div class="container p-5 my-3 w-100 border rounded bg-white border-primary">
@@ -218,10 +218,11 @@
             <td><%= test.ear_advantage %></td>
             <td><%= test.ear_advantage_score %></td>
             <td>
-              <%= link_to 'Review Test', client_test_path(@client, test.id) %>
-              
+              <%= link_to edit_client_test_path(@client, test.id) do %>
+                <%= image_tag 'edit_icon.png', alt: 'Edit', width: 20 %>
+              <% end %>
             </td>
-
+            <td></td>
           </tr>
         <% end %>
       </tbody>
