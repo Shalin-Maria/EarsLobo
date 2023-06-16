@@ -103,7 +103,6 @@
 
     
     <div class="col-sm">
-      <div class="table-responsive" style="height: 1000px; overflow-y: auto; overflow-x: hidden;">
         <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
           <thead class="thead-dark">
             <tr>
@@ -163,7 +162,7 @@
           </tbody>
           <!--Hidden table for submition items-->
         </table>
-      </div>
+      
         <%= f.hidden_field :client_name, value: "Example user" %>
         <%= f.hidden_field :test_type, value: "DWT" %>
         <%= f.hidden_field :left_score, id: "left_score" %>
@@ -189,13 +188,6 @@
 
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-          // Disable scrolling
-          document.body.style.overflow = 'hidden';
-
-          // Enable scrolling
-          // document.body.style.overflow = 'auto';
-        });
 
     //function for keeping the buttons blue after being clicked
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -256,8 +248,8 @@
           nondom = percent1;
         } else {
           direction = "Neutral";
-          }
-// IF else logic for diagnosis based on the childs age. Still unsure if this works as intended accoring to Employer, but we believe it is
+        }
+        // IF else logic for diagnosis based on the childs age. Still unsure if this works as intended accoring to Employer, but we believe it is
         if (age == 5 || age == 6){
           if (direction == "Neutral"){
             if (percent1 <= 44){

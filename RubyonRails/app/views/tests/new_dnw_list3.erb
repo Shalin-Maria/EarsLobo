@@ -99,7 +99,7 @@
 
     
     <div class="col-sm">
-      <div class="table-responsive" style="height: 1000px; overflow-y: auto; overflow-x: hidden;">
+
         <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
           <thead class="thead-dark">
             <tr>
@@ -159,7 +159,7 @@
           </tbody>
           <!--Hidden table for submition items-->
         </table>
-      </div>
+
         <%= f.hidden_field :client_name, value: "Example user" %>
         <%= f.hidden_field :test_type, value: "DNW" %>
         <%= f.hidden_field :left_score, id: "left_score" %>
@@ -184,13 +184,7 @@
     <script>
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-          // Disable scrolling
-          document.body.style.overflow = 'hidden';
 
-          // Enable scrolling
-          // document.body.style.overflow = 'auto';
-        });
 
     //function for keeping the buttons blue after being clicked
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');

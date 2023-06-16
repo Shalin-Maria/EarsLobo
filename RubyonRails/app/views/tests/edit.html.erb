@@ -1,0 +1,33 @@
+<h1>Test Details</h1>
+
+<%= bootstrap_form_with model: @test, url: client_test_path(@test), method: :patch, local: true do |f| %>
+
+
+  <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Rddt List One" %>
+  <%= f.text_area :notes, class: 'form-control', rows: '3' %>
+  <%= f.text_field :client_name, value: "Example user" %>
+  <%= f.text_field :test_type, value: "RDDT" %>
+  <%= f.text_field :left_score, id: "left_score" %>
+  <%= f.text_field :right_score, id: "right_score" %>
+  <%= f.text_field :ear_advantage, id: "ear_advantage" %>
+  <%= f.text_field :ear_advantage_score, id: "ear_advantage_score" %>
+
+  <%= f.text_field :col1G1, id: "col1G1" %>
+  <%= f.text_field :col2G1, id: "col2G1" %>
+  <%= f.text_field :col1G3, id: "col1G3" %>
+  <%= f.text_field :col2G3, id: "col2G3" %>
+
+  <%= f.text_field :G1adv, id: "G1adv" %>
+  <%= f.text_field :G3adv, id: "G3adv" %>
+
+  <%= f.text_field :interpretation, id: "interpretation" %>
+
+  
+
+  <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
+<% end %>
+<!-- Other test details -->
+
+
+
+

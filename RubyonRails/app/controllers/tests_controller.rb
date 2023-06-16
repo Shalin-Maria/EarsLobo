@@ -65,9 +65,10 @@ class TestsController < ApplicationController
       @dob = @client.date_of_birth
     end
 
-    def show
+    def edit
+      @client = Client.find(params[:client_id])
       @test = Test.find(params[:id])
-      
+      render :edit
     end
     
 
