@@ -35,6 +35,10 @@
     <%= f.password_field :password_confirmation, autocomplete: "new-password",class: "form-control form-control-lg", style: ' padding:10px;' %>
   </div>
 
+
+  <%= f.label :registration_key %>
+  <%= f.text_field :registration_key, class: "form-control form-control-lg", style: ' padding:10px;'  %>
+
   <div class="actions">
     <%= f.submit "Sign up",  class: 'btn btn-primary btn-lg btn-block' %>
   </div>

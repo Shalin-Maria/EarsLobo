@@ -18,8 +18,19 @@
 #  zip           :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  tenant_id     :bigint
+#
+# Indexes
+#
+#  index_clients_on_tenant_id  (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (tenant_id => tenants.id)
 #
 class Client < ApplicationRecord
+    acts_as_tenant(:tenant)
+
     has_many :emergency_contacts,dependent: :destroy
     has_many :tests,dependent: :destroy
 
