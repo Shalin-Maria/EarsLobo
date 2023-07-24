@@ -1,21 +1,16 @@
 class ApplicationController < ActionController::Base
-  include ActsAsTenant::ControllerExtensions
   
   
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :find_current_tenant, unless: :devise_controller?
   before_action :authenticate_user_with_redirect!
+  before_action :set_current_tenant
+  
+  def set_current_tenant
+    ActsAsTenant.current_tenant = current_user.tenant if current_user
+    puts "Current User: #{current_user.inspect}"
+    puts "Current Tenant: #{ActsAsTenant.current_tenant.inspect}"
 
-  def find_current_tenant
-    if current_user && current_user.tenant
-      set_current_tenant_by_subdomain(current_user, current_user.tenant.subdomain)
-    elsif !devise_controller? || action_name != 'new'
-      redirect_to new_user_session_path
-    end
   end
-  
-  
-
 
   protected
   def authenticate_user_with_redirect!

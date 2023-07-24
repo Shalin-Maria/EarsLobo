@@ -31,8 +31,8 @@ class User < ApplicationRecord
   belongs_to :tenant
   enum role: { regular_user: 0, local_moderator: 1, global_moderator: 2 }
   attr_accessor :registration_key
-  attr_accessor :subdomain
-  before_create :validate_registration_key
+  validate :validate_registration_key, on: :create
+
 
   has_many :tests
   # Include default devise modules. Others available are:
@@ -42,15 +42,24 @@ class User < ApplicationRecord
 
   private
   def validate_registration_key
-    key = Key.find_by(code: registration_key, used: false)
-    if key.present?
+    key = Key.find_by(code: registration_key)
+    puts "key checker: #{key.inspect}"
+  
+    if key.present? && !key.used
       key.update(used: true)
-      self.tenant = Tenant.create!(subdomain: subdomain)
+      puts "Valid registration key found: #{key.inspect}"
+
+      self.tenant = Tenant.find_or_create_by(subdomain: generate_subdomain)
+
+      puts "New tenant created: #{self.tenant.inspect}"
     else
       errors.add(:registration_key, "is invalid.")
-      throw(:abort)
+      puts "Invalid registration key: #{registration_key}"
+      return false
     end
   end
+  
+  
   
 
   def generate_subdomain

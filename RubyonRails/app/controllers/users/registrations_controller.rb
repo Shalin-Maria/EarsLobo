@@ -65,6 +65,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:registration_key, :other, :user, :attributes])
+    resource.validate_registration_key
   end
 
 

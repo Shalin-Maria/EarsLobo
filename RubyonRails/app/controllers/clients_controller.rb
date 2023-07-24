@@ -42,6 +42,7 @@ class ClientsController < ApplicationController
     end
   
     def index
+      puts "Clients: #{Client.all.inspect}"
       if params[:query]
         split_query = params[:query].split(' ')
         if split_query.length > 1
@@ -59,6 +60,7 @@ class ClientsController < ApplicationController
         @clients = Client.all
       end
     end
+    
       
     def show
       @client = Client.find(params[:id])
