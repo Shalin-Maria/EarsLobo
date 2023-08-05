@@ -1,60 +1,168 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
-load(Rails.root.join('db', 'seeds', 'clients_seed.rb'))
 # db/seeds.rb
 
-# Generate Users
-# Create 2 local moderators
-2.times do
-  User.create!(
-    email: Faker::Internet.unique.email,
-    password: 'password123',
-    password_confirmation: 'password123',
-    fname: Faker::Name.first_name,
-    lname: Faker::Name.last_name,
-    role: :local_moderator
-  )
-end
+keys = []
+keys << Key.create!(code: 'key1', used: false)
+keys << Key.create!(code: 'key2', used: false)
+keys << Key.create!(code: 'key3', used: false)
 
-# Create 9 regular users
-9.times do
-  User.create!(
-    email: Faker::Internet.unique.email,
-    password: 'password123',
-    password_confirmation: 'password123',
-    fname: Faker::Name.first_name,
-    lname: Faker::Name.last_name,
-    role: :regular_user
-  )
-end
 
-  
-  users = User.all
+puts "keys: #{keys.inspect}"
+
+tenants = []
+tenants << Tenant.find_or_create_by!(subdomain: 'tenant1')
+tenants << Tenant.find_or_create_by!(subdomain: 'tenant2')
+
+puts "tenant: #{tenants.inspect}"
+
+
+
+ActsAsTenant.with_tenant(tenants.first) do
+
+  user = User.create!(
+    email: "globalmod@gmail.com",
+    password: "password",
+    fname: "Global",
+    lname:"Mod",
+    role: :global_moderator,
+    registration_key: keys.third.code,
+  )
+  user = User.create!(
+    email: "testa@gmail.com",
+    password: "password",
+    fname: "local",
+    lname:"Mod",
+    role: :local_moderator,
+    registration_key: keys.first.code,
+  )
+
+  puts "user: #{user.inspect}"
+
     
-  clients = Client.all
+    client = Client.create!(
+    first_name: 'Client1',
+    last_name: 'Test',
+    gender: 'Male',
+    email: 'client1@test.com',
+    date_of_birth: 30.years.ago,
+    address1: '123 Street',
+    country: 'US',
+    state: 'NY',
+    city: 'New York',
+    zip: '10001',
+    phone1: '1234567890'
+  )
   
-  # Generate Tests
-  3.times do
-    Test.create!(
-      user: users.sample,
-      client: clients.sample,
-      client_name: "#{Faker::Name.first_name} #{Faker::Name.last_name}",
-      ear_advantage: %w[Left Right].sample,
-      ear_advantage_score: rand(1.0..10.0).round(2),
-      label: Faker::Lorem.word,
-      left_score: rand(1.0..10.0).round(2),
-      notes: Faker::Lorem.sentence,
-      right_score: rand(1.0..10.0).round(2),
-      test_type: %w[DWT RDT].sample
-    )
-  end
+  puts "client: #{client.inspect}"
+
   
-User.create(email: "globalmod@gmail.com", password: "password", fname: "Global", lname:"Mod", role: :global_moderator)
-User.create(email: "localmod@gmail.com", password: "password",fname: "Local", lname:"Mod", role: :local_moderator)
-User.create(email: "user@gmail.com", password: "password",fname: "Regular", lname:"User", role: :regular_user)
+  EmergencyContact.create!(
+    first_name: 'Contact1',
+    last_name: 'Test',
+    phone_number: '1234567890',
+    address: '123 Street',
+    email: 'contact1@test.com',
+    city: 'New York',
+    state: 'NY',
+    client: client
+  )
+  Test.create!(
+    client_name: 'Client1 Test',
+    test_type: 'Type1',
+    client: client,
+    user: user
+  )
+end
+
+
+ActsAsTenant.with_tenant(tenants.second) do
+
+  user = User.create!(
+    email: "globalmod12312@gmail.com",
+    password: "password",
+    fname: "Globaler",
+    lname:"Modda",
+    role: :global_moderator,
+    registration_key: keys.second.code,
+  )
+
+
+    
+    client = Client.create!(
+    first_name: 'Client1',
+    last_name: 'Test',
+    email: 'client12@test.com',
+    gender: 'Male',
+    date_of_birth: 30.years.ago,
+    address1: '123 Street',
+    country: 'US',
+    state: 'NY',
+    city: 'New York',
+    zip: '10001',
+    phone1: '1234567890'
+  )
+  
+  puts "client: #{client.inspect}"
+
+  
+  EmergencyContact.create!(
+    first_name: 'Coasdasdasntact1',
+    last_name: 'Test',
+    phone_number: '1234567890',
+    address: '123 Street',
+    email: 'contact1@test.com',
+    city: 'New York',
+    state: 'NY',
+    client: client
+  )
+  Test.create!(
+    client_name: 'Client1 Test',
+    test_type: 'Type1',
+    client: client,
+    user: user
+  )
+end
+
+
+# user = User.create!(
+#   email: "globalmod1@gmail.com",
+#   password: "password",
+#   fname: "Global1",
+#   lname:"Mod1",
+#   role: :global_moderator,
+#   registration_key: keys.second.code
+# )
+# user.validate_registration_key
+# puts "user: #{user.inspect}"
+# puts "keys: #{keys.inspect}"
+# ActsAsTenant.with_tenant(user.tenant) do
+  
+#   client = Client.create!(
+#     first_name: 'Client1',
+#     last_name: 'Test',
+#     email: 'client11@test.com',
+#     date_of_birth: 30.years.ago,
+#     address1: '123 Street',
+#     country: 'US',
+#     state: 'NY',
+#     city: 'New York',
+#     zip: '10001',
+#     phone1: '1234567890'
+#   )
+#   puts "client: #{client.inspect}"
+  
+#   EmergencyContact.create!(
+#     first_name: 'Contact11',
+#     last_name: 'Test',
+#     phone_number: '1234567890',
+#     address: '123 Street',
+#     email: 'contact1@test.com',
+#     city: 'New York',
+#     state: 'NY',
+#     client: client
+#   )
+#   Test.create!(
+#     client_name: 'Client1 Test',
+#     test_type: 'Type1',
+#     client: client,
+#     user: user
+#   )

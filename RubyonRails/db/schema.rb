@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_02_190034) do
+ActiveRecord::Schema.define(version: 2023_07_02_194649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(version: 2023_06_02_190034) do
     t.string "phone2"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "tenant_id"
+    t.index ["tenant_id"], name: "index_clients_on_tenant_id"
   end
 
   create_table "clinicians", force: :cascade do |t|
@@ -68,6 +70,8 @@ ActiveRecord::Schema.define(version: 2023_06_02_190034) do
     t.string "phone"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "tenant_id"
+    t.index ["tenant_id"], name: "index_clinicians_on_tenant_id"
   end
 
   create_table "emergency_contacts", force: :cascade do |t|
@@ -81,7 +85,23 @@ ActiveRecord::Schema.define(version: 2023_06_02_190034) do
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "tenant_id"
     t.index ["client_id"], name: "index_emergency_contacts_on_client_id"
+    t.index ["tenant_id"], name: "index_emergency_contacts_on_tenant_id"
+  end
+
+  create_table "keys", force: :cascade do |t|
+    t.string "code"
+    t.boolean "used"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_keys_on_code", unique: true
+  end
+
+  create_table "tenants", force: :cascade do |t|
+    t.string "subdomain"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "tests", force: :cascade do |t|
@@ -98,7 +118,9 @@ ActiveRecord::Schema.define(version: 2023_06_02_190034) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id"
     t.string "image_path"
+    t.bigint "tenant_id"
     t.index ["client_id"], name: "index_tests_on_client_id"
+    t.index ["tenant_id"], name: "index_tests_on_tenant_id"
     t.index ["user_id"], name: "index_tests_on_user_id"
   end
 
@@ -113,13 +135,20 @@ ActiveRecord::Schema.define(version: 2023_06_02_190034) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "role"
+    t.bigint "tenant_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["tenant_id"], name: "index_users_on_tenant_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "clients", "tenants"
+  add_foreign_key "clinicians", "tenants"
   add_foreign_key "emergency_contacts", "clients"
+  add_foreign_key "emergency_contacts", "tenants"
   add_foreign_key "tests", "clients"
+  add_foreign_key "tests", "tenants"
   add_foreign_key "tests", "users"
+  add_foreign_key "users", "tenants"
 end
