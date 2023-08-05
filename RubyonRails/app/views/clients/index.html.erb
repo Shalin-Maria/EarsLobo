@@ -1,10 +1,8 @@
 <body class="bg-light center">
   <div class="container p-5 my-3 w-100 border rounded bg-white border-0">
-    <!-- Heading for clients page -->
-    <h1 class="display-2" style='padding-bottom:20px'><strong>Clients<strong></h1>
+    <h1 class="display-2" style='padding-bottom:20px'><strong>Clients</strong></h1>
     
     <div class="row mb-3">
-      <!-- Search bar -->
       <div class="col-md-6">
         <%= form_with url: clients_path, method: :get, local: true, class: 'form-inline' do %>
           <%= text_field_tag :query, params[:query], class: 'form-control mr-sm-2', placeholder: 'Search clients' %>
@@ -30,15 +28,14 @@
               <th>Date of Birth</th>
               <th>Phone</th>
               <th>Address</th>
+              <th>tenant_id</th>
               <th>Delete</th>
             </tr>
           </thead>
           <tbody>
             <% @clients.each do |user| %>
-            <!-- Display client information in a row -->
               <tr>
                 <td>
-                  <!-- Link to edit a client's information -->
                   <%= link_to edit_client_path(user) do %>
                     <%= image_tag 'edit_icon.png', alt: 'Edit',width: 20 %>
                   <% end %>
@@ -50,8 +47,8 @@
                 <td><%= user.date_of_birth %></td>
                 <td><%= user.phone1 %></td>
                 <td><%= user.address1 %></td>
+                <td><%= user.tenant_id %></td>
                 <td>
-                  <!-- Link to delete a client -->
                   <%= link_to client_path(user), method: :delete, data: { confirm: 'Are you sure?' } do %>
                     <%= image_tag 'delete_icon.png', alt: 'Delete', width: 20 %>
                   <% end %>
