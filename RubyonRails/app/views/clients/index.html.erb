@@ -14,6 +14,7 @@
         <%= link_to 'Add New Client', new_client_path, class: 'btn btn-primary btn-lg'%>
       </div>
     </div>
+    <%= link_to 'Download CSV', clients_path(format: "csv"), class: 'btn btn-secondary mb-3' %>
    
     <div class="justify-content-center">
       <div class="table-responsive">

@@ -1,19 +1,35 @@
 # db/seeds.rb
 # Seeds file with 3 tenants, 50 users, clients, and registration keys for each tenant
 
-keybruh = Key.create!(code: "keyamill", used: false)
+# keybruh = Key.create!(code: "keyamill", used: false)
+
+# tenants = []
+# # 3.times { |i| tenants << Tenant.find_or_create_by!(subdomain: "tenant#{i + 1}") }
+# ActsAsTenant.with_tenant(tenants.first) do
+
+#   user = User.create!(
+#     email: "globalmod@gmail.com",
+#     password: "password",
+#     fname: "Global",
+#     lname:"Mod",
+#     role: :global_moderator,
+#     registration_key: 'keyamill',
+#   )
+# end 
+
+keybruh = Key.create!(code: "keyamillw31", used: false)
 
 tenants = []
 3.times { |i| tenants << Tenant.find_or_create_by!(subdomain: "tenant#{i + 1}") }
 ActsAsTenant.with_tenant(tenants.first) do
 
   user = User.create!(
-    email: "globalmod@gmail.com",
+    email: "localw@gmail.com",
     password: "password",
-    fname: "Global",
+    fname: "Locality",
     lname:"Mod",
-    role: :global_moderator,
-    registration_key: 'keyamill',
+    role: :local_moderator,
+    registration_key: 'keyamillw31',
   )
 end 
 # require 'faker'
