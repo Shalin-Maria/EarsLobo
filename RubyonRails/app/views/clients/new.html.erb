@@ -48,6 +48,11 @@
         <div class="form-group">
           <%= client_fields.select :gender, ['Male', 'Female', 'Other'], {}, class: "form-control" %>
         </div>
+        <!-- A form group with a select field for the client's race -->
+        <div class="form-group">
+          <%= client_fields.select :race, ['American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White'], {}, class: "form-control" %>
+        </div>
+
  
       </div>
 

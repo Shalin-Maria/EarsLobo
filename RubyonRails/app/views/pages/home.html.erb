@@ -18,11 +18,12 @@
       <img class="card-img-top">
       <%= image_tag 'headphones.png', class: ' d-block m-auto' , style: ' max-width: 15rem;'%>
       <div class="card-body">
-        <% if user_signed_in? %>
-          <h5 class="card-title"><strong><%= link_to 'Go to Clients', clients_path, class: 'btn rounded-pill btn-primary btn-lg border-0'%></strong></h5>
-        <% else %>
-          <h5 class="card-title"><strong><%= link_to 'Go to Clients', new_user_session_path, class: 'btn rounded-pill btn-primary btn-lg border-0'%></strong></h5>
-        <% end %>
+      <% if user_signed_in? %>
+        <h5 class="card-title"><strong><%= link_to 'Go to Clients', current_user.global_moderator? ? global_moderator_index_path : clients_path, class: 'btn rounded-pill btn-primary btn-lg border-0'%></strong></h5>
+      <% else %>
+        <h5 class="card-title"><strong><%= link_to 'Go to Clients', new_user_session_path, class: 'btn rounded-pill btn-primary btn-lg border-0'%></strong></h5>
+      <% end %>  
+
         <p class="card-text">Go here to add or edit clients, as well as perform tests </p>
       </div>
     </div>
