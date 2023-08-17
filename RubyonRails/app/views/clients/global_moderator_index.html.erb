@@ -1,0 +1,38 @@
+<h1>Global Moderator View</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Gender</th>
+      <th>Age</th>
+      <th>City</th>
+      <th>Country</th>
+      <th>State</th>
+      <th>Race</th>
+      <th>Ear Advantage</th>
+      <th>Ear Advantage Score</th>
+      <th>Left Score</th>
+      <th>Right Score</th>
+      <th>Edit</th> <!-- Add a new column for the Edit button -->
+    </tr>
+  </thead>
+  <tbody>
+    <% @clients.each do |client| %>
+      <% client.tests.each do |test| %>
+        <tr>
+          <td><%= client.gender %></td>
+          <td><%= client.age_in_years %></td>
+          <td><%= client.city %></td>
+          <td><%= client.country %></td>
+          <td><%= client.state %></td>
+          <td><%= client.race %></td>
+          <td><%= test.ear_advantage %></td>
+          <td><%= test.ear_advantage_score %></td>
+          <td><%= test.left_score %></td>
+          <td><%= test.right_score %></td>
+          <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

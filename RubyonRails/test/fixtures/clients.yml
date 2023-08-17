@@ -14,6 +14,7 @@
 #  mgmt_ref      :string
 #  phone1        :string
 #  phone2        :string
+#  race          :string
 #  state         :string
 #  zip           :string
 #  created_at    :datetime         not null

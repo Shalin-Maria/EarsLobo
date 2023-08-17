@@ -82,11 +82,16 @@ class ClientsController < ApplicationController
         @clients = Client.where("first_name ILIKE ? OR last_name ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
       end
     end
+  def global_moderator_index
+    if current_user.global_moderator?
+      @clients = Client.includes(:tests).all
+    else
+      # If the user is not a global moderator, redirect them
+      redirect_to root_path, alert: 'You do not have access to this page.'
+    end
   end
+end
 
-
-  
-  
     private
     
     def client_params
