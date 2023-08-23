@@ -30,15 +30,14 @@
 #  fk_rails_...  (tenant_id => tenants.id)
 #
 class Client < ApplicationRecord
-    acts_as_tenant(:tenant)
+  acts_as_tenant(:tenant)
 
-    has_many :emergency_contacts,dependent: :destroy
-    has_many :tests,dependent: :destroy
+  # Associations with emergency contacts and tests, with dependent destroy option
+  has_many :emergency_contacts, dependent: :destroy
+  has_many :tests, dependent: :destroy
 
-    accepts_nested_attributes_for :emergency_contacts
-    validates :first_name, :last_name, :email, :date_of_birth, :address1, :country, :state, :city, :zip, :phone1, presence: true
-    validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-    validates :phone1, numericality: { only_integer: true }
+  # Allow nested attributes for emergency contacts
+  accepts_nested_attributes_for :emergency_contacts
 
     def full_name
       "#{first_name}#{last_name}"
@@ -62,6 +61,26 @@ class Client < ApplicationRecord
           'phone2' => Digest::SHA256.hexdigest(self.phone2)
         })
     end
+  # Validations for various client attributes
+  validates :first_name, :last_name, :email, :date_of_birth, :address1, :country, :state, :city, :zip, :phone1, presence: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :phone1, numericality: { only_integer: true }
+
+  # Allow these attributes to be searched through Ransack
+  def self.ransackable_attributes(auth_object = nil)
+    %w(id address1 city country date_of_birth email first_name gender last_name mgmt_ref phone1 phone2 state zip created_at updated_at tenant_id age_in_years age ) + _ransackers.keys
+  end
+
+  # Allow these associations to be searched through Ransack
+  def self.ransackable_associations(auth_object = nil)
+    ["emergency_contacts", "tenant", "tests"]
+  end
+
+  # Controls the functionality behind thw advanced searching for this attribute of id
+  ransacker :id do
+    Arel.sql('id')
+  end
+
 end
   
 
