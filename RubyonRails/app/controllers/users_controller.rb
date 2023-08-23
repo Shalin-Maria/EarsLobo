@@ -35,7 +35,6 @@ class UsersController < ApplicationController
   end
 
   private
-
   def check_permission
     unless current_user.local_moderator? || current_user.global_moderator?
       redirect_to users_path, alert: "You don't have permission to perform this action."

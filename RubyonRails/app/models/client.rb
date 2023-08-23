@@ -14,12 +14,24 @@
 #  mgmt_ref      :string
 #  phone1        :string
 #  phone2        :string
+#  race          :string
 #  state         :string
 #  zip           :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  tenant_id     :bigint
+#
+# Indexes
+#
+#  index_clients_on_tenant_id  (tenant_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (tenant_id => tenants.id)
 #
 class Client < ApplicationRecord
+    acts_as_tenant(:tenant)
+
     has_many :emergency_contacts,dependent: :destroy
     has_many :tests,dependent: :destroy
 
@@ -38,6 +50,17 @@ class Client < ApplicationRecord
       age = now.year - dob.year
       age -= 1 if now < dob + age.years # for days before birthday
       age
+    end
+
+
+    def anonymized
+      self.attributes.except('address1', 'email', 'phone1', 'phone2')
+        .merge({
+          'address1' => Digest::SHA256.hexdigest(self.address1),
+          'email' => Digest::SHA256.hexdigest(self.email),
+          'phone1' => Digest::SHA256.hexdigest(self.phone1),
+          'phone2' => Digest::SHA256.hexdigest(self.phone2)
+        })
     end
 end
   
