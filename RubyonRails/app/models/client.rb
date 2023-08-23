@@ -33,7 +33,7 @@ class Client < ApplicationRecord
     acts_as_tenant(:tenant)
 
     has_many :emergency_contacts,dependent: :destroy
-    has_many :tests,dependent: :destroy
+    has_many :dwt_tests,dependent: :destroy
 
     accepts_nested_attributes_for :emergency_contacts
     validates :first_name, :last_name, :email, :date_of_birth, :address1, :country, :state, :city, :zip, :phone1, presence: true
