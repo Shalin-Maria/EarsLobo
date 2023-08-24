@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_03_135958) do
+ActiveRecord::Schema.define(version: 2023_08_23_232746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -75,6 +75,38 @@ ActiveRecord::Schema.define(version: 2023_08_03_135958) do
     t.index ["tenant_id"], name: "index_clinicians_on_tenant_id"
   end
 
+  create_table "dnw_tests", force: :cascade do |t|
+    t.string "label"
+    t.string "test_type"
+    t.string "client_name"
+    t.text "notes"
+    t.string "ear_advantage"
+    t.float "left_score"
+    t.float "right_score"
+    t.float "ear_advantage_score"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_dnw_tests_on_client_id"
+  end
+
+  create_table "dwt_tests", force: :cascade do |t|
+    t.string "label"
+    t.string "test_type"
+    t.string "client_name"
+    t.text "notes"
+    t.string "ear_advantage"
+    t.float "left_score"
+    t.float "right_score"
+    t.float "ear_advantage_score"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "tenant_id"
+    t.index ["client_id"], name: "index_dwt_tests_on_client_id"
+    t.index ["tenant_id"], name: "index_dwt_tests_on_tenant_id"
+  end
+
   create_table "emergency_contacts", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -97,6 +129,25 @@ ActiveRecord::Schema.define(version: 2023_08_03_135958) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["code"], name: "index_keys_on_code", unique: true
+  end
+
+  create_table "rddt_tests", force: :cascade do |t|
+    t.string "label"
+    t.string "test_type"
+    t.string "client_name"
+    t.text "notes"
+    t.string "ear_advantage"
+    t.float "left_score1"
+    t.float "left_score2"
+    t.float "left_score3"
+    t.float "right_score1"
+    t.float "right_score2"
+    t.float "right_score3"
+    t.float "ear_advantage_score"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_rddt_tests_on_client_id"
   end
 
   create_table "tenants", force: :cascade do |t|
@@ -146,8 +197,12 @@ ActiveRecord::Schema.define(version: 2023_08_03_135958) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "clients", "tenants"
   add_foreign_key "clinicians", "tenants"
+  add_foreign_key "dnw_tests", "clients"
+  add_foreign_key "dwt_tests", "clients"
+  add_foreign_key "dwt_tests", "tenants"
   add_foreign_key "emergency_contacts", "clients"
   add_foreign_key "emergency_contacts", "tenants"
+  add_foreign_key "rddt_tests", "clients"
   add_foreign_key "tests", "clients"
   add_foreign_key "tests", "tenants"
   add_foreign_key "tests", "users"

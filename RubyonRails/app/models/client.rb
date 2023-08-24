@@ -32,9 +32,13 @@
 class Client < ApplicationRecord
   acts_as_tenant(:tenant)
 
+
+    has_many :emergency_contacts,dependent: :destroy
+    has_many :dwt_tests,dependent: :destroy
+    has_many :dnw_tests,dependent: :destroy
+    has_many :rddt_tests,dependent: :destroy
   # Associations with emergency contacts and tests, with dependent destroy option
-  has_many :emergency_contacts, dependent: :destroy
-  has_many :tests, dependent: :destroy
+
 
   # Allow nested attributes for emergency contacts
   accepts_nested_attributes_for :emergency_contacts
