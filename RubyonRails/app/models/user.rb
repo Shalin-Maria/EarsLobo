@@ -45,10 +45,14 @@ class User < ApplicationRecord
 
 
 
+  # function checks to see if the role of the user is a global moderator
   def global_moderator?
     role == 'global_moderator'
   end
   
+  # functions finds the code for the registration key and checks to see if the key has been used or not. 
+  # This determines if the key for registration has been used or not.
+
   private
   def validate_registration_key
     key = Key.find_by(code: registration_key)
@@ -64,13 +68,8 @@ class User < ApplicationRecord
       return false
     end
   end
-
-
-
   
   
-  
-
   def generate_subdomain
     # You may want to generate a subdomain based on some user's data (for example, email).
     # This is a very basic implementation which takes a part before '@' symbol from the email.

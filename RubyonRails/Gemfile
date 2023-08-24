@@ -79,5 +79,6 @@ gem 'faker'
 
 gem 'acts_as_tenant'
 
+gem 'ransack'
 
 
