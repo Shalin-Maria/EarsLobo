@@ -10,6 +10,8 @@
 class Tenant < ApplicationRecord
     has_many :users,dependent: :destroy
     has_many :dwt_tests,dependent: :destroy
+    has_many :dnw_tests,dependent: :destroy
+    has_many :rddt_tests,dependent: :destroy
     has_many :clients,dependent: :destroy
 
 

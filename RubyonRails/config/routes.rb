@@ -36,10 +36,18 @@ Rails.application.routes.draw do
         get 'new_dwt_list2', to: 'dwt_tests#new_dwt_list2', as: 'dwt_list2'
         get 'new_dwt_list3', to: 'dwt_tests#new_dwt_list3', as: 'dwt_list3'
         get 'new_dwt_list4', to: 'dwt_tests#new_dwt_list4', as: 'dwt_list4'
+      end
+    end
+    resources :dnw_tests do
+      collection do
         get 'new_dnw_list1', to: 'dnw_tests#new_dnw_list1', as: 'dnw_list1'
         get 'new_dnw_list2', to: 'dnw_tests#new_dnw_list2', as: 'dnw_list2'
         get 'new_dnw_list3', to: 'dnw_tests#new_dnw_list3', as: 'dnw_list3'
         get 'new_dnw_list4', to: 'dnw_tests#new_dnw_list4', as: 'dnw_list4'
+      end
+    end
+    resources :rddt_tests do
+      collection do
         get 'new_rddt_list1', to: 'rddt_tests#new_rddt_list1', as: 'rddt_list1'
         get 'new_rddt_list2', to: 'rddt_tests#new_rddt_list2', as: 'rddt_list2'
       end
