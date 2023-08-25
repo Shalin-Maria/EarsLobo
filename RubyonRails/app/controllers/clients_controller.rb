@@ -23,8 +23,13 @@ class ClientsController < ApplicationController
     
     def edit
         @client = Client.find(params[:id])
-        id = params[:dwt_test_id]
-        @test = @client.dwt_tests.find_by(params[id: id])
+        #is this way of doing id correct? or should it be split up into 3 lines?
+        dwt_id = params[:dwt_test_id]
+        dnw_id = params[:dnw_test_id]
+        rddt_id = params[:rddt_test_id]
+        @dwt_test = @client.dwt_tests.find_by(params[id: dwt_id])
+        @dnw_test = @client.dnw_tests.find_by(params[id: dnw_id])
+        @rddt_test = @client.rddt_tests.find_by(params[id: rddt_id])
       end
 
 
@@ -81,7 +86,9 @@ class ClientsController < ApplicationController
       
     def show
       @client = Client.find(params[:id])
-      @tests = @client.tests
+      @dwt_tests = @client.dwt_tests
+      @dnw_tests = @client.dnw_tests
+      @rddt_tests = @client.rddt_tests
       end
     def search
       if params[:search].blank?
@@ -92,7 +99,9 @@ class ClientsController < ApplicationController
     end
   def global_moderator_index
     if current_user.global_moderator?
-      @clients = Client.includes(:tests).all
+      @clients = Client.includes(:dwt_tests).all
+      @clients = Client.includes(:dnw_tests).all
+      @clients = Client.includes(:rddt_tests).all
 
       respond_to do |format|
         format.html
@@ -114,8 +123,14 @@ def generate_csv(clients)
       csv << ["Gender", "Age", "City", "Country", "State", "Race", "Ear Advantage", "Ear Advantage Score", "Left Score", "Right Score"]
 
       clients.each do |client|
-        client.tests.each do |test|
-          csv << [client.gender, client.age_in_years, client.city, client.country, client.state, client.race, test.ear_advantage, test.ear_advantage_score, test.left_score, test.right_score]
+        client.dwt_tests.each do |dwt_test|
+          csv << [client.gender, client.age_in_years, client.city, client.country, client.state, client.race, dwt_test.ear_advantage, dwt_test.ear_advantage_score, dwt_test.left_score, dwt_test.right_score]
+        end
+        client.dnw_tests.each do |dnw_test|
+          csv << [client.gender, client.age_in_years, client.city, client.country, client.state, client.race, dnw_test.ear_advantage, dnw_test.ear_advantage_score, dnw_test.left_score, dnw_test.right_score]
+        end
+        client.rddt_tests.each do |rddt_test|
+          csv << [client.gender, client.age_in_years, client.city, client.country, client.state, client.race, rddt_test.ear_advantage, rddt_test.ear_advantage_score, rddt_test.left_score, rddt_test.right_score]
         end
       end
     end

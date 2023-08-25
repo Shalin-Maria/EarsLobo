@@ -34,7 +34,9 @@ class User < ApplicationRecord
   before_validation :validate_registration_key, on: :create
 
 
-  has_many :tests
+  has_many :dwt_tests,dependent: :destroy
+  has_many :dnw_tests,dependent: :destroy
+  has_many :rddt_tests,dependent: :destroy
   has_many :clients, foreign_key: :tenant_id, primary_key: :tenant_id
 
   # Include default devise modules. Others available are:
