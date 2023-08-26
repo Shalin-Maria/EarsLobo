@@ -42,46 +42,70 @@ class ClientsController < ApplicationController
             redirect_to edit_client_path(@client), notice: "client was not updated."
         end
     end
+
+    
     def destroy
       @client = Client.find(params[:id])
       @client.destroy
   
       redirect_to clients_url, notice: "client was successfully deleted."
     end
-  
+
+
     def index
-      puts "Clients: #{Client.all.inspect}"
+      # Determine the scope based on the user role
       if current_user.global_moderator?
         # For a global moderator, all clients are accessible
-        client_scope = Client.unscoped.all
+        client_scope = Client.unscoped
       else
         # For regular users, only clients of the same tenant are accessible
         client_scope = current_user.clients.where(tenant_id: current_user.tenant_id)
       end
+
+      # Set the selected sorting option based on params
+      selected_sorting_name = params[:q]&.dig(:sort_by_name)
+      selected_sort_by_client = params[:q]&.dig(:sort_by_client)
+      selected_sort_by_date_birth = params[:q]&.dig(:sort_by_date_birth)
     
-      if params[:query]
-        split_query = params[:query].split(' ')
-        if split_query.length > 1
-          # Case when both first name and last name are typed
-          @clients = client_scope.where('lower(first_name) LIKE :first AND lower(last_name) LIKE :last OR phone1 LIKE :query', 
-                                      first: "#{split_query.first.downcase}%", 
-                                      last: "#{split_query.last.downcase}%", 
-                                      query: "%#{params[:query]}%")
-          
-        else
-          # Case when either first name, last name, email, or phone number is typed
-          @clients = client_scope.where('lower(first_name) LIKE :query OR lower(last_name) LIKE :query OR lower(email) LIKE :query OR phone1 LIKE :query', 
-                                      query: "%#{params[:query].downcase}%")
-        end
-      else
-        @clients = client_scope
+      # Initialize Ransack search object with the given scope
+      @q = client_scope.ransack(params[:q])
+    
+      # Set the sorting option based on the parameter
+      if selected_sorting_name || selected_sort_by_client || selected_sort_by_date_birth
+        @q.sorts = selected_sorting_name
+        @q.sorts = selected_sort_by_client
+        @q.sorts = selected_sort_by_date_birth
       end
+
+      # Code below is used to allow user to filter clients on age, broken for now. FIX ME
+      #   # Filter by age range
+    # age_gteq = params[:q]&.dig(:age_gteq)
+    # age_eq = params[:q]&.dig(:age_eq)
+    # age_lteq = params[:q]&.dig(:age_lteq)
+
+    # if age_gteq.present? && age_lteq.present?
+    #   @q.result = @q.result.where("age_in_years >= ? AND age_in_years <= ?", age_gteq, age_lteq)
+    # elsif age_gteq.present?
+    #   @q.result = @q.result.where("age_in_years >= ?", age_gteq)
+    # elsif age_eq.present?
+    #   @q.result = @q.result.where(age_in_years: age_eq)
+    # elsif age_lteq.present?
+    #   @q.result = @q.result.where("age_in_years <= ?", age_lteq)
+    # end
+
+      # Execute the search query, ensuring distinct results
+      @clients = @q.result(distinct: true)
+    
       respond_to do |format|
         format.html
         format.csv { send_data generate_csv(@clients), filename: "client_data-#{Date.today}.csv" }
       end
-    end
+        # Regular users can only access clients in their tenant
+        client_scope = Client.where(tenant_id: current_user.tenant_id)
+      end
     
+    
+    end
     
       
     def show
@@ -90,14 +114,9 @@ class ClientsController < ApplicationController
       @dnw_tests = @client.dnw_tests
       @rddt_tests = @client.rddt_tests
       end
-    def search
-      if params[:search].blank?
-        @clients = Client.all
-      else
-        @clients = Client.where("first_name ILIKE ? OR last_name ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
-      end
-    end
-  def global_moderator_index
+  
+  
+    def global_moderator_index
     if current_user.global_moderator?
       @clients = Client.includes(:dwt_tests).all
       @clients = Client.includes(:dnw_tests).all
@@ -113,8 +132,6 @@ class ClientsController < ApplicationController
       redirect_to root_path, alert: 'You do not have access to this page.'
     end
   end
-end
-
 
 
 def generate_csv(clients)
@@ -147,8 +164,6 @@ def generate_csv(clients)
 end
 
 
-
-
     private
     
     def client_params
@@ -158,3 +173,4 @@ end
         ]
   )
       end
+  
