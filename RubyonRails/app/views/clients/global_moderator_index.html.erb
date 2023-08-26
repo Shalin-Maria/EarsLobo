@@ -19,7 +19,7 @@
   </thead>
   <tbody>
     <% @clients.each do |client| %>
-      <% client.tests.each do |test| %>
+      <% client.dwt_tests.each do |dwt_test| %>
         <tr>
           <td><%= client.gender %></td>
           <td><%= client.age_in_years %></td>
@@ -27,10 +27,40 @@
           <td><%= client.country %></td>
           <td><%= client.state %></td>
           <td><%= client.race %></td>
-          <td><%= test.ear_advantage %></td>
-          <td><%= test.ear_advantage_score %></td>
-          <td><%= test.left_score %></td>
-          <td><%= test.right_score %></td>
+          <td><%= dwt_test.ear_advantage %></td>
+          <td><%= dwt_test.ear_advantage_score %></td>
+          <td><%= dwt_test.left_score %></td>
+          <td><%= dwt_test.right_score %></td>
+          <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
+        </tr>
+      <% end %>
+      <% client.dnw_tests.each do |dnw_test| %>
+        <tr>
+          <td><%= client.gender %></td>
+          <td><%= client.age_in_years %></td>
+          <td><%= client.city %></td>
+          <td><%= client.country %></td>
+          <td><%= client.state %></td>
+          <td><%= client.race %></td>
+          <td><%= dnw_test.ear_advantage %></td>
+          <td><%= dnw_test.ear_advantage_score %></td>
+          <td><%= dnw_test.left_score %></td>
+          <td><%= dnw_test.right_score %></td>
+          <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
+        </tr>
+      <% end %>
+      <% client.rddt_tests.each do |rddt_test| %>
+        <tr>
+          <td><%= client.gender %></td>
+          <td><%= client.age_in_years %></td>
+          <td><%= client.city %></td>
+          <td><%= client.country %></td>
+          <td><%= client.state %></td>
+          <td><%= client.race %></td>
+          <td><%= rddt_test.ear_advantage %></td>
+          <td><%= rddt_test.ear_advantage_score %></td>
+          <td><%= rddt_test.left_score %></td>
+          <td><%= rddt_test.right_score %></td>
           <td><%= link_to "Edit", edit_client_path(client) %></td> <!-- Add the Edit button link -->
         </tr>
       <% end %>

@@ -7,19 +7,19 @@ class DwtTestsController < ApplicationController
   
     def new_dwt_list2
         @client = Client.find(params[:client_id])
-        @test = @client.tests.build
+        @dwt_test = @client.dwt_tests.build
         @dob = @client.date_of_birth
     end
       
     def new_dwt_list3
         @client = Client.find(params[:client_id])
-        @test = @client.tests.build
+        @dwt_test = @client.dwt_tests.build
         @dob = @client.date_of_birth
     end
   
     def new_dwt_list4
         @client = Client.find(params[:client_id])
-        @test = @client.tests.build
+        @dwt_test = @client.dwt_tests.build
         @dob = @client.date_of_birth
     end
 
@@ -56,7 +56,7 @@ class DwtTestsController < ApplicationController
   
   def create
       @client = Client.find(params[:client_id])
-      @dwt_test = @client.tests.build(dwt_test_params)
+      @dwt_test = @client.dwt_tests.build(dwt_test_params)
       @dwt_test.user = current_user
       @dwt_test.client = @client
   
