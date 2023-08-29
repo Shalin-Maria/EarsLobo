@@ -107,6 +107,9 @@ GEM
     ffi (1.15.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    httparty (0.21.0)
+      mini_mime (>= 1.0.0)
+      multi_xml (>= 0.5.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -145,6 +148,7 @@ GEM
     mini_portile2 (2.8.4)
     minitest (5.19.0)
     msgpack (1.7.2)
+    multi_xml (0.6.0)
     net-imap (0.3.7)
       date
       net-protocol
@@ -285,6 +289,7 @@ DEPENDENCIES
   carrierwave (~> 0.11.2)
   devise
   faker
+  httparty
   image_processing (~> 1.12, >= 1.12.2)
   jbuilder (~> 2.7)
   jquery-rails
