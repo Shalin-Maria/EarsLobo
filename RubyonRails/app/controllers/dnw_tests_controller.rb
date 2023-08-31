@@ -30,11 +30,12 @@ class DnwTestsController < ApplicationController
     end
 
 
+
     def edit
         @client = Client.find(params[:client_id])
         @dnw_test = Dnw_Test.find(params[:id])
         render :edit
-      end
+    end
       
   
       def update

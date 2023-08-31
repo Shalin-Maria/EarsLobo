@@ -49,7 +49,6 @@ class RddtTestsController < ApplicationController
       @rddt_test.client = @client
   
       if @rddt_test.save
-  
         redirect_to edit_client_path(@client)
       else
         render 'new'
@@ -61,7 +60,7 @@ class RddtTestsController < ApplicationController
       private
     
       def rddt_test_params
-        params.require(:rddt_test).permit(:label, :notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score, :scan, :authenticity_token)
+        params.require(:rddt_test).permit(:label, :notes, :client_name, :test_type, :left_score1, :left_score2, :left_score3, :right_score1, :right_score2, :right_score3, :ear_advantage, :ear_advantage_score, :scan, :authenticity_token)
       end
     
 

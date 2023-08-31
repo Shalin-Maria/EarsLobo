@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_24_003510) do
+ActiveRecord::Schema.define(version: 2023_08_29_020636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,8 +88,10 @@ ActiveRecord::Schema.define(version: 2023_08_24_003510) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tenant_id"
+    t.bigint "user_id", null: false
     t.index ["client_id"], name: "index_dnw_tests_on_client_id"
     t.index ["tenant_id"], name: "index_dnw_tests_on_tenant_id"
+    t.index ["user_id"], name: "index_dnw_tests_on_user_id"
   end
 
   create_table "dwt_tests", force: :cascade do |t|
@@ -105,8 +107,11 @@ ActiveRecord::Schema.define(version: 2023_08_24_003510) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tenant_id"
+    t.bigint "user_id", null: false
+    t.string "interpretation"
     t.index ["client_id"], name: "index_dwt_tests_on_client_id"
     t.index ["tenant_id"], name: "index_dwt_tests_on_tenant_id"
+    t.index ["user_id"], name: "index_dwt_tests_on_user_id"
   end
 
   create_table "emergency_contacts", force: :cascade do |t|
@@ -150,8 +155,10 @@ ActiveRecord::Schema.define(version: 2023_08_24_003510) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tenant_id"
+    t.bigint "user_id", null: false
     t.index ["client_id"], name: "index_rddt_tests_on_client_id"
     t.index ["tenant_id"], name: "index_rddt_tests_on_tenant_id"
+    t.index ["user_id"], name: "index_rddt_tests_on_user_id"
   end
 
   create_table "tenants", force: :cascade do |t|
@@ -203,12 +210,15 @@ ActiveRecord::Schema.define(version: 2023_08_24_003510) do
   add_foreign_key "clinicians", "tenants"
   add_foreign_key "dnw_tests", "clients"
   add_foreign_key "dnw_tests", "tenants"
+  add_foreign_key "dnw_tests", "users"
   add_foreign_key "dwt_tests", "clients"
   add_foreign_key "dwt_tests", "tenants"
+  add_foreign_key "dwt_tests", "users"
   add_foreign_key "emergency_contacts", "clients"
   add_foreign_key "emergency_contacts", "tenants"
   add_foreign_key "rddt_tests", "clients"
   add_foreign_key "rddt_tests", "tenants"
+  add_foreign_key "rddt_tests", "users"
   add_foreign_key "tests", "clients"
   add_foreign_key "tests", "tenants"
   add_foreign_key "tests", "users"

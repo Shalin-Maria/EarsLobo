@@ -36,6 +36,7 @@ Rails.application.routes.draw do
         get 'new_dwt_list2', to: 'dwt_tests#new_dwt_list2', as: 'dwt_list2'
         get 'new_dwt_list3', to: 'dwt_tests#new_dwt_list3', as: 'dwt_list3'
         get 'new_dwt_list4', to: 'dwt_tests#new_dwt_list4', as: 'dwt_list4'
+        get 'dwt_tests/:id', to: 'dwt_tests#show', as: 'show'
       end
     end
     resources :dnw_tests do
