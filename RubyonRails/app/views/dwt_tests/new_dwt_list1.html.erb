@@ -110,6 +110,7 @@
           </thead>
         </table>
       </div>
+      
       <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
@@ -119,8 +120,10 @@
       <span hidden id="Diagnosis"></span>
     </div>
 
+
     
     <div class="col-sm">
+      
         <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
           <thead class="thead-dark">
             <tr>
@@ -187,6 +190,8 @@
         <%= f.hidden_field :right_score, id: "right_score" %>
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
+        <%= f.hidden_field :interpretation, id: "interpretation" %>
+
     
         <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
       
@@ -200,6 +205,8 @@
       <p><span id="advantage-Diff"></span></p>
     </div>
 
+
+    
 
 
     <script>
@@ -438,9 +445,13 @@
       document.getElementById("right_score").value = column2Percent.innerText;
       document.getElementById("ear_advantage").value = advantageName.innerText;
       document.getElementById("ear_advantage_score").value = advantageDiff.innerText;
+      document.getElementById("interpretation").value = testDiagnosis.innerText;
     }
   
     </script>
+    
+
+
 
   </div>
 </div>

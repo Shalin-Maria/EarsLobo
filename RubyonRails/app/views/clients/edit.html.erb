@@ -226,7 +226,7 @@
         <% @client.dwt_tests.each do |dwt_test, index| %>
           <tr>
             <td class="btn btn-link" data-toggle="collapse" href="#collapseExample<%index.to_s%>" role="link" aria-expanded="false" aria-controls="collapseExample">
-            <%= dwt_test.id %></td>
+            <%= link_to dwt_test.id, client_dwt_test_path(@client, dwt_test) %></td>
             
             <td><%= dwt_test.user.fname %> <%= dwt_test.user.lname %></td>
             <td><%= dwt_test.test_type %></td>
@@ -256,8 +256,8 @@
             
             <td><%= rddt_test.user.fname %> <%= rddt_test.user.lname %></td>
             <td><%= rddt_test.test_type %></td>
-            <td><%= rddt_test.left_score %></td>
-            <td><%= rddt_test.right_score %></td>
+            <td><%= rddt_test.left_score2 %></td>
+            <td><%= rddt_test.right_score2 %></td>
             <td><%= rddt_test.ear_advantage %></td>
             <td><%= rddt_test.ear_advantage_score %></td>
           </tr>
