@@ -120,7 +120,23 @@
           </div>
         </div>
       </div>
-        
+        <style>
+          /* Center buttons in the table cells */
+          .btn-group-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+          }
+
+          /* Make the font larger */
+          .btn.btn-outline-primary {
+            font-size: 16px; /* Adjust the font size as needed */
+            margin: 5px; /* Add some margin to separate the buttons */
+            min-width: 40px; /* Adjust the minimum width as needed */
+          }
+        </style>
+
       
 
       <div class="col-sm">
@@ -365,9 +381,9 @@
           const percentColumn2Group2 = ((checkedCount2Group2 / totalCountColumn2Group2) * 100).toFixed(2);
           const percentColumn2Group3 = ((checkedCount2Group3 / totalCountColumn2Group3) * 100).toFixed(2);
 
-          const group1Advantage = (percentColumn1Group1 - percentColumn2Group1).toFixed(2);
-          const group2Advantage = (percentColumn1Group2 - percentColumn2Group2).toFixed(2);
-          const group3Advantage = (percentColumn1Group3 - percentColumn2Group3).toFixed(2);
+          const group1Advantage = (percentColumn2Group1 - percentColumn1Group1).toFixed(2);
+          const group2Advantage = (percentColumn2Group2 - percentColumn1Group2).toFixed(2);
+          const group3Advantage = (percentColumn2Group3 - percentColumn1Group3).toFixed(2);
 
 
 
@@ -395,11 +411,11 @@
           let dom = null;
           let nondom = null;
 
-          if (group2Advantage > 0) {
+          if (group2Advantage < 0) {
             direction = "Left";
             dom = percentColumn1Group2;
             nondom = percentColumn2Group2;
-          } else if (group2Advantage < 0) {
+          } else if (group2Advantage > 0) {
             direction = "Right";
             dom = percentColumn2Group2;
             nondom = percentColumn1Group2;
@@ -578,9 +594,9 @@
             const value = parseFloat(cell.textContent);
 
             // Check the value and set the background color accordingly
-            if (value > 0) {
+            if (value < 0) {
               cell.style.backgroundColor = 'lightblue';
-            } else if (value < 0) {
+            } else if (value > 0) {
               cell.style.backgroundColor = 'lightpink';
             } else {
               cell.style.backgroundColor = 'white';

@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 2023_08_29_171641) do
     t.float "left_score"
     t.float "right_score"
     t.float "ear_advantage_score"
+    t.string "interpretation"
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -154,6 +155,7 @@ ActiveRecord::Schema.define(version: 2023_08_29_171641) do
     t.float "right_score2"
     t.float "right_score3"
     t.float "ear_advantage_score"
+    t.string "interpretation"
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

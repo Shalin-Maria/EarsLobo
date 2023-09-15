@@ -9,6 +9,7 @@ class CreateDnwTests < ActiveRecord::Migration[6.1]
       t.float :left_score
       t.float :right_score
       t.float :ear_advantage_score
+      t.string :interpretation
 
       t.references :client, null: false, foreign_key: true
 
