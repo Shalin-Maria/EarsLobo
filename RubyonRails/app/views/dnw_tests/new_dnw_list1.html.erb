@@ -1,5 +1,5 @@
 <body id="grad4Attempt2" class= "bg-light center">
-<div id="whiteGrad" class="container p-5 my-3 w-100 border rounded bg-white ">
+<div class="container p-5 my-3 w-100 border rounded bg-white ">
 
 
 
@@ -33,61 +33,64 @@
       <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
 
       <hr/>
-      <label for="Notes">Notes</label>
-      <%= f.text_area :notes, class: 'form-control', rows: '3' %>
-      <hr/>
-      <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
-      <audio controls>
-        <source src="/assets/DNW List 1.mp3" type="audio/mpeg">
-      </audio>
-      <hr/>
-      <!--Table for ear advantage percentage that is calculated in the script-->
-      <style>
-          .left-column {
-            background-color: lightblue;
-          }
-          
-          .right-column {
-            background-color: lightpink;
-          }
-          
-          .ear-advantage {
-            background-color: white;
-          }
-          
-          .ear-advantage.positive {
-            background-color: lightblue;
-          }
-          
-          .ear-advantage.negative {
-            background-color: lightpink;
-          }
-      </style>
-      <p>Scores:</p>
-      <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
-        <thead>
-          <tr>
-            <th scope="col">Pairs</th>
-            <th scope="col">Left</th>
-            <th scope="col">Right</th>
-            <th scope="col">Ear Adv</th>
-          </tr>
-          <tbody>
+      <div class="sticky">
+        <label for="Notes">Notes</label>
+        <%= f.text_area :notes, class: 'form-control', rows: '3' %>
+        <hr/>
+        <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
+        <audio controls>
+          <source src="/assets/DNW List 1.mp3" type="audio/mpeg">
+        </audio>
+        <hr/>
+        <!--Table for ear advantage percentage that is calculated in the script-->
+        <style>
+            .left-column {
+              background-color: lightblue;
+            }
+            
+            .right-column {
+              background-color: lightpink;
+            }
+            
+            .ear-advantage {
+              background-color: white;
+            }
+            
+            .ear-advantage.positive {
+              background-color: lightblue;
+            }
+            
+            .ear-advantage.negative {
+              background-color: lightpink;
+            }
+        </style>
+        <p>Scores:</p>
+        <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+          <thead>
             <tr>
-              <th scope="row">1</th>
-              <td class="left-column"><span id="column1-percent">0</span>%</p></td>
-              <td class="right-column"><span id="column2-percent">0</span>%</td>
-              <td class="ear-advantage"><span id="advantage-Diff">0</span>%</td>
+              <th scope="col">Pairs</th>
+              <th scope="col">Left</th>
+              <th scope="col">Right</th>
+              <th scope="col">Ear Adv</th>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-            </tr>
-            <tr>
-              <th scope="row">3</th>           
-            </tr>
-          </tbody>
-        </thead>
-      </table>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td class="left-column"><span id="column1-percent">0</span>%</p></td>
+                <td class="right-column"><span id="column2-percent">0</span>%</td>
+                <td class="ear-advantage"><span id="advantage-Diff">0</span>%</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+              </tr>
+              <tr>
+                <th scope="row">3</th>           
+              </tr>
+            </tbody>
+          </thead>
+        </table>
+      </div>
+
       <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
@@ -97,6 +100,23 @@
       <span hidden id="Diagnosis"></span>
     </div>
 
+
+    <style>
+      /* Center buttons in the table cells */
+      .btn-group-toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%; /* Set the width to 100% to make buttons occupy the entire cell */
+      }
+
+      /* Make the font larger */
+      .btn.btn-outline-primary {
+        font-size: 16px; /* Adjust the font size as needed */
+        /* Remove margin and min-width properties */
+      }
+    </style>
     
     <div class="col-sm">
 
@@ -227,7 +247,7 @@
         const totalCount2 = column2Buttons.length;
         const percent1 = ((checkedCount1 / totalCount1) * 100).toFixed(2);
         const percent2 = ((checkedCount2 / totalCount2) * 100).toFixed(2);
-        const advantage = (percent1 - percent2).toFixed(2);
+        const advantage = (percent2 - percent1).toFixed(2);
         const avgPercent = ((+percent1 + +percent2) / 2).toFixed(2);
 
         let direction = null;
@@ -235,11 +255,11 @@
         let age = 40;
         let dom = null;
         let nondom = null;
-        if (advantage > 0) {
+        if (advantage < 0) {
           direction = "Left";
           dom = percent1;
           nondom = percent2;
-        } else if (advantage < 0) {
+        } else if (advantage > 0) {
           direction = "Right";
           dom = percent2;
           nondom = percent1;
@@ -401,9 +421,9 @@
             const value = parseFloat(cell.textContent);
 
             // Check the value and set the background color accordingly
-            if (value > 0) {
+            if (value < 0) {
               cell.style.backgroundColor = 'lightblue';
-            } else if (value < 0) {
+            } else if (value > 0) {
               cell.style.backgroundColor = 'lightpink';
             } else {
               cell.style.backgroundColor = 'white';
