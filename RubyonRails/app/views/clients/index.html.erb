@@ -109,12 +109,10 @@
 
         <div class="col-md-6 text-right">
           <%= link_to 'Add New Client' , new_client_path, class: 'btn btn-primary rounded-pill btn-lg' %>
-
         </div>
     </div>
     <%= link_to 'Download CSV', clients_path(format: "csv"), class: 'btn btn-secondary mb-3' %>
    
-
     <!--Designs the table for the following columns from Client model where data will be displayed-->
     <div class="justify-content-center">
       <div class="table-responsive">
@@ -122,9 +120,9 @@
           <thead>
             <tr>
               <th>Edit</th>
-              <th>Email</th>
               <th>First Name</th>
               <th>Last Name</th>
+              <th>Email</th>
               <th>Gender</th>
               <th>Age</th>
               <th>Date of Birth</th>
@@ -133,10 +131,7 @@
               <th>Country</th>
               <th>State</th>
               <th>City</th>
-              <th>Zip</th>
-              <th>Client ID</th>
               <th>Tenant_ID</th>
-              <th>Client Created</th>
               <th>Delete</th>
             </tr>
           </thead>
@@ -151,13 +146,13 @@
                       <% end %>
                 </td>
                 <td>
-                  <%= client.email %>
-                </td>
-                <td>
                   <%= client.first_name %>
                 </td>
                 <td>
                   <%= client.last_name %>
+                </td>
+                <td>
+                  <%= client.email %>
                 </td>
                 <td>
                   <%= client.gender %>
@@ -184,16 +179,7 @@
                   <%= client.city %>
                 </td>
                 <td>
-                  <%= client.zip %>
-                </td>
-                <td>
-                  <%= client.id %>
-                </td>
-                <td>
                   <%= client.tenant_id %>
-                </td>
-                <td>
-                  <%= client.created_at %>
                 </td>
                 <td>
                   <%= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
