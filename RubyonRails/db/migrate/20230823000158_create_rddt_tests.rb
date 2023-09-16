@@ -13,6 +13,7 @@ class CreateRddtTests < ActiveRecord::Migration[6.1]
       t.float :right_score2
       t.float :right_score3
       t.float :ear_advantage_score
+      t.string :interpretation
 
       t.references :client, null: false, foreign_key: true
 

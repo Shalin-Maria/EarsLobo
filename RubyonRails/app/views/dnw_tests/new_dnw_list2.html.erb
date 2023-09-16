@@ -98,6 +98,23 @@
     </div>
 
     
+    <style>
+      /* Center buttons in the table cells */
+      .btn-group-toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%; /* Set the width to 100% to make buttons occupy the entire cell */
+      }
+
+      /* Make the font larger */
+      .btn.btn-outline-primary {
+        font-size: 16px; /* Adjust the font size as needed */
+        /* Remove margin and min-width properties */
+      }
+    </style>
+
     <div class="col-sm">
 
         <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
@@ -226,7 +243,7 @@
         const totalCount2 = column2Buttons.length;
         const percent1 = ((checkedCount1 / totalCount1) * 100).toFixed(2);
         const percent2 = ((checkedCount2 / totalCount2) * 100).toFixed(2);
-        const advantage = (percent1 - percent2).toFixed(2);
+        const advantage = (percent2 - percent1).toFixed(2);
         const avgPercent = ((+percent1 + +percent2) / 2).toFixed(2);
 
         let direction = null;
@@ -234,11 +251,11 @@
         let age = 40;
         let dom = null;
         let nondom = null;
-        if (advantage > 0) {
+        if (advantage < 0) {
           direction = "Left";
           dom = percent1;
           nondom = percent2;
-        } else if (advantage < 0) {
+        } else if (advantage > 0) {
           direction = "Right";
           dom = percent2;
           nondom = percent1;
@@ -400,9 +417,9 @@
             const value = parseFloat(cell.textContent);
 
             // Check the value and set the background color accordingly
-            if (value > 0) {
+            if (value < 0) {
               cell.style.backgroundColor = 'lightblue';
-            } else if (value < 0) {
+            } else if (value > 0) {
               cell.style.backgroundColor = 'lightpink';
             } else {
               cell.style.backgroundColor = 'white';

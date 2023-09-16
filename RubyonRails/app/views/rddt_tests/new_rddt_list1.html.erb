@@ -120,7 +120,23 @@
           </div>
         </div>
       </div>
-        
+        <style>
+          /* Center buttons in the table cells */
+          .btn-group-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+          }
+
+          /* Make the font larger */
+          .btn.btn-outline-primary {
+            font-size: 16px; /* Adjust the font size as needed */
+            margin: 5px; /* Add some margin to separate the buttons */
+            min-width: 40px; /* Adjust the minimum width as needed */
+          }
+        </style>
+
       
 
       <div class="col-sm">
@@ -233,15 +249,15 @@
           <!-- Existing form fields -->
           <%= f.hidden_field :client_name, value: "Example user" %>
           <%= f.hidden_field :test_type, value: "RDDT" %>
-          <%= f.hidden_field :left_score, id: "left_score" %>
-          <%= f.hidden_field :right_score, id: "right_score" %>
+          <%= f.hidden_field :left_score2, id: "left_score" %>
+          <%= f.hidden_field :right_score2, id: "right_score" %>
           <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
           <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
 
-          <%= f.hidden_field :col1G1, id: "col1G1" %>
-          <%= f.hidden_field :col2G1, id: "col2G1" %>
-          <%= f.hidden_field :col1G3, id: "col1G3" %>
-          <%= f.hidden_field :col2G3, id: "col2G3" %>
+          <%= f.hidden_field :left_score1, id: "col1G1" %>
+          <%= f.hidden_field :right_score1, id: "col2G1" %>
+          <%= f.hidden_field :left_score3, id: "col1G3" %>
+          <%= f.hidden_field :right_score3, id: "col2G3" %>
 
           <%= f.hidden_field :G1adv, id: "G1adv" %>
           <%= f.hidden_field :G3adv, id: "G3adv" %>
@@ -365,9 +381,9 @@
           const percentColumn2Group2 = ((checkedCount2Group2 / totalCountColumn2Group2) * 100).toFixed(2);
           const percentColumn2Group3 = ((checkedCount2Group3 / totalCountColumn2Group3) * 100).toFixed(2);
 
-          const group1Advantage = (percentColumn1Group1 - percentColumn2Group1).toFixed(2);
-          const group2Advantage = (percentColumn1Group2 - percentColumn2Group2).toFixed(2);
-          const group3Advantage = (percentColumn1Group3 - percentColumn2Group3).toFixed(2);
+          const group1Advantage = (percentColumn2Group1 - percentColumn1Group1).toFixed(2);
+          const group2Advantage = (percentColumn2Group2 - percentColumn1Group2).toFixed(2);
+          const group3Advantage = (percentColumn2Group3 - percentColumn1Group3).toFixed(2);
 
 
 
@@ -395,11 +411,11 @@
           let dom = null;
           let nondom = null;
 
-          if (group2Advantage > 0) {
+          if (group2Advantage < 0) {
             direction = "Left";
             dom = percentColumn1Group2;
             nondom = percentColumn2Group2;
-          } else if (group2Advantage < 0) {
+          } else if (group2Advantage > 0) {
             direction = "Right";
             dom = percentColumn2Group2;
             nondom = percentColumn1Group2;
@@ -578,9 +594,9 @@
             const value = parseFloat(cell.textContent);
 
             // Check the value and set the background color accordingly
-            if (value > 0) {
+            if (value < 0) {
               cell.style.backgroundColor = 'lightblue';
-            } else if (value < 0) {
+            } else if (value > 0) {
               cell.style.backgroundColor = 'lightpink';
             } else {
               cell.style.backgroundColor = 'white';

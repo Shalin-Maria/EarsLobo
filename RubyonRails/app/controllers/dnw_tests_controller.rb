@@ -30,11 +30,18 @@ class DnwTestsController < ApplicationController
     end
 
 
+    def show
+      @client = Client.find(params[:client_id])
+      @dnw_test = @client.dnw_tests.find(params[:id])
+
+    end
+
+
     def edit
         @client = Client.find(params[:client_id])
         @dnw_test = Dnw_Test.find(params[:id])
         render :edit
-      end
+    end
       
   
       def update
@@ -73,7 +80,7 @@ class DnwTestsController < ApplicationController
       private
     
       def dnw_test_params
-        params.require(:dnw_test).permit(:label, :notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score, :scan, :authenticity_token)
+        params.require(:dnw_test).permit(:label, :notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score, :interpretation, :scan, :authenticity_token)
       end
     
 end

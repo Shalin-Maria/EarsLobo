@@ -17,14 +17,6 @@
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 
-<style>
-  div.sticky {
-      position: -webkit-sticky; /* Safari */
-      position: sticky;
-      top: 0;
-  }
-</style>
-
 <%= form_with model: [@client, @dwt_test], local: true do |f| %>
 <div class="container">
   <div class="row">
@@ -110,6 +102,7 @@
           </thead>
         </table>
       </div>
+      
       <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
@@ -119,8 +112,25 @@
       <span hidden id="Diagnosis"></span>
     </div>
 
+    <style>
+      /* Center buttons in the table cells */
+      .btn-group-toggle {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%; /* Set the width to 100% to make buttons occupy the entire cell */
+      }
+
+      /* Make the font larger */
+      .btn.btn-outline-primary {
+        font-size: 16px; /* Adjust the font size as needed */
+        /* Remove margin and min-width properties */
+      }
+    </style>
     
     <div class="col-sm">
+      
         <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
           <thead class="thead-dark">
             <tr>
@@ -187,6 +197,8 @@
         <%= f.hidden_field :right_score, id: "right_score" %>
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
+        <%= f.hidden_field :interpretation, id: "interpretation" %>
+
     
         <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
       
@@ -200,6 +212,8 @@
       <p><span id="advantage-Diff"></span></p>
     </div>
 
+
+    
 
 
     <script>
@@ -247,7 +261,7 @@
         const totalCount2 = column2Buttons.length;
         const percent1 = ((checkedCount1 / totalCount1) * 100).toFixed(2);
         const percent2 = ((checkedCount2 / totalCount2) * 100).toFixed(2);
-        const advantage = (percent1 - percent2).toFixed(2);
+        const advantage = (percent2 - percent1).toFixed(2);
         const avgPercent = ((+percent1 + +percent2) / 2).toFixed(2);
 
         let direction = null;
@@ -255,11 +269,11 @@
         let age = <%= @client.age_in_years %>;
         let dom = null;
         let nondom = null;
-        if (advantage > 0) {
+        if (advantage < 0) {
           direction = "Left";
           dom = percent1;
           nondom = percent2;
-        } else if (advantage < 0) {
+        } else if (advantage > 0) {
           direction = "Right";
           dom = percent2;
           nondom = percent1;
@@ -421,9 +435,9 @@
             const value = parseFloat(cell.textContent);
 
             // Check the value and set the background color accordingly
-            if (value > 0) {
+            if (value < 0) {
               cell.style.backgroundColor = 'lightblue';
-            } else if (value < 0) {
+            } else if (value > 0) {
               cell.style.backgroundColor = 'lightpink';
             } else {
               cell.style.backgroundColor = 'white';
@@ -438,9 +452,13 @@
       document.getElementById("right_score").value = column2Percent.innerText;
       document.getElementById("ear_advantage").value = advantageName.innerText;
       document.getElementById("ear_advantage_score").value = advantageDiff.innerText;
+      document.getElementById("interpretation").value = testDiagnosis.innerText;
     }
   
     </script>
+    
+
+
 
   </div>
 </div>
