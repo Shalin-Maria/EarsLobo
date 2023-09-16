@@ -31,6 +31,8 @@
 #
 class Client < ApplicationRecord
   acts_as_tenant(:tenant)
+  
+  attr_encrypted :email, :address1, :date_of_birth, :first_name, :last_name, :phone1, :phone2, :gender, :race, :zip, key: ENV['ENCRYPTION_KEY']
 
 
     has_many :emergency_contacts,dependent: :destroy
