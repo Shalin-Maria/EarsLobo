@@ -3,4 +3,5 @@
 //= link_directory ../stylesheets .css
 //= link tabs.js
 //= link modalControlClientsIndex.js
+//= link modalControlGlobalModeratorIndex.js
 

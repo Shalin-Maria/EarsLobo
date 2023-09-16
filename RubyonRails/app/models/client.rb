@@ -72,7 +72,7 @@ class Client < ApplicationRecord
 
   # Allow these attributes to be searched through Ransack
   def self.ransackable_attributes(auth_object = nil)
-    %w(id address1 city country date_of_birth email first_name gender last_name mgmt_ref phone1 phone2 state zip created_at updated_at tenant_id age_in_years age ) + _ransackers.keys
+    %w(id address1 city country date_of_birth email first_name gender last_name mgmt_ref phone1 phone2 race state zip created_at updated_at tenant_id age_in_years age ) + _ransackers.keys
   end
 
   # Allow these associations to be searched through Ransack

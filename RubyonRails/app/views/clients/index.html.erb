@@ -3,7 +3,7 @@
     <!-- Heading for clients page -->
     <h1 class="display-2" style='padding-bottom:20px'><strong>Clients<strong></h1>
 
-    <!--Filter optionss-->
+    <!--Filter options-->
     <div class="row mb-3">
       <div class="col-md-6">
         <%= search_form_for @q, url: clients_path, method: :get, local: true, class: 'form-inline' do |f| %>
@@ -115,7 +115,7 @@
     <%= link_to 'Download CSV', clients_path(format: "csv"), class: 'btn btn-secondary mb-3' %>
    
 
-    <!--Designs the table for the following columns where data will be presented-->
+    <!--Designs the table for the following columns from Client model where data will be displayed-->
     <div class="justify-content-center">
       <div class="table-responsive">
         <table>
@@ -141,62 +141,62 @@
             </tr>
           </thead>
           
-          <!--Take data from database and show it in the table-->
+          <!--Take data from the Client model database and show it in the table-->
           <tbody>
-            <% @clients.each do |user| %>
+            <% @clients.each do |client| %>
               <tr>
                 <td>
-                  <%= link_to edit_client_path(user) do %>
+                  <%= link_to edit_client_path(client) do %>
                     <%= image_tag 'edit_icon.png' , alt: 'Edit' ,width: 20 %>
                       <% end %>
                 </td>
                 <td>
-                  <%= user.email %>
+                  <%= client.email %>
                 </td>
                 <td>
-                  <%= user.first_name %>
+                  <%= client.first_name %>
                 </td>
                 <td>
-                  <%= user.last_name %>
+                  <%= client.last_name %>
                 </td>
                 <td>
-                  <%= user.gender %>
+                  <%= client.gender %>
                 </td>
                 <td>
-                  <%= user.age_in_years %>
+                  <%= client.age_in_years %>
                 </td>
                 <td>
-                  <%= user.date_of_birth %>
+                  <%= client.date_of_birth %>
                 </td>
                 <td>
-                  <%= user.phone1 %>
+                  <%= client.phone1 %>
                 </td>
                 <td>
-                  <%= user.address1 %>
+                  <%= client.address1 %>
                 </td>
                 <td>
-                  <%= user.country %>
+                  <%= client.country %>
                 </td>
                 <td>
-                  <%= user.state %>
+                  <%= client.state %>
                 </td>
                 <td>
-                  <%= user.city %>
+                  <%= client.city %>
                 </td>
                 <td>
-                  <%= user.zip %>
+                  <%= client.zip %>
                 </td>
                 <td>
-                  <%= user.id %>
+                  <%= client.id %>
                 </td>
                 <td>
-                  <%= user.tenant_id %>
+                  <%= client.tenant_id %>
                 </td>
                 <td>
-                  <%= user.created_at %>
+                  <%= client.created_at %>
                 </td>
                 <td>
-                  <%= link_to client_path(user), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                  <%= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
                     <%= image_tag 'delete_icon.png' , alt: 'Delete' , width: 20 %>
                       <% end %>
                 </td>
