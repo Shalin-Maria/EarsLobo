@@ -42,6 +42,7 @@ class ClientsController < ApplicationController
             redirect_to edit_client_path(@client), notice: "client was not updated."
         end
     end
+    
     def destroy
       @client = Client.find(params[:id])
       @client.destroy
@@ -58,45 +59,92 @@ class ClientsController < ApplicationController
         # For regular users, only clients of the same tenant are accessible
         client_scope = current_user.clients.where(tenant_id: current_user.tenant_id)
       end
+
+      # Initialize instance variable to be used in clients > index.html.erb
+      @clients = client_scope
+      
+      # Calling method that enables Ransack functionality
+      sort_and_filter_clients(client_scope)
     
-      if params[:query]
-        split_query = params[:query].split(' ')
-        if split_query.length > 1
-          # Case when both first name and last name are typed
-          @clients = client_scope.where('lower(first_name) LIKE :first AND lower(last_name) LIKE :last OR phone1 LIKE :query', 
-                                      first: "#{split_query.first.downcase}%", 
-                                      last: "#{split_query.last.downcase}%", 
-                                      query: "%#{params[:query]}%")
-          
-        else
-          # Case when either first name, last name, email, or phone number is typed
-          @clients = client_scope.where('lower(first_name) LIKE :query OR lower(last_name) LIKE :query OR lower(email) LIKE :query OR phone1 LIKE :query', 
-                                      query: "%#{params[:query].downcase}%")
-        end
-      else
-        @clients = client_scope
-      end
       respond_to do |format|
         format.html
         format.csv { send_data generate_csv(@clients), filename: "client_data-#{Date.today}.csv" }
       end
-      # Set the selected sorting option based on params
-      selected_sorting_name = params[:q]&.dig(:sort_by_name)
-      selected_sort_by_client = params[:q]&.dig(:sort_by_client)
-      selected_sort_by_date_birth = params[:q]&.dig(:sort_by_date_birth)
-    
-      # Initialize Ransack search object with the given scope
-      @q = client_scope.ransack(params[:q])
-    
-      # Set the sorting option based on the parameter
-      if selected_sorting_name || selected_sort_by_client || selected_sort_by_date_birth
-        @q.sorts = selected_sorting_name
-        @q.sorts = selected_sort_by_client
-        @q.sorts = selected_sort_by_date_birth
-      end
+
+      # Old code below was used for old search filtering
+      # if params[:query]
+      #   split_query = params[:query].split(' ')
+      #   if split_query.length > 1
+      #     # Case when both first name and last name are typed
+      #     @clients = client_scope.where('lower(first_name) LIKE :first AND lower(last_name) LIKE :last OR phone1 LIKE :query', 
+      #                                 first: "#{split_query.first.downcase}%", 
+      #                                 last: "#{split_query.last.downcase}%", 
+      #                                 query: "%#{params[:query]}%")
+          
+      #   else
+      #     # Case when either first name, last name, email, or phone number is typed
+      #     @clients = client_scope.where('lower(first_name) LIKE :query OR lower(last_name) LIKE :query OR lower(email) LIKE :query OR phone1 LIKE :query', 
+      #                                 query: "%#{params[:query].downcase}%")
+      #   end
+      # else
+      #   @clients = client_scope
+      # end
+
     end
+
+    # Controller for global_moderator_index page functionality
+    def global_moderator_index
+      if current_user.global_moderator?
+
+        # For a global moderator, all clients are accessible
+        client_scope = Client.unscoped.all
+
+        @clients = Client.includes(:dwt_tests, :dnw_tests, :rddt_tests).all
+
+    else
+      # If the user is not a global moderator, redirect them
+      redirect_to root_path, alert: 'You do not have access to this page.'
+    end
+  
+        # Initialize instance variable to be used in clients > index.html.erb
+        @clients = client_scope
+
+        # Calling method that enables Ransack functionality
+        sort_and_filter_clients(client_scope)
+  
+        respond_to do |format|
+          format.html
+          format.csv { send_data generate_csv(@clients), filename: "global_moderator_data-#{Date.today}.csv" }
+        end
+      end
+  end
     
+  # Method that contains functionality for ransack advanced for search
+    private def sort_and_filter_clients(client_scope)
     
+      # Set the selected sorting option based on params
+    selected_sorting_name = params[:q]&.dig(:sort_by_name)
+    selected_sort_by_client = params[:q]&.dig(:sort_by_client)
+    selected_sort_by_date_birth = params[:q]&.dig(:sort_by_date_birth)
+
+    # Initialize Ransack search object with the given scope
+    @q = client_scope.ransack(params[:q])
+
+    # Will update the two search bars for name and location
+    @clients = @q.result
+
+    # Set the sorting option based on the parameter chosen by user from modal popup.
+    if selected_sorting_name || selected_sort_by_client || selected_sort_by_date_birth
+      @q.sorts = selected_sorting_name
+      @q.sorts = selected_sort_by_client
+      @q.sorts = selected_sort_by_date_birth
+      
+      # Will update the model filtering options when submitted by user
+      @clients = @q.result
+
+    end
+  end
+
       
     def show
       @client = Client.find(params[:id])
@@ -104,6 +152,8 @@ class ClientsController < ApplicationController
       @dnw_tests = @client.dnw_tests
       @rddt_tests = @client.rddt_tests
       end
+
+
     def search
       if params[:search].blank?
         @clients = Client.all
@@ -111,26 +161,9 @@ class ClientsController < ApplicationController
         @clients = Client.where("first_name ILIKE ? OR last_name ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
       end
     end
-  def global_moderator_index
-    if current_user.global_moderator?
-      @clients = Client.includes(:dwt_tests).all
-      @clients = Client.includes(:dnw_tests).all
-      @clients = Client.includes(:rddt_tests).all
-
-      respond_to do |format|
-        format.html
-        format.csv { send_data generate_csv(@clients), filename: "global_moderator_data-#{Date.today}.csv" }
-      end
+   
     
-    else
-      # If the user is not a global moderator, redirect them
-      redirect_to root_path, alert: 'You do not have access to this page.'
-    end
-  end
-end
-
-
-
+# Method generates a CSV that can be downloaded
 def generate_csv(clients)
   if current_user.global_moderator?
     return CSV.generate(headers: true) do |csv|
@@ -159,8 +192,6 @@ def generate_csv(clients)
     end
   end
 end
-
-
 
 
     private
