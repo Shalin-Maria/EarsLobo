@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_20_154804) do
+ActiveRecord::Schema.define(version: 2023_09_20_164326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,8 @@ ActiveRecord::Schema.define(version: 2023_09_20_154804) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tenant_id"
     t.bigint "user_id", null: false
+    t.string "encrypted_client_name"
+    t.string "encrypted_client_name_iv"
     t.index ["client_id"], name: "index_dnw_tests_on_client_id"
     t.index ["tenant_id"], name: "index_dnw_tests_on_tenant_id"
     t.index ["user_id"], name: "index_dnw_tests_on_user_id"
@@ -122,23 +124,32 @@ ActiveRecord::Schema.define(version: 2023_09_20_154804) do
     t.bigint "tenant_id"
     t.bigint "user_id", null: false
     t.string "interpretation"
+    t.string "encrypted_client_name"
+    t.string "encrypted_client_name_iv"
     t.index ["client_id"], name: "index_dwt_tests_on_client_id"
     t.index ["tenant_id"], name: "index_dwt_tests_on_tenant_id"
     t.index ["user_id"], name: "index_dwt_tests_on_user_id"
   end
 
   create_table "emergency_contacts", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "phone_number"
-    t.string "address"
-    t.string "email"
-    t.string "city"
-    t.string "state"
+    t.string "encrypted_first_name"
+    t.string "encrypted_last_name"
+    t.string "encrypted_phone_number"
+    t.string "encrypted_address"
+    t.string "encrypted_email"
+    t.string "encrypted_city"
+    t.string "encrypted_state"
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tenant_id"
+    t.string "encrypted_address_iv"
+    t.string "encrypted_city_iv"
+    t.string "encrypted_email_iv"
+    t.string "encrypted_first_name_iv"
+    t.string "encrypted_last_name_iv"
+    t.string "encrypted_phone_number_iv"
+    t.string "encrypted_state_iv"
     t.index ["client_id"], name: "index_emergency_contacts_on_client_id"
     t.index ["tenant_id"], name: "index_emergency_contacts_on_tenant_id"
   end
@@ -170,6 +181,8 @@ ActiveRecord::Schema.define(version: 2023_09_20_154804) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tenant_id"
     t.bigint "user_id", null: false
+    t.string "encrypted_client_name"
+    t.string "encrypted_client_name_iv"
     t.index ["client_id"], name: "index_rddt_tests_on_client_id"
     t.index ["tenant_id"], name: "index_rddt_tests_on_tenant_id"
     t.index ["user_id"], name: "index_rddt_tests_on_user_id"
