@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_20_054432) do
+ActiveRecord::Schema.define(version: 2023_09_20_154804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,8 @@ ActiveRecord::Schema.define(version: 2023_09_20_054432) do
     t.string "encrypted_gender_iv"
     t.string "encrypted_race_iv"
     t.string "encrypted_zip_iv"
+    t.string "encrypted_dob_string"
+    t.string "encrypted_dob_string_iv"
     t.index ["tenant_id"], name: "index_clients_on_tenant_id"
   end
 

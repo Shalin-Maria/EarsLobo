@@ -9,6 +9,8 @@
 #  encrypted_address1_iv      :string
 #  encrypted_date_of_birth    :date
 #  encrypted_date_of_birth_iv :string
+#  encrypted_dob_string       :string
+#  encrypted_dob_string_iv    :string
 #  encrypted_email            :string
 #  encrypted_email_iv         :string
 #  encrypted_first_name       :string

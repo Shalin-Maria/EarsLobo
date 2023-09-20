@@ -9,6 +9,8 @@
 #  encrypted_address1_iv      :string
 #  encrypted_date_of_birth    :date
 #  encrypted_date_of_birth_iv :string
+#  encrypted_dob_string       :string
+#  encrypted_dob_string_iv    :string
 #  encrypted_email            :string
 #  encrypted_email_iv         :string
 #  encrypted_first_name       :string
@@ -43,8 +45,9 @@ class Client < ApplicationRecord
   acts_as_tenant(:tenant)
   
   attr_encrypted :email, :address1, :date_of_birth, :first_name, :last_name, :phone1, :phone2, :gender, :race, :zip, key: ENV['ENCRYPTION_KEY']
+  attr_encrypted :dob_string, key: ENV['ENCRYPTION_KEY']
 
-
+  
     has_many :emergency_contacts,dependent: :destroy
     has_many :dwt_tests,dependent: :destroy
     has_many :dnw_tests,dependent: :destroy
@@ -55,6 +58,21 @@ class Client < ApplicationRecord
   # Allow nested attributes for emergency contacts
   accepts_nested_attributes_for :emergency_contacts
 
+
+  
+    def date_of_birth=(date)
+      self.dob_string = date.to_s
+    end
+    # The setter for the raw_date_of_birth, used internally
+   
+
+    def date_of_birth
+      return if dob_string.nil?
+      Date.parse(dob_string)
+    end
+    
+  
+
     def full_name
       "#{first_name}#{last_name}"
     end
@@ -62,6 +80,7 @@ class Client < ApplicationRecord
     def age_in_years
       now = Time.now.utc.to_date
       dob = date_of_birth
+      
       age = now.year - dob.year
       age -= 1 if now < dob + age.years # for days before birthday
       age
@@ -78,7 +97,8 @@ class Client < ApplicationRecord
         })
     end
   # Validations for various client attributes
-  validates :first_name, :last_name, :email, :date_of_birth, :address1, :country, :state, :city, :zip, :phone1, presence: true
+  validates :first_name, :last_name, :email, :address1, :country, :state, :city, :zip, :phone1, :date_of_birth, presence: true
+
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :phone1, numericality: { only_integer: true }
 
