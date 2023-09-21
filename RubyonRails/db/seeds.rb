@@ -63,7 +63,7 @@ tenants.each do |tenant|
           last_name: Faker::Name.last_name,
           email: Faker::Internet.unique.email,
           gender: Faker::Gender.binary_type,
-          date_of_birth: Faker::Date.birthday(min_age: 18, max_age: 65),
+          date_of_birth: Faker::Date.birthday(min_age: 6, max_age: 15),
           address1: Faker::Address.street_address,
           country: Faker::Address.country_code,
           state: Faker::Address.state_abbr,
