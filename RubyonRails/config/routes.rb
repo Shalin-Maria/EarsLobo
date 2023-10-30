@@ -57,4 +57,6 @@ Rails.application.routes.draw do
     end
   end
 
+    get 'clients/:client_id/trainings', to: 'trainings#index', as: 'client_trainings'
+    get 'clients/:client_id/trainings/:id', to: 'tranings#show', as: 'client_traning'
 end

@@ -96,8 +96,7 @@
             $('#myBtn').on('click', function() { $('#myForm').submit(); });
                 });
            </script>
-
-
+          
           </div>
 
 
@@ -262,6 +261,7 @@
             <td><%= rddt_test.ear_advantage_score %></td>
           </tr>
         <% end %>
+        
       </tbody>
     </table>
   </div>
@@ -280,8 +280,12 @@
    <%= rddt_test.user.fname %>
   </div>
 <% end %>
+<div >
+   <%= link_to 'Training Protocol', client_trainings_path(@client), class: 'btn btn-secondary' %>
+    </div>
     </table>
   </div>
+  
 
   
 </div>

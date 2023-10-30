@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_20_164326) do
+ActiveRecord::Schema.define(version: 2023_10_25_183719) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -214,6 +214,19 @@ ActiveRecord::Schema.define(version: 2023_09_20_164326) do
     t.index ["user_id"], name: "index_tests_on_user_id"
   end
 
+  create_table "trainings", force: :cascade do |t|
+    t.integer "week"
+    t.string "client_name"
+    t.string "ear_advantage"
+    t.string "ear_advanatage_score"
+    t.string "left_score"
+    t.string "right_score"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "client_id"
+    t.index ["client_id"], name: "index_trainings_on_client_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "fname"
     t.string "lname"
@@ -230,6 +243,18 @@ ActiveRecord::Schema.define(version: 2023_09_20_164326) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["tenant_id"], name: "index_users_on_tenant_id"
+  end
+
+  create_table "week_ones", force: :cascade do |t|
+    t.string "client_name"
+    t.string "ear_advantage"
+    t.float "ear_advantage_score"
+    t.float "left_score"
+    t.text "notes"
+    t.float "right_score"
+    t.bigint "client_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -250,5 +275,6 @@ ActiveRecord::Schema.define(version: 2023_09_20_164326) do
   add_foreign_key "tests", "clients"
   add_foreign_key "tests", "tenants"
   add_foreign_key "tests", "users"
+  add_foreign_key "trainings", "clients"
   add_foreign_key "users", "tenants"
 end

@@ -52,6 +52,13 @@ class Client < ApplicationRecord
     has_many :dwt_tests,dependent: :destroy
     has_many :dnw_tests,dependent: :destroy
     has_many :rddt_tests,dependent: :destroy
+    has_many(
+      :trainings,
+      class_name: 'Training',
+      foreign_key: 'client_id',
+      inverse_of: :client,
+     dependent: :destroy
+     )
   # Associations with emergency contacts and tests, with dependent destroy option
 
 
