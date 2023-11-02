@@ -4,7 +4,7 @@
 
 
 
-<h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
+<h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training for " + @client.first_name + " " + @client.last_name%></strong></h1>
 
 <!--Test page for DNW List 3 Contains everything for completing and submitting a test  -->
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
@@ -15,7 +15,7 @@
     <div class="col-sm">
       <div class="form-group row">
         <label for="exampleLabel">Label</label>
-          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Dnw List Three" %>
+          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week Three Test Five" %>
       </div>
       <div class="form-group row">
         <label for="clientName">Client</label>
@@ -23,13 +23,9 @@
       </div>
       <div class="form-group row">
         <label for="testType">Type</label>
-        <input class="form-control" type="text" id="testType" placeholder="DNW" readonly>
+        <input class="form-control" type="text" id="testType" placeholder="Dichotic Words" readonly>
       </div>
       <hr/>
-      <div class="form-group row">
-        <label for="conditionSelect">Condition</label>
-        <input class="form-control" type="text" id="testType" placeholder="" readonly>
-      </div>
       <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
 
       <hr/>
@@ -37,9 +33,6 @@
       <%= f.text_area :notes, class: 'form-control', rows: '3' %>
       <hr/>
       <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
-      <audio controls>
-        <source src="/assets/DNW List 3.mp3" type="audio/mpeg">
-      </audio>
       <hr/>
       <!--Table for ear advantage percentage that is calculated in the script-->
       <style>
@@ -184,9 +177,15 @@
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
     
-        <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
+      <!--  <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
       
       <% end %>
+      <div>
+  <%= link_to "Submit and Proceed",  week_one_test_six_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
+  <%= link_to "Submit and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
+  
+</div>
+
 
       <div>
         <p><span hidden id="column1-count"></span></p>
@@ -442,7 +441,5 @@
     </div>
   </div>
 </div>
-<div>
-  <%= link_to "Next",  week_one_test_six_client_week_ones_path(@client), class: "btn btn-secondary"%>
-</div>
+
 </body>

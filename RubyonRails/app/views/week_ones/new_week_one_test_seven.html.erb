@@ -1,12 +1,11 @@
-<body id="grad4Attempt2" class= "bg-light center">
+<body id= "defBG">
 <div class="container p-5 my-3 w-100 border rounded bg-white ">
 
 
 
+<h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training for" + @client.first_name + " " + @client.last_name%></strong></h1>
 
-<h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training for " + @client.first_name + " " + @client.last_name%></strong></h1>
-
-<!--Test page for DNW List 1 Contains everything for completing and submitting a test  -->
+<!--Test page for Week One Test Seven Contains everything for completing and submitting a test  -->
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 <%= form_with model: [@client, @week_one], local: true do |f| %>
@@ -15,7 +14,7 @@
     <div class="col-sm">
       <div class="form-group row">
         <label for="exampleLabel">Label</label>
-          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week One Test Six" %>
+          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week One Test Seven" %>
       </div>
       <div class="form-group row">
         <label for="clientName">Client</label>
@@ -26,71 +25,70 @@
         <input class="form-control" type="text" id="testType" placeholder="Dichotic Spondees" readonly>
       </div>
       <hr/>
+      
       <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
 
       <hr/>
-      <div class="sticky">
-        <label for="Notes">Notes</label>
-        <%= f.text_area :notes, class: 'form-control', rows: '3' %>
-        <hr/>
-        <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
-        <hr/>
-        <!--Table for ear advantage percentage that is calculated in the script-->
-        <style>
-            .left-column {
-              background-color: lightblue;
-            }
-            
-            .right-column {
-              background-color: lightpink;
-            }
-            
-            .ear-advantage {
-              background-color: white;
-            }
-            
-            .ear-advantage.positive {
-              background-color: lightblue;
-            }
-            
-            .ear-advantage.negative {
-              background-color: lightpink;
-            }
-        </style>
-        <p>Scores:</p>
-        <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
-          <thead>
+      <label for="Notes">Notes</label>
+      <%= f.text_area :notes, class: 'form-control', rows: '3' %>
+      <hr/>
+      <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
+      
+      <!--Table for ear advantage percentage that is calculated in the script-->
+      <style>
+          .left-column {
+            background-color: lightblue;
+          }
+          
+          .right-column {
+            background-color: lightpink;
+          }
+          
+          .ear-advantage {
+            background-color: white;
+          }
+          
+          .ear-advantage.positive {
+            background-color: lightblue;
+          }
+          
+          .ear-advantage.negative {
+            background-color: lightpink;
+          }
+      </style>
+      <p>Scores:</p>
+      <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+        <thead>
+          <tr>
+            <th scope="col">Pairs</th>
+            <th scope="col">Left</th>
+            <th scope="col">Right</th>
+            <th scope="col">Ear Adv</th>
+          </tr>
+          <tbody>
             <tr>
-              <th scope="col">Pairs</th>
-              <th scope="col">Left</th>
-              <th scope="col">Right</th>
-              <th scope="col">Ear Adv</th>
+              <th scope="row">1</th>
+              <td class="left-column"><span id="column1-percent">0</span>%</p></td>
+              <td class="right-column"><span id="column2-percent">0</span>%</td>
+              <td class="ear-advantage"><span id="advantage-Diff">0</span>%</td>
             </tr>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td class="left-column"><span id="column1-percent">0</span>%</p></td>
-                <td class="right-column"><span id="column2-percent">0</span>%</td>
-                <td class="ear-advantage"><span id="advantage-Diff">0</span>%</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-              </tr>
-              <tr>
-                <th scope="row">3</th>           
-              </tr>
-            </tbody>
-          </thead>
-        </table>
-      </div>
-
-      <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
+            <tr>
+              <th scope="row">2</th>
+            </tr>
+            <tr>
+              <th scope="row">3</th>           
+            </tr>
+          </tbody>
+        </thead>
+      </table>
+      <!--Table for ear advantage name that is calculated in the script and ear diagnosis/interpretation-->
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
       <span hidden id="advantage-Name"></span>
+      <label for="read-Only">Interpretation</label>
+      <input class="form-control" type="text" id="read-Only-diag" value="" readonly>
       <span hidden id="Diagnosis"></span>
     </div>
-
 
     <style>
       /* Center buttons in the table cells */
@@ -107,10 +105,9 @@
         font-size: 16px; /* Adjust the font size as needed */
         /* Remove margin and min-width properties */
       }
-    </style>
-    
-    <div class="col-sm">
+    </style>   
 
+    <div class="col-sm">
         <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
           <thead class="thead-dark">
             <tr>
@@ -123,31 +120,31 @@
           <!-- Loop for table of words and creation of all buttons, only loops 25 times and creates table for buttons-->
             <% 25.times do |i| %>
               <% words = [
-                ["Beeth", "Ked"],
-                ["Dith", "Feev"],
-                ["Thich", "Yob"],
-                ["Yid", "Jeek"],
-                ["Duth", "Pel"],
-                ["Koid", "Zuth"],
-                ["Poim", "Zug"],
-                ["Choid", "Thooch"],
-                ["Boap", "Rudge"],
-                ["Looth", "Sich"],
-                ["Veb", "Zite"],
-                ["Jeeth", "Koom"],
-                ["Chiv", "Feek"],
-                ["Beev", "Zoil"],
-                ["Meeth", "Wid"],
-                ["Vich", "Zayg"],
-                ["Widge", "Zuch"],
-                ["Choog", "Zith"],
-                ["Vum", "Waf"],
-                ["Meech", "Zoth"],
-                ["Futh", "Zoop"],
-                ["Keek", "Noof"],
-                ["Kich", "Weeth"],
-                ["Mayp", "Tith"],
-                ["Maych", "Veeb"]
+                ["Bar", "Head"],
+                ["Box", "Shelf"],
+                ["Will", "Pan"],
+                ["Work", "Dive"],
+                ["Knit", "Where"],
+                ["Down", "Vase"],
+                ["Food", "Judge"],
+                ["Gas", "Sand"],
+                ["Van", "Game"],
+                ["Joke", "Need"],
+                ["New", "Late"],
+                ["Plate", "Rope"],
+                ["Jar", "Fish"],
+                ["First", "Black"],
+                ["Voice", "Rose"],
+                ["Bed", "Catch"],
+                ["Couch", "Best"],
+                ["Type", "Big"],
+                ["Rain", "Mouse"],
+                ["Cow", "Her"],
+                ["Neat", "Rock"],
+                ["Sing", "Plain"],
+                ["Learn", "Dark"],
+                ["Yell", "White"],
+                ["Help", "Knee"]
                 ] %>
               <tr>
                 <td><%= i + 1 %></td>
@@ -170,20 +167,22 @@
           </tbody>
           <!--Hidden table for submition items-->
         </table>
-
+      
         <%= f.hidden_field :client_name, value: "Example user" %>
-        <%= f.hidden_field :test_type, value: "DNW" %>
+        <%= f.hidden_field :test_type, value: "DWT" %>
         <%= f.hidden_field :left_score, id: "left_score" %>
         <%= f.hidden_field :right_score, id: "right_score" %>
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
-    
-       <!--  <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
+        <%= f.hidden_field :interpretation, id: "interpretation" %>
+
+    <!--  <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
       
       <% end %>
       <div>
-  <%= link_to "Save and Proceed",  week_one_test_seven_client_week_ones_path(@client), class: "btn btn-secondary"%>
+  <%= link_to "Submit and Proceed",  week_one_test_six_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
 </div>
+
 
       <div>
         <p><span hidden id="column1-count"></span></p>
@@ -196,6 +195,8 @@
 
 
     <script>
+
+
 
 
 
@@ -246,7 +247,7 @@
 
         let direction = null;
         let interpretation = null;
-        let age = 40;
+        let age = <%= @client.age_in_years %>;
         let dom = null;
         let nondom = null;
         if (advantage < 0) {
@@ -432,6 +433,7 @@
       document.getElementById("right_score").value = column2Percent.innerText;
       document.getElementById("ear_advantage").value = advantageName.innerText;
       document.getElementById("ear_advantage_score").value = advantageDiff.innerText;
+      document.getElementById("interpretation").value = testDiagnosis.innerText;
     }
 
     </script>

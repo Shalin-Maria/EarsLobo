@@ -63,6 +63,7 @@ Rails.application.routes.draw do
       collection do
         get 'new_week_one_test_five', to: 'week_ones#new_week_one_test_five', as: 'week_one_test_five'
         get 'new_week_one_test_six', to: 'week_ones#new_week_one_test_six', as: 'week_one_test_six'
+        get 'new_week_one_test_seven', to: 'week_ones#new_week_one_test_seven', as: 'week_one_test_seven'
         get 'week_ones/:id', to: 'week_ones#show', as: 'show'
       end
     end

@@ -62,33 +62,11 @@
 <div class="justify-content-center">
 <div class="table-responsive">
   
-<table class="table table-hover">
- 
-  <thead class="table-light">
-    <tr>
-      <th>Week</th>
-      <th>Left Score</th>
-      <th>Right Score</th>
-      <th>Ear Advanatge</th>
-      <th>Ear Advantage Score</th>
-    </tr>
-  </thead>
- 
-  <tbody>
-  <% @trainings.each do |training| %>
-    <tr>
-      <td><%=@trainings.week%></td>
-    </tr>
-     <% end %>
-  </tbody>
- 
-</table>
+
 </div>
 </div>
 </div>
 <div>
-  <%= link_to 'Go back to Client information page', edit_client_path(@client), class: 'btn btn-outline-primary' %> | Start Training
-</div>
-<div>
+  <%= link_to 'Go back to Client information page', edit_client_path(@client), class: 'btn btn-outline-primary' %> |
   <%= link_to "Start Training",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-secondary"%>
 </div>

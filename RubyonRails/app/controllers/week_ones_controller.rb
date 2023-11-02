@@ -2,8 +2,13 @@ class WeekOnesController < ApplicationController
     def new_week_one_test_five
         @client = Client.find(params[:client_id])
         @week_one = @client.week_ones.build
+       
     end
     def new_week_one_test_six
+        @client = Client.find(params[:client_id])
+        @week_one = @client.week_ones.build
+    end
+    def new_week_one_test_seven
         @client = Client.find(params[:client_id])
         @week_one = @client.week_ones.build
     end
@@ -50,9 +55,8 @@ class WeekOnesController < ApplicationController
       @week_one.client = @client
   
       if @week_one.save
-  
-        redirect_to edit_client_path(@client)
-      else
+        redirect_to client_trainings_path(@client)
+      else  
         render 'new'
       end
     end
