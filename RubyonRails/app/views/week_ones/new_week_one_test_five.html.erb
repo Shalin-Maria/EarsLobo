@@ -6,7 +6,7 @@
 
 <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training for " + @client.first_name + " " + @client.last_name%></strong></h1>
 
-<!--Test page for DNW List 3 Contains everything for completing and submitting a test  -->
+<!--Test page for Week One Test Five Contains everything for completing and submitting a test  -->
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 <%= form_with model: [@client, @week_one], local: true do |f| %>
@@ -85,8 +85,6 @@
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
       <span hidden id="advantage-Name"></span>
-      <label for="read-Only">Interpretation</label>
-      <input class="form-control" type="text" id="read-Only-diag" value="" readonly>
       <span hidden id="Diagnosis"></span>
     </div>
 
