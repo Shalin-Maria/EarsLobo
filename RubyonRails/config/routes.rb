@@ -55,8 +55,19 @@ Rails.application.routes.draw do
         get 'rddt_tests/:id', to: 'rddt_tests#show', as: 'show'
       end
     end
-  end
-
+  
+ 
+ 
+  
+    resources :week_ones do
+      collection do
+        get 'new_week_one_test_five', to: 'week_ones#new_week_one_test_five', as: 'week_one_test_five'
+        get 'new_week_one_test_six', to: 'week_ones#new_week_one_test_six', as: 'week_one_test_six'
+        get 'week_ones/:id', to: 'week_ones#show', as: 'show'
+      end
+    end
+    end
     get 'clients/:client_id/trainings', to: 'trainings#index', as: 'client_trainings'
     get 'clients/:client_id/trainings/:id', to: 'tranings#show', as: 'client_traning'
+    
 end

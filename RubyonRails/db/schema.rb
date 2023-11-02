@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_25_183719) do
+ActiveRecord::Schema.define(version: 2023_11_01_234524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -246,15 +246,21 @@ ActiveRecord::Schema.define(version: 2023_10_25_183719) do
   end
 
   create_table "week_ones", force: :cascade do |t|
+    t.string "test_type"
     t.string "client_name"
-    t.string "ear_advantage"
-    t.float "ear_advantage_score"
-    t.float "left_score"
     t.text "notes"
-    t.float "right_score"
-    t.bigint "client_id"
+    t.string "ear_advantage"
+    t.string "left_score"
+    t.string "right_score"
+    t.string "ear_advantage_score"
+    t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.bigint "tenant_id"
+    t.index ["client_id"], name: "index_week_ones_on_client_id"
+    t.index ["tenant_id"], name: "index_week_ones_on_tenant_id"
+    t.index ["user_id"], name: "index_week_ones_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -277,4 +283,7 @@ ActiveRecord::Schema.define(version: 2023_10_25_183719) do
   add_foreign_key "tests", "users"
   add_foreign_key "trainings", "clients"
   add_foreign_key "users", "tenants"
+  add_foreign_key "week_ones", "clients"
+  add_foreign_key "week_ones", "tenants"
+  add_foreign_key "week_ones", "users"
 end

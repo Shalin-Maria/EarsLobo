@@ -42,6 +42,7 @@ class User < ApplicationRecord
   has_many :dwt_tests,dependent: :destroy
   has_many :dnw_tests,dependent: :destroy
   has_many :rddt_tests,dependent: :destroy
+  has_many :week_ones,dependent: :destroy
   has_many :clients, foreign_key: :tenant_id, primary_key: :tenant_id
 
   # Include default devise modules. Others available are:
