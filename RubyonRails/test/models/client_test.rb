@@ -28,6 +28,7 @@
 #  encrypted_zip              :string
 #  encrypted_zip_iv           :string
 #  mgmt_ref                   :string
+#  right_ear_decibel          :integer
 #  state                      :string
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
