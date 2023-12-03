@@ -28,6 +28,13 @@
         <div class="col-sm">
           <div class="form-group row ">
             <div>
+              <p>Ear Dominance</p>
+              <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+              <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+            </div>
+          </div>
+          <div class="form-group row ">
+            <div>
               <p>Audio Controls</p>
               <button id="playButton" type="button">Play</button>
               <button id="pauseButton" type="button">Pause</button>
@@ -258,6 +265,7 @@
           <!-- ALLEARS ADDITIONS, added to submit as well-->
 
           <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
+          <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
           <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
           <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
@@ -382,8 +390,8 @@
 
           
           //ALLEARS ADDITIONS
-          let rightEarDecibel = 30; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
-          let leftEarDecibel = 0; // this is not yet attempted set up for server side at all, unlike right
+          let rightEarDecibel; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
+          let leftEarDecibel; // this is not yet attempted set up for server side at all, unlike right
 
 
           let direction = null;
@@ -449,8 +457,6 @@
         document.getElementById("G3adv").value = advantageDiffGroup3.innerText;
 
         document.getElementById("interpretation").value = testDiagnosis.innerText;
-
-      
    
       }
       //ALLEARS ADDITIONS
@@ -468,6 +474,21 @@
         // SETS VALUE of hidden field
         document.getElementById("rightEarDecibelField").value = rightEarDecibel;
       }
+      //functions for setting ear dominance
+      function setEarDominance(dominance) {
+      // Assuming rightEarDecibel changes based on ear dominance
+        if (dominance === 'left') {
+          rightEarDecibel = 50;
+          leftEarDecibel = 30;
+        } else if (dominance === 'right') {
+          rightEarDecibel = 30;
+          leftEarDecibel = 50;
+        }
+        document.getElementById("rightEarDecibelField").value = rightEarDecibel;
+        document.getElementById("leftEarDecibelField").value = leftEarDecibel;
+        document.getElementById('rightEarDecibelDisplay').innerText = document.getElementById("rightEarDecibelField").value;
+        document.getElementById('leftEarDecibelDisplay').innerText = document.getElementById("leftEarDecibelField").value;
+      }
       //separate testing function, can be commented/deleted later
       // This is working, problem is with the user data then
       function testRightEarDecibelUpdate() {
@@ -475,35 +496,45 @@
         // Update display of rightEarDecibel
         document.getElementById('rightEarDecibelDisplay').innerText = document.getElementById("rightEarDecibelField").value;
       }
-      //ALLEARS Audio control vairables controls and functions
+      //ALLEARS Audio control listener, buttons
       document.addEventListener('DOMContentLoaded', (event) => {
-      const leftEarAudio = document.getElementById('leftEarAudio');
-      const rightEarAudio = document.getElementById('rightEarAudio');
+        const leftEarAudio = document.getElementById('leftEarAudio');
+        const rightEarAudio = document.getElementById('rightEarAudio');
 
-      // Play button event
-      document.getElementById('playButton').addEventListener('click', function() {
-        leftEarAudio.play();
-        rightEarAudio.play();
-      });
+        // Play button event
+        document.getElementById('playButton').addEventListener('click', function() {
+          leftEarAudio.play();
+          rightEarAudio.play();
+        });
 
-      // Pause button event
-      document.getElementById('pauseButton').addEventListener('click', function() {
-        leftEarAudio.pause();
-        rightEarAudio.pause();
+        // Pause button event
+        document.getElementById('pauseButton').addEventListener('click', function() {
+          leftEarAudio.pause();
+          rightEarAudio.pause();
+        });
+        document.getElementById('setLeftDominance').addEventListener('click', function() {
+        setEarDominance('left');
+        });
+
+        document.getElementById('setRightDominance').addEventListener('click', function() {
+        setEarDominance('right');
+        });
       });
-  });
+      
 
     </script>
       <div>
-        <p>DEBUG: Combined play and pause</p>
-        <button id="playButton" type="button">Play</button>
-        <button id="pauseButton" type="button">Pause</button>
 
         <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
         <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
+        <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
         <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
         <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
-        
+        <div>
+          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+        </div>
+
         </div>
 
       </div>
