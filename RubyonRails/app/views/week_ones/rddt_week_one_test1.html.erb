@@ -212,73 +212,37 @@
                   </tr>
                 <% end %>
               </tbody>
+              <!--Hidden table for submition items-->
             </table>
+
+          
+            <%= f.hidden_field :client_name, value: "Example user" %>
+            <%= f.hidden_field :test_type, value: "RDDT" %>
+            <%= f.hidden_field :left_score2, id: "left_score" %>
+            <%= f.hidden_field :right_score2, id: "right_score" %>
+            <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
+            <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
+
+          <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
+        <% end %>
           <div>
+            <%= link_to "Save and Proceed",  week_one_test_two_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
+            <%= link_to "Save and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
         </div>  
     </div>
 
 
-
-          <!-- Existing form fields -->
-          <%= f.hidden_field :client_name, value: "Example user" %>
-          <%= f.hidden_field :test_type, value: "RDDT" %>
-          <%= f.hidden_field :left_score2, id: "left_score" %>
-          <%= f.hidden_field :right_score2, id: "right_score" %>
-          <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
-          <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
-
-          <%= f.hidden_field :left_score1, id: "col1G1" %>
-          <%= f.hidden_field :right_score1, id: "col2G1" %>
-          <%= f.hidden_field :left_score3, id: "col1G3" %>
-          <%= f.hidden_field :right_score3, id: "col2G3" %>
-
-          <%= f.hidden_field :G1adv, id: "G1adv" %>
-          <%= f.hidden_field :G3adv, id: "G3adv" %>
-
-          <%= f.hidden_field :interpretation, id: "interpretation" %>
-
-          
-
-          <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
-        <% end %>
-
-
-
-
-
-
-
-
-
-
-
-
-
         <div>
           <p><span hidden id="column1-count"></span></p>
-          <p><span id="column1Group1-percent"></span></p>
-          <p><span id="column1Group2-percent"></span></p>
-          <p><span id="column1Group3-percent"></span></p>
-
+          <p><span id="column1-percent"></span></p>
           <p><span hidden id="column2-count"></span></p>
-          <p><span id="column2Group1-percent"></span></p>
-          <p><span id="column2Group2-percent"></span></p>
-          <p><span id="column2Group3-percent"></span></p>
-
-          <p><span id="Group1advantage-Diff"></span></p>
-          <p><span id="Group2advantage-Diff"></span></p>
-          <p><span id="Group3advantage-Diff"></span></p>
+          <p><span id="column2-percent"></span></p>
+          <p><span id="advantage-Diff"></span></p>
         </div>
-
-
-
 
 
       <script>
       
-
-
-
 
       //function for keeping the buttons blue after being clicked
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -583,17 +547,6 @@
         document.getElementById("right_score").value = column2Group2Percent.innerText;
         document.getElementById("ear_advantage").value = advantageName.innerText;
         document.getElementById("ear_advantage_score").value = advantageDiffGroup2.innerText;
-
-
-        document.getElementById("col1G1").value = column1Group1Percent.innerText;
-        document.getElementById("col2G1").value = column2Group1Percent.innerText;
-        document.getElementById("col1G3").value = column1Group3Percent.innerText;
-        document.getElementById("col2G3").value = column2Group3Percent.innerText;
-
-        document.getElementById("G1adv").value = advantageDiffGroup1.innerText;
-        document.getElementById("G3adv").value = advantageDiffGroup3.innerText;
-
-        document.getElementById("interpretation").value = testDiagnosis.innerText;
    
       }
 
@@ -602,8 +555,6 @@
       </div>
     </div>
   </div>
-  <div>
-    <%= link_to "Next", week_one_test_two_client_week_ones_path(@client), class: "btn btn-secondary" %>
-  </div>
+
   </body>
 </html>

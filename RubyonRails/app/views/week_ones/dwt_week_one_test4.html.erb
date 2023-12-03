@@ -182,9 +182,14 @@
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
     
-        <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
+        <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
       
       <% end %>
+      <div>
+          <%= link_to "Save and Proceed",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
+          <%= link_to "Save and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
+      </div>  
+    </div>
 
       <div>
         <p><span hidden id="column1-count"></span></p>
@@ -440,7 +445,5 @@
     </div>
   </div>
 </div>
-<div>
-  <%= link_to "Next",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-secondary"%>
-</div>
+
 </body>
