@@ -59,9 +59,41 @@
           </table>
         </div>
 
+
 <div class="justify-content-center">
 <div class="table-responsive">
-  
+  <h4 style="margin-top: 20px;">Week One Results</h4>
+  <div class="tableWrap" style="margin-top: 20px;">
+    <table id="tableID">
+      <thead>
+        <tr>
+          <th>ID</th>
+          
+          <th>Test Giver</th>
+          <th>Test Type</th>
+          <th>Left Score</th>
+          <th>Right Score</th>
+          <th>Ear Advantage</th>
+          <th>Ear Advantage Score</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% @client.week_ones.each do |week_one| %>
+          <tr>
+            <td><%= week_one.id %></td>
+            <td><%= week_one.client.full_name %></td>
+            <td><%= week_one.test_type %></td>
+            <td><%= week_one.left_score %></td>
+            <td><%= week_one.right_score %></td>
+            <td><%= week_one.ear_advantage %></td>
+            <td><%= week_one.ear_advantage_score %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+    
 
 </div>
 </div>

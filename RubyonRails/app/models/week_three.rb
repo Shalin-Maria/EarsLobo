@@ -1,0 +1,30 @@
+# == Schema Information
+#
+# Table name: week_threes
+#
+#  id                  :bigint           not null, primary key
+#  client_name         :string
+#  ear_advantage       :string
+#  ear_advantage_score :string
+#  left_score          :string
+#  notes               :text
+#  right_score         :string
+#  test_type           :string
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
+#  client_id           :bigint           not null
+#
+# Indexes
+#
+#  index_week_threes_on_client_id  (client_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (client_id => clients.id)
+#
+class WeekThree < ApplicationRecord
+    acts_as_tenant(:tenant)
+  
+    belongs_to :client
+    belongs_to :user
+end

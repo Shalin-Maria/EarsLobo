@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_02_044436) do
+ActiveRecord::Schema.define(version: 2023_12_04_014725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -265,6 +265,20 @@ ActiveRecord::Schema.define(version: 2023_12_02_044436) do
     t.index ["user_id"], name: "index_week_ones_on_user_id"
   end
 
+  create_table "week_threes", force: :cascade do |t|
+    t.string "test_type"
+    t.string "client_name"
+    t.text "notes"
+    t.string "ear_advantage"
+    t.string "left_score"
+    t.string "right_score"
+    t.string "ear_advantage_score"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_week_threes_on_client_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "clients", "tenants"
@@ -288,4 +302,5 @@ ActiveRecord::Schema.define(version: 2023_12_02_044436) do
   add_foreign_key "week_ones", "clients"
   add_foreign_key "week_ones", "tenants"
   add_foreign_key "week_ones", "users"
+  add_foreign_key "week_threes", "clients"
 end
