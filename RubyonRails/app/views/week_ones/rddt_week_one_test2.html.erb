@@ -213,15 +213,13 @@
                 <% end %>
               </tbody>
             </table>
-          <div>
-        </div>  
-    </div>
-
+         
 
 
           <!-- Existing form fields -->
           <%= f.hidden_field :client_name, value: "Example user" %>
           <%= f.hidden_field :test_type, value: "RDDT" %>
+          <%= f.hidden_field :counter, value: "2" %>
           <%= f.hidden_field :left_score2, id: "left_score" %>
           <%= f.hidden_field :right_score2, id: "right_score" %>
           <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
@@ -239,7 +237,7 @@
 
           
 
-          <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
+          <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
         <% end %>
 
 
@@ -599,11 +597,13 @@
 
         
       </script>
+       <div>
+        <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
+        <%= link_to "Back",  week_one_test_one_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
+       </div>
       </div>
     </div>
   </div>
-  <div>
-    <%= link_to "Next", week_one_test_three_client_week_ones_path(@client), class: "btn btn-secondary" %>
-  </div>
+  
   </body>
 </html>

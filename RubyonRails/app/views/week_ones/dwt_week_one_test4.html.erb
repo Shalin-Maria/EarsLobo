@@ -177,12 +177,13 @@
 
         <%= f.hidden_field :client_name, value: "Example user" %>
         <%= f.hidden_field :test_type, value: "DWT" %>
+        <%= f.hidden_field :counter, value: "4" %>
         <%= f.hidden_field :left_score, id: "left_score" %>
         <%= f.hidden_field :right_score, id: "right_score" %>
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
     
-        <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
+        <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
       
       <% end %>
 
@@ -436,11 +437,11 @@
     }
 
     </script>
-
+    <div>
+        <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
+        <%= link_to "Back",  week_one_test_three_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
+       </div>
     </div>
   </div>
-</div>
-<div>
-  <%= link_to "Next",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-secondary"%>
 </div>
 </body>

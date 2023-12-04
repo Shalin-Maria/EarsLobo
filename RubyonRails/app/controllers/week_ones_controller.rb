@@ -1,14 +1,5 @@
 class WeekOnesController < ApplicationController
-    def new_week_one_test_five
-        @client = Client.find(params[:client_id])
-        @week_one = @client.week_ones.build
-       
-    end
-    def new_week_one_test_six
-        @client = Client.find(params[:client_id])
-        @week_one = @client.week_ones.build
-    end
-
+    
     def rddt_week_one_test1
       @client = Client.find(params[:client_id])
       @week_one = @client.week_ones.build
@@ -28,11 +19,28 @@ class WeekOnesController < ApplicationController
       @client = Client.find(params[:client_id])
       @week_one = @client.week_ones.build
     end
+    def dwt_week_one_test5
+      @client = Client.find(params[:client_id])
+      @week_one = @client.week_ones.build
+     
+  end
+  def dnw_week_one_test6
+      @client = Client.find(params[:client_id])
+      @week_one = @client.week_ones.build
+  end
 
-    def new_week_one_test_seven
+    def dnw_week_one_test7
         @client = Client.find(params[:client_id])
         @week_one = @client.week_ones.build
     end
+    def dwt_week_one_test8
+      @client = Client.find(params[:client_id])
+      @week_one = @client.week_ones.build
+  end
+  def rddt_week_one_test9
+    @client = Client.find(params[:client_id])
+    @week_one = @client.week_ones.build
+end
     def index
         @week_ones = WeekOnes.all
         render :index
@@ -64,30 +72,50 @@ class WeekOnesController < ApplicationController
         end
       end
   
+      def create
+        @client = Client.find(params[:client_id])
+        @week_one = @client.week_ones.build(week_one_params)
+        @week_one.user = current_user
+        @week_one.client = @client
+        submit_with_counter()
+
+      end
     
-  
-  
-  
-  
-  def create
-      @client = Client.find(params[:client_id])
-      @week_one = @client.week_ones.build(week_one_params)
-      @week_one.user = current_user
-      @week_one.client = @client
-  
+    def submit_with_counter
       if @week_one.save
-        redirect_to client_trainings_path(@client)
-      else  
+        case @week_one.counter
+        when 1
+          session[:test_one_completed] = true
+          redirect_to week_one_test_two_client_week_ones_path(@client)
+        when 2
+          redirect_to week_one_test_three_client_week_ones_path(@client)
+        when 3
+          redirect_to week_one_test_four_client_week_ones_path(@client)
+        when 4
+          redirect_to week_one_test_five_client_week_ones_path(@client)
+        when 5
+          redirect_to week_one_test_six_client_week_ones_path(@client)
+        when 6
+          redirect_to week_one_test_seven_client_week_ones_path(@client)
+        when 7
+          redirect_to week_one_test_eight_client_week_ones_path(@client)
+        when 8
+          redirect_to week_one_test_nine_client_week_ones_path(@client)
+        when 9
+          redirect_to client_trainings_path(@client)
+        else
+          render 'new'
+        end
+      else
         render 'new'
       end
     end
-  
   
     
       private
     
       def week_one_params
-        params.require(:week_one).permit( :notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score)
+        params.require(:week_one).permit( :notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score, :counter)
       end
 
 end
