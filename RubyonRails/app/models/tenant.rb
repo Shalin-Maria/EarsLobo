@@ -14,7 +14,7 @@ class Tenant < ApplicationRecord
     has_many :rddt_tests,dependent: :destroy
     has_many :clients,dependent: :destroy
     has_many :week_ones,dependent: :destroy
-    has_many :week_twos,dependent: :destory
+    has_many :week_twos,dependent: :destroy
 
 
     validates :subdomain, uniqueness: true
