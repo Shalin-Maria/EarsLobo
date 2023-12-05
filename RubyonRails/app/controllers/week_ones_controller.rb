@@ -116,7 +116,7 @@ end
 
       # took out :notes -->
       def week_one_params
-        params.require(:week_one).permit( :notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score)
+        params.require(:week_one).permit( :notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score, :counter)
       end
 
 end
