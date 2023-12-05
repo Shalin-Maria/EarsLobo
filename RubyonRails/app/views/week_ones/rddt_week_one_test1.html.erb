@@ -512,6 +512,8 @@
           leftEarAudio.pause();
           rightEarAudio.pause();
         });
+
+        //dominacne listeners
         document.getElementById('setLeftDominance').addEventListener('click', function() {
         setEarDominance('left');
         });
@@ -529,6 +531,7 @@
         <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
         <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
         <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
+        <p>DEBUG: Client Value: Left Ear Decibel: <%= @client.left_ear_decibel %></p>
         <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
         <div>
           <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
