@@ -9,11 +9,33 @@
 <!--Test page for DNW List 1 Contains everything for completing and submitting a test  -->
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-<%= form_with model: [@client, @week_one], local: true do |f| %>
-<div class="container">
+<style>
+    div.sticky {
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 0;
+    }
+  </style>
+  <div class="container">
+<%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
   <div class="row">
+  <div class="form-group row">
     <div class="col-sm">
       <div class="form-group row">
+      <div>
+              <p>Ear Dominance</p>
+              <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+              <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+            </div>
+          </div>
+          <div class="form-group row ">
+            <div>
+              <p>Audio Controls</p>
+              <button id="playButton" type="button">Play</button>
+              <button id="pauseButton" type="button">Pause</button>
+            </div>
+          </div>
+          <div class="form-group row ">
         <label for="exampleLabel">Label</label>
           <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week One Test Six" %>
       </div>
@@ -35,6 +57,10 @@
         <hr/>
         <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
         <hr/>
+        <%= audio_tag "Dichotic Spondees 16-35_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
+            <%= audio_tag "Dichotic Spondees 16-35_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
+        <!--<%= audio_tag "1-pair Dichotic Digits, List 1_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
+            <%= audio_tag "1-pair Dichotic Digits, List 1_Right_HRTF.wav", id: "rightEarAudio", controls: false %> -->
         <!--Table for ear advantage percentage that is calculated in the script-->
         <style>
             .left-column {
@@ -89,9 +115,16 @@
       <input class="form-control" type="text" id="read-Only" value="" readonly>
       <span hidden id="advantage-Name"></span>
       <span hidden id="Diagnosis"></span>
+       <!-- ALL EARS Table for ear score-->
+            <label for="read-Only">training Left Score</label>
+            <input class="form-control" type="number" id="read-Only" value="" readonly>
+            <span hidden id="taining-Left-Score"></span>
+            <label for="read-Only">training Right Score</label>
+            <input class="form-control" type="number" id="read-Only" value="" readonly>
+            <span hidden id="taining-Right-Score"></span>
     </div>
 
-
+</div>
     <style>
       /* Center buttons in the table cells */
       .btn-group-toggle {
@@ -121,33 +154,28 @@
           </thead>
           <tbody>
           <!-- Loop for table of words and creation of all buttons, only loops 25 times and creates table for buttons-->
-            <% 25.times do |i| %>
+            <% 20.times do |i| %>
               <% words = [
-                ["Beeth", "Ked"],
-                ["Dith", "Feev"],
-                ["Thich", "Yob"],
-                ["Yid", "Jeek"],
-                ["Duth", "Pel"],
-                ["Koid", "Zuth"],
-                ["Poim", "Zug"],
-                ["Choid", "Thooch"],
-                ["Boap", "Rudge"],
-                ["Looth", "Sich"],
-                ["Veb", "Zite"],
-                ["Jeeth", "Koom"],
-                ["Chiv", "Feek"],
-                ["Beev", "Zoil"],
-                ["Meeth", "Wid"],
-                ["Vich", "Zayg"],
-                ["Widge", "Zuch"],
-                ["Choog", "Zith"],
-                ["Vum", "Waf"],
-                ["Meech", "Zoth"],
-                ["Futh", "Zoop"],
-                ["Keek", "Noof"],
-                ["Kich", "Weeth"],
-                ["Mayp", "Tith"],
-                ["Maych", "Veeb"]
+                ["Northwest", "Hothouse"],
+                ["Iceberg", "Daybreak"],
+                ["Toothbrush", "Airplane"],
+                ["Sunset", "Birthday"],
+                ["Railroad", "Mushroom"],
+                ["Inkwell", "Baseball"],
+                ["Hardware", "Mousetrap"],
+                ["Farewell", "Headlight"],
+                ["Schoolboy", "NorthWest"],
+                ["Armchair", "Grandson"],
+                ["Eardrum", "Padlock"],
+                ["Pothouse", "Whitewash"],
+                ["Woodwork", "Pancake"],
+                ["Cowboy", "Duckpawn"],
+                ["Oatmeal", "Hotdog"],
+                ["Daybreak", "Workshop"],
+                ["Greyhound", "Playground"],
+                ["Drawbridge", "Stairway"],
+                ["Doormat", "Iceberg"],
+                ["Airplane", "Sidewalk"]
                 ] %>
               <tr>
                 <td><%= i + 1 %></td>
@@ -178,8 +206,12 @@
         <%= f.hidden_field :right_score, id: "right_score" %>
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
+        <!-- ALLEARS ADDITIONS, added to submit as well-->
+
+        <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
+        <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
     
-       <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> 
+       <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %> 
       
       <% end %>
 
@@ -242,6 +274,9 @@
         const advantage = (percent2 - percent1).toFixed(2);
         const avgPercent = ((+percent1 + +percent2) / 2).toFixed(2);
 
+        //ALLEARS ADDITIONS
+        let rightEarDecibel; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
+        let leftEarDecibel; // this is not yet attempted set up for server side at all, unlike right
         let direction = null;
         let interpretation = null;
         let age = 40;
@@ -431,12 +466,87 @@
       document.getElementById("ear_advantage").value = advantageName.innerText;
       document.getElementById("ear_advantage_score").value = advantageDiff.innerText;
     }
+    //ALLEARS ADDITIONS
+      
+      function calculateRightEarDecibel() {
+      
+        const checkedCount1Group1 = document.querySelectorAll(".column1Group1-button input[type='checkbox']:checked").length;
+        const checkedCount2Group1 = document.querySelectorAll(".column2Group1-button input[type='checkbox']:checked").length;
+
+        
+
+        if (checkedCount1Group1 >= (checkedCount2Group1 * 1.1)) {
+          rightEarDecibel = 35;
+        }
+        // SETS VALUE of hidden field
+        document.getElementById("rightEarDecibelField").value = rightEarDecibel;
+      }
+      //functions for setting ear dominance
+      function setEarDominance(dominance) {
+      // Assuming rightEarDecibel changes based on ear dominance
+        if (dominance === 'left') {
+          rightEarDecibel = 50;
+          leftEarDecibel = 30;
+        } else if (dominance === 'right') {
+          rightEarDecibel = 30;
+          leftEarDecibel = 50;
+        }
+        document.getElementById("rightEarDecibelField").value = rightEarDecibel;
+        document.getElementById("leftEarDecibelField").value = leftEarDecibel;
+        document.getElementById('rightEarDecibelDisplay').innerText = document.getElementById("rightEarDecibelField").value;
+        document.getElementById('leftEarDecibelDisplay').innerText = document.getElementById("leftEarDecibelField").value;
+      }
+      //separate testing function, can be commented/deleted later
+      // This is working, problem is with the user data then
+      function testRightEarDecibelUpdate() {
+        calculateRightEarDecibel();
+        // Update display of rightEarDecibel
+        document.getElementById('rightEarDecibelDisplay').innerText = document.getElementById("rightEarDecibelField").value;
+      }
+      //ALLEARS Audio control listener, buttons
+      document.addEventListener('DOMContentLoaded', (event) => {
+        const leftEarAudio = document.getElementById('leftEarAudio');
+        const rightEarAudio = document.getElementById('rightEarAudio');
+
+        // Play button event
+        document.getElementById('playButton').addEventListener('click', function() {
+          leftEarAudio.play();
+          rightEarAudio.play();
+        });
+
+        // Pause button event
+        document.getElementById('pauseButton').addEventListener('click', function() {
+          leftEarAudio.pause();
+          rightEarAudio.pause();
+        });
+        document.getElementById('setLeftDominance').addEventListener('click', function() {
+        setEarDominance('left');
+        });
+
+        document.getElementById('setRightDominance').addEventListener('click', function() {
+        setEarDominance('right');
+        });
+      });
 
     </script>
-     <div>
+    <div>
         <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
         <%= link_to "Back",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
        </div>
+    <div>
+
+        <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
+        <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
+        <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
+        <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
+        <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
+        <div>
+          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+        </div>
+
+        </div>
+     
     </div>
   </div>
 </div>
