@@ -28,6 +28,7 @@
 #  encrypted_zip              :string
 #  encrypted_zip_iv           :string
 #  mgmt_ref                   :string
+#  right_ear_decibel          :integer
 #  state                      :string
 #  created_at                 :datetime         not null
 #  updated_at                 :datetime         not null
@@ -60,6 +61,13 @@ class Client < ApplicationRecord
       inverse_of: :client,
       dependent: :destroy
       )
+    has_many(
+      :week_threes,
+      class_name: 'WeekThree',
+      foreign_key: 'client_id',
+      inverse_of: :client,
+      dependent: :destroy
+    )
     has_many(
       :trainings,
       class_name: 'Training',

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_16_202832) do
+ActiveRecord::Schema.define(version: 2023_12_04_050337) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2023_11_16_202832) do
     t.string "encrypted_zip_iv"
     t.string "encrypted_dob_string"
     t.string "encrypted_dob_string_iv"
+    t.integer "right_ear_decibel"
     t.index ["tenant_id"], name: "index_clients_on_tenant_id"
   end
 
@@ -240,6 +241,7 @@ ActiveRecord::Schema.define(version: 2023_11_16_202832) do
     t.integer "role"
     t.bigint "tenant_id"
     t.string "verification_key"
+    t.integer "right_ear_decibel"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["tenant_id"], name: "index_users_on_tenant_id"
@@ -258,6 +260,7 @@ ActiveRecord::Schema.define(version: 2023_11_16_202832) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
     t.bigint "tenant_id"
+    t.integer "counter"
     t.index ["client_id"], name: "index_week_ones_on_client_id"
     t.index ["tenant_id"], name: "index_week_ones_on_tenant_id"
     t.index ["user_id"], name: "index_week_ones_on_user_id"
@@ -277,6 +280,24 @@ ActiveRecord::Schema.define(version: 2023_11_16_202832) do
     t.bigint "tenant_id"
     t.index ["tenant_id"], name: "index_week_twos_on_tenant_id"
     t.index ["user_id"], name: "index_week_twos_on_user_id"
+  end
+
+  create_table "week_threes", force: :cascade do |t|
+    t.string "test_type"
+    t.string "client_name"
+    t.text "notes"
+    t.string "ear_advantage"
+    t.string "left_score"
+    t.string "right_score"
+    t.string "ear_advantage_score"
+    t.bigint "client_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "tenant_id"
+    t.bigint "user_id", null: false
+    t.index ["client_id"], name: "index_week_threes_on_client_id"
+    t.index ["tenant_id"], name: "index_week_threes_on_tenant_id"
+    t.index ["user_id"], name: "index_week_threes_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -304,4 +325,7 @@ ActiveRecord::Schema.define(version: 2023_11_16_202832) do
   add_foreign_key "week_ones", "users"
   add_foreign_key "week_twos", "tenants"
   add_foreign_key "week_twos", "users"
+  add_foreign_key "week_threes", "clients"
+  add_foreign_key "week_threes", "tenants"
+  add_foreign_key "week_threes", "users"
 end

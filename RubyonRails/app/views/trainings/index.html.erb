@@ -59,16 +59,85 @@
           </table>
         </div>
 
-<div class="justify-content-center">
-<div class="table-responsive">
-  
 
+<div class="justify-content-center mt-3">
+   <div class="dropdown-item">
+    <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#weekOneResultsTable">
+      Week One Results
+    </button> 
+    <div class="collapse table-responsive" id="weekOneResultsTable">
+    <table id="tableID">
+      <thead>
+        <tr>
+          <th>ID</th>
+          
+          <th>Test Giver</th>
+          <th>Test Type</th>
+          <th>Left Score</th>
+          <th>Right Score</th>
+          <th>Ear Advantage</th>
+          <th>Ear Advantage Score</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% @client.week_ones.each do |week_one| %>
+          <tr>
+            <td><%= week_one.id %></td>
+            <td><%= week_one.client.full_name %></td>
+            <td><%= week_one.test_type %></td>
+            <td><%= week_one.left_score %></td>
+            <td><%= week_one.right_score %></td>
+            <td><%= week_one.ear_advantage %></td>
+            <td><%= week_one.ear_advantage_score %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 </div>
+
+<div class="justify-content-center mt-3">
+  <div class="dropdown-item">
+    <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#weekThreeResultsTable">
+      Week Three Results
+    </button>
+    <div class="collapse table-responsive" id="weekThreeResultsTable">
+    <table id="tableID">
+      <thead>
+        <tr>
+          <th>ID</th>
+          
+          <th>Test Giver</th>
+          <th>Test Type</th>
+          <th>Left Score</th>
+          <th>Right Score</th>
+          <th>Ear Advantage</th>
+          <th>Ear Advantage Score</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% @client.week_threes.each do |week_three| %>
+          <tr>
+            <td><%= week_three.id %></td>
+            <td><%= week_three.client.full_name %></td>
+            <td><%= week_three.test_type %></td>
+            <td><%= week_three.left_score %></td>
+            <td><%= week_three.right_score %></td>
+            <td><%= week_three.ear_advantage %></td>
+            <td><%= week_three.ear_advantage_score %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="mt-3">
+    <%= link_to "Week Three", week_three_test_one_client_week_threes_path(@client) %>
+  </div>
+</div>   
 </div>
 <div>
-  <%= link_to 'Go back to Client information page', edit_client_path(@client), class: 'btn btn-outline-primary' %> | Start Training
-</div>
-<div>
+  <%= link_to 'Go back to Client information page', edit_client_path(@client), class: 'btn btn-outline-primary' %> </div> 
   <%= link_to "Start Training",  week_one_test_one_client_week_ones_path(@client), class: "btn btn-secondary"%>
 </div>

@@ -54,20 +54,19 @@ Rails.application.routes.draw do
         get 'new_rddt_list2', to: 'rddt_tests#new_rddt_list2', as: 'rddt_list2'
         get 'rddt_tests/:id', to: 'rddt_tests#show', as: 'show'
       end
-    end
-  
- 
- 
-  
+    end 
     resources :week_ones do
+      post 'submit_with_counter', on: :member
       collection do
-        get 'new_week_one_test_five', to: 'week_ones#new_week_one_test_five', as: 'week_one_test_five'
-        get 'new_week_one_test_six', to: 'week_ones#new_week_one_test_six', as: 'week_one_test_six'
+        get 'dwt_week_one_test5', to: 'week_ones#dwt_week_one_test5', as: 'week_one_test_five'
+        get 'dnw_week_one_test6', to: 'week_ones#dnw_week_one_test6', as: 'week_one_test_six'
         get 'rddt_week_one_test1', to: 'week_ones#rddt_week_one_test1', as: 'week_one_test_one'
         get 'rddt_week_one_test2', to: 'week_ones#rddt_week_one_test2', as: 'week_one_test_two'
         get 'dwt_week_one_test3', to: 'week_ones#dwt_week_one_test3', as: 'week_one_test_three'
         get 'dwt_week_one_test4', to: 'week_ones#dwt_week_one_test4', as: 'week_one_test_four'
-        get 'new_week_one_test_seven', to: 'week_ones#new_week_one_test_seven', as: 'week_one_test_seven'
+        get 'dnw_week_one_test7', to: 'week_ones#dnw_week_one_test7', as: 'week_one_test_seven' 
+        get 'dwt_week_one_test8', to: 'week_ones#dwt_week_one_test8', as: 'week_one_test_eight'
+        get 'rddt_week_one_test9', to: 'week_ones#rddt_week_one_test9', as: 'week_one_test_nine'
         get 'week_ones/:id', to: 'week_ones#show', as: 'show'
       end
     end
@@ -79,8 +78,18 @@ Rails.application.routes.draw do
         get 'week_twos/:id', to: 'week_twos#show', as: 'show'
       end
     end
+
+    resources :week_threes do
+      collection do
+        get 'rddt_week_three_test1', to: 'week_threes#rddt_week_three_test1', as: 'week_three_test_one'
+        get 'dwt_week_three_test4', to: 'week_threes#dwt_week_three_test4', as: 'week_three_test_four'
+        get 'dwt_week_three_test5', to: 'week_threes#dwt_week_three_test5', as: 'week_three_test_five'
+        get 'rddt_week_three_test8', to: 'week_threes#rddt_week_three_test8', as: 'week_three_test_eight'
+        get 'week_threes/:id', to: 'week_threes#show', as: 'show'
+      end
     end
+  end
     get 'clients/:client_id/trainings', to: 'trainings#index', as: 'client_trainings'
-    get 'clients/:client_id/trainings/:id', to: 'tranings#show', as: 'client_traning'
+    get 'clients/:client_id/trainings/:id', to: 'trainings#show', as: 'client_training'
     
 end

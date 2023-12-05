@@ -10,6 +10,7 @@
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  right_ear_decibel      :integer
 #  role                   :integer
 #  verification_key       :string
 #  created_at             :datetime         not null
