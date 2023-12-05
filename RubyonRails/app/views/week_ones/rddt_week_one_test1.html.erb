@@ -256,7 +256,7 @@
           <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
           <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
-          <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+          <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
         <% end %>
           <div>
             <!-- <%= link_to "Save and Proceed",  week_one_test_two_client_week_ones_path(@client), class: "btn btn-primary btn-block"%> -->
@@ -514,7 +514,7 @@
     </div>
   </div>
 
-      
+      </script>
        <div>
         <%= link_to "Submit and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%> 
         <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
