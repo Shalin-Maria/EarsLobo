@@ -14,7 +14,27 @@ class WeekThreesController < ApplicationController
       @week_three = @client.week_threes.build
     end
 
+    def dnw_week_three_test6
+      @client = Client.find(params[:client_id])
+      @week_three = @client.week_threes.build
+    end
+
+    def dnw_week_three_test7
+      @client = Client.find(params[:client_id])
+      @week_three = @client.week_threes.build
+    end
+
     def rddt_week_three_test8
+      @client = Client.find(params[:client_id])
+      @week_three = @client.week_threes.build
+    end
+
+    def dwt_week_three_test9
+      @client = Client.find(params[:client_id])
+      @week_three = @client.week_threes.build
+    end
+
+    def dwt_week_three_test10
       @client = Client.find(params[:client_id])
       @week_three = @client.week_threes.build
     end

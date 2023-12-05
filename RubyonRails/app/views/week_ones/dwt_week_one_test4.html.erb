@@ -37,13 +37,16 @@
       <%= f.text_area :notes, class: 'form-control', rows: '3' %>
       <hr/>
       <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
-      <audio controls>
+      <%= audio_tag "Dichotic Words Track 7_R_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
+      <%= audio_tag "Dichotic Words Track 7_R_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
+                  
+      <!-- <audio controls>
         <source src="/assets/Dichotic Words Track 7_R_Left_HRTF.wav" type="audio/wav">
       </audio>
       <audio controls>
         <source src="/assets/Dichotic Words Track 7_R_Right_HRTF.wav" type="audio/wav">
       </audio>
-      <hr/>
+      <hr/> -->
       <!--Table for ear advantage percentage that is calculated in the script-->
       <style>
           .left-column {
@@ -183,14 +186,19 @@
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
     
-        <!-- <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
+        <!-- ALLEARS ADDITIONS, added to submit as well-->
+
+        <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
+        <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
+          
+        <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
       
       <% end %>
-      <div>
+      <!-- <div>
           <%= link_to "Submit and Proceed",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
           <%= link_to "Submit and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
       </div>  
-    </div>
+    </div> -->
 
       <div>
         <p><span hidden id="column1-count"></span></p>
@@ -250,6 +258,11 @@
         const percent2 = ((checkedCount2 / totalCount2) * 100).toFixed(2);
         const advantage = (percent2 - percent1).toFixed(2);
         const avgPercent = ((+percent1 + +percent2) / 2).toFixed(2);
+
+      //ALLEARS ADDITIONS
+        let rightEarDecibel; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
+        let leftEarDecibel; // this is not yet attempted set up for server side at all, unlike right
+
 
         let direction = null;
         let interpretation = null;
@@ -441,6 +454,69 @@
       document.getElementById("ear_advantage_score").value = advantageDiff.innerText;
     }
 
+    //ALLEARS ADDITIONS
+      // only works for first group rn, copy paste for more when relevant to test
+      function calculateRightEarDecibel() {
+      
+        const checkedCount1Group1 = document.querySelectorAll(".column1Group1-button input[type='checkbox']:checked").length;
+        const checkedCount2Group1 = document.querySelectorAll(".column2Group1-button input[type='checkbox']:checked").length;
+
+        
+
+        if (checkedCount1Group1 >= (checkedCount2Group1 * 1.1)) {
+          rightEarDecibel = 35;
+        }
+        // SETS VALUE of hidden field
+        document.getElementById("rightEarDecibelField").value = rightEarDecibel;
+      }
+      //functions for setting ear dominance
+      function setEarDominance(dominance) {
+      // Assuming rightEarDecibel changes based on ear dominance
+        if (dominance === 'left') {
+          rightEarDecibel = 50;
+          leftEarDecibel = 30;
+        } else if (dominance === 'right') {
+          rightEarDecibel = 30;
+          leftEarDecibel = 50;
+        }
+        document.getElementById("rightEarDecibelField").value = rightEarDecibel;
+        document.getElementById("leftEarDecibelField").value = leftEarDecibel;
+        document.getElementById('rightEarDecibelDisplay').innerText = document.getElementById("rightEarDecibelField").value;
+        document.getElementById('leftEarDecibelDisplay').innerText = document.getElementById("leftEarDecibelField").value;
+      }
+      //separate testing function, can be commented/deleted later
+      // This is working, problem is with the user data then
+      function testRightEarDecibelUpdate() {
+        calculateRightEarDecibel();
+        // Update display of rightEarDecibel
+        document.getElementById('rightEarDecibelDisplay').innerText = document.getElementById("rightEarDecibelField").value;
+      }
+      //ALLEARS Audio control listener, buttons
+      document.addEventListener('DOMContentLoaded', (event) => {
+        const leftEarAudio = document.getElementById('leftEarAudio');
+        const rightEarAudio = document.getElementById('rightEarAudio');
+
+        // Play button event
+        document.getElementById('playButton').addEventListener('click', function() {
+          leftEarAudio.play();
+          rightEarAudio.play();
+        });
+
+        // Pause button event
+        document.getElementById('pauseButton').addEventListener('click', function() {
+          leftEarAudio.pause();
+          rightEarAudio.pause();
+        });
+        document.getElementById('setLeftDominance').addEventListener('click', function() {
+        setEarDominance('left');
+        });
+
+        document.getElementById('setRightDominance').addEventListener('click', function() {
+        setEarDominance('right');
+        });
+      });
+      
+
     </script>
     <div>
         <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
@@ -448,8 +524,5 @@
        </div>
     </div>
   </div>
-</div>
-<div>
-  <%= link_to "Next",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-secondary"%>
 </div>
 </body>

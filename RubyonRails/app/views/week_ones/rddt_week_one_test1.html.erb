@@ -144,7 +144,7 @@
             <span hidden id="taining-Left-Score"></span>
             <label for="read-Only">training Right Score</label>
             <input class="form-control" type="number" id="read-Only" value="" readonly>
-            <span hidden id="taining-Right-Score"></span>
+            <span hidden id="training-Right-Score"></span>
         </div>
       </div>
         <style>
@@ -243,6 +243,7 @@
           
             <%= f.hidden_field :client_name, value: "Example user" %>
             <%= f.hidden_field :test_type, value: "RDDT" %>
+            <%= f.hidden_field :counter, value: "1" %>
             <%= f.hidden_field :left_score2, id: "left_score" %>
             <%= f.hidden_field :right_score2, id: "right_score" %>
             <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
@@ -256,13 +257,13 @@
           <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
           <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
-          <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+          <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
         <% end %>
-          <div>
-            <!-- <%= link_to "Save and Proceed",  week_one_test_two_client_week_ones_path(@client), class: "btn btn-primary btn-block"%> -->
+          <!-- <div>
+             <%= link_to "Save and Proceed",  week_one_test_two_client_week_ones_path(@client), class: "btn btn-primary btn-block"%> 
             <%= link_to "Save and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
         </div>  
-    </div>
+    </div> -->
 
 
         <div>

@@ -76,7 +76,11 @@ Rails.application.routes.draw do
         get 'rddt_week_three_test1', to: 'week_threes#rddt_week_three_test1', as: 'week_three_test_one'
         get 'dwt_week_three_test4', to: 'week_threes#dwt_week_three_test4', as: 'week_three_test_four'
         get 'dwt_week_three_test5', to: 'week_threes#dwt_week_three_test5', as: 'week_three_test_five'
+        get 'dnw_week_three_test6', to: 'week_threes#dnw_week_three_test6', as: 'week_three_test_six'
+        get 'dnw_week_three_test7', to: 'week_threes#dnw_week_three_test7', as: 'week_three_test_seven'
         get 'rddt_week_three_test8', to: 'week_threes#rddt_week_three_test8', as: 'week_three_test_eight'
+        get 'dwt_week_three_test9', to: 'week_threes#dwt_week_three_test9', as: 'week_three_test_nine'
+        get 'dwt_week_three_test10', to: 'week_threes#dwt_week_three_test10', as: 'week_three_test_ten'
         get 'week_threes/:id', to: 'week_threes#show', as: 'show'
       end
     end
