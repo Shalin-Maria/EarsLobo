@@ -61,6 +61,13 @@ class Client < ApplicationRecord
       dependent: :destroy
       )
     has_many(
+      :week_threes,
+      class_name: 'WeekThree',
+      foreign_key: 'client_id',
+      inverse_of: :client,
+      dependent: :destroy
+    )
+    has_many(
       :trainings,
       class_name: 'Training',
       foreign_key: 'client_id',

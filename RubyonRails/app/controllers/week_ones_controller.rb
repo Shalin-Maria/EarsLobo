@@ -44,7 +44,7 @@ class WeekOnesController < ApplicationController
         @client = Client.find(params[:client_id])
         @week_one = WeekOnes.find(params[:id])
         render :edit
-      end
+    end
       
   
       def update

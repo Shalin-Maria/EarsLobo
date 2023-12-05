@@ -1,4 +1,24 @@
 class WeekThreesController < ApplicationController
+    def rddt_week_three_test1
+        @client = Client.find(params[:client_id])
+        @week_three = @client.week_threes.build
+    end
+
+    def dwt_week_three_test4
+      @client = Client.find(params[:client_id])
+      @week_three = @client.week_threes.build
+    end
+
+    def dwt_week_three_test5
+      @client = Client.find(params[:client_id])
+      @week_three = @client.week_threes.build
+    end
+
+    def rddt_week_three_test8
+      @client = Client.find(params[:client_id])
+      @week_three = @client.week_threes.build
+    end
+    
     def index
         @week_three = WeekThrees.all
         render :index

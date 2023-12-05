@@ -13,14 +13,20 @@
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
 #  client_id           :bigint           not null
+#  tenant_id           :bigint
+#  user_id             :bigint           not null
 #
 # Indexes
 #
 #  index_week_threes_on_client_id  (client_id)
+#  index_week_threes_on_tenant_id  (tenant_id)
+#  index_week_threes_on_user_id    (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (client_id => clients.id)
+#  fk_rails_...  (tenant_id => tenants.id)
+#  fk_rails_...  (user_id => users.id)
 #
 class WeekThree < ApplicationRecord
     acts_as_tenant(:tenant)
