@@ -81,11 +81,16 @@ Rails.application.routes.draw do
       end
     end
     resources :week_twos do
+      post 'submit_with_counter', on: :member
       collection do
         get 'rddt_week_two_test1', to: 'week_twos#rddt_week_two_test1', as: 'week_two_test_one'
-        get 'new_week_two_test_five', to: 'week_twos#new_week_two_test_five', as: 'week_two_test_five'
-        get 'new_week_two_test_six', to: 'week_twos#new_week_two_test_six', as: 'week_two_test_six'
-        get 'new_week_two_test_seven', to: 'week_twos#new_week_two_test_seven', as: 'week_two_test_seven'
+        get 'dwt_week_two_test2', to: 'week_twos#dwt_week_two_test2', as: 'week_two_test_two'
+        get 'dwt_week_two_test3', to: 'week_twos#dwt_week_two_test3', as: 'week_two_test_three'
+        get 'dwt_week_two_test4', to: 'week_twos#dwt_week_two_test4', as: 'week_two_test_four'
+        get 'rddt_week_two_test5', to: 'week_twos#rddt_week_two_test5', as: 'week_two_test_five'
+        get 'dnw_week_two_test6', to: 'week_twos#dnw_week_two_test6', as: 'week_two_test_six'
+        get 'dwt_week_two_test7', to: 'week_twos#dwt_week_two_test7', as: 'week_two_test_seven'
+        get 'dwt_week_two_test8', to: 'week_twos#dwt_week_two_test8', as: 'week_two_test_eight'
         get 'week_twos/:id', to: 'week_twos#show', as: 'show'
       end
     end
