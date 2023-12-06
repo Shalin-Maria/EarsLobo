@@ -4,18 +4,39 @@
 
 
 
-<h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
+<h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training " + @client.first_name + " " + @client.last_name%></strong></h1>
 
 <!--Test page for DWT List 1 Contains everything for completing and submitting a test  -->
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
-<%= form_with model: [@client, @week_one], local: true do |f| %>
+ <style>
+    div.sticky {
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 0;
+    }
+  </style> 
+<%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
 <div class="container">
   <div class="row">
     <div class="col-sm">
+    <div class="form-group row">
+      <div>
+        <p>Ear Dominance</p>
+          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+        </div>
+      </div> 
       <div class="form-group row">
+        <div>
+          <p>Audio Controls</p>
+          <button id="playButton" type="button">Play</button>
+          <button id="pauseButton" type="button">Pause</button>
+        </div>
+      </div> 
+      <div class="form-group row ">
         <label for="exampleLabel">Label</label>
-          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "DWT List One" %>
+          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week One Test Three" %>
       </div>
       <div class="form-group row">
         <label for="clientName">Client</label>
@@ -23,18 +44,16 @@
       </div>
       <div class="form-group row">
         <label for="testType">Type</label>
-        <input class="form-control" type="text" id="testType" placeholder="DWT" readonly>
+        <input class="form-control" type="text" id="testType" placeholder="Dichotic Words" readonly>
       </div>
       <hr/>
-      <div class="form-group row">
-        <label for="conditionSelect">Condition</label>
-        <input class="form-control" type="text" id="testType" placeholder="" readonly>
-      </div>
+      <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
 
       <hr/>
-      <label for="Notes">Notes</label>
-      <%= f.text_area :notes, class: 'form-control', rows: '3' %>
-      <hr/>
+      <div class="sticky">
+        <label for="Notes">Notes</label>
+        <%= f.text_area :notes, class: 'form-control', rows: '3' %>
+        <hr/>      
       <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
       <!-- ALLEARS Edited by Layton, removed default controls and added ids for easier access across javascript, html, and so-->
       <%= audio_tag "Dichotic Words Track 6_R_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
@@ -94,22 +113,13 @@
           </tbody>
         </thead>
       </table>
+
       <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
       <span hidden id="advantage-Name"></span>
-      <label for="read-Only">Interpretation</label>
-      <input class="form-control" type="text" id="read-Only-diag" value="" readonly>
-      <span hidden id="Diagnosis"></span>
     </div>
-    <!-- ALL EARS Table for ear score-->
-      <label for="read-Only">training Left Score</label>
-      <input class="form-control" type="number" id="read-Only" value="" readonly>
-      <span hidden id="taining-Left-Score"></span>
-      <label for="read-Only">training Right Score</label>
-      <input class="form-control" type="number" id="read-Only" value="" readonly>
-      <span hidden id="taining-Right-Score"></span>
-
+</div>
     <style>
       /* Center buttons in the table cells */
       .btn-group-toggle {
@@ -158,7 +168,7 @@
                 ["Hurl", "Check"],
                 ["Pick", "Date"],
                 ["Lore", "Pain"],
-                ["Dag", "Keg"],
+                ["Dab", "Keg"],
                 ["Goose", "Whip"],
                 ["Dime", "Tool"]
                 ] %>
@@ -191,21 +201,16 @@
         <%= f.hidden_field :right_score, id: "right_score" %>
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
-    
-        <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
-        <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
 
         <!-- AllEARS -->
         <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
         <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
         <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
+        <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
+        <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+
       <% end %>
-      <!-- <div>
-          <%= link_to "Submit and Proceed",  week_one_test_four_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
-          <%= link_to "Submit and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
-      </div>  
-    </div> -->
 
       <div>
         <p><span hidden id="column1-count"></span></p>
