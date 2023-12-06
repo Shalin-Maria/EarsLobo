@@ -263,6 +263,7 @@ ActiveRecord::Schema.define(version: 2023_12_06_050416) do
     t.bigint "user_id", null: false
     t.bigint "tenant_id"
     t.integer "counter"
+    t.integer "right_ear_decibel"
     t.index ["client_id"], name: "index_week_ones_on_client_id"
     t.index ["tenant_id"], name: "index_week_ones_on_tenant_id"
     t.index ["user_id"], name: "index_week_ones_on_user_id"
