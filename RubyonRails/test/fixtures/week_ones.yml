@@ -9,6 +9,7 @@
 #  ear_advantage_score :string
 #  left_score          :string
 #  notes               :text
+#  right_ear_decibel   :integer
 #  right_score         :string
 #  test_type           :string
 #  created_at          :datetime         not null

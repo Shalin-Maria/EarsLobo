@@ -263,11 +263,7 @@
           <%= f.hidden_field :left_ear_decibel, id: "leftEarDecibelField" %>
           <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
-<<<<<<< HEAD
-          <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %>
-=======
           <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields();" %>
->>>>>>> LaytonHell
         <% end %>
           <div>
             <!-- <%= link_to "Save and Proceed",  week_one_test_two_client_week_ones_path(@client), class: "btn btn-primary btn-block"%> -->
@@ -285,10 +281,6 @@
         </div>
 
 
-<<<<<<< HEAD
-      <script>
-      
-=======
    
       
     
@@ -296,7 +288,6 @@
 
     <script>
 
->>>>>>> LaytonHell
 
       //function for keeping the buttons blue after being clicked
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -456,13 +447,15 @@
 
       // This function combines the ear_decibel value and combines it with the audio file name to play the desired decibel level
       function updateAudioSources() {
-        //var audioPath = "/app/assets/audio/"
-        var leftEarSource =  leftEarDecibel + "1-pair Dichotic Digits, List 1_Left_HRTF.wav";
-        var rightEarSource = rightEarDecibel + "1-pair Dichotic Digits, List 1_Right_HRTF.wav";
+        var leftEarSource = "/audio_files/" + leftEarDecibel + "1-pair Dichotic Digits, List 1_Left_HRTF";
+        var rightEarSource = "/audio_files/" + rightEarDecibel + "1-pair Dichotic Digits, List 1_Right_HRTF";
+  
         leftEarAudio.src = leftEarSource;
         rightEarAudio.src = rightEarSource;
+  
         leftEarAudio.load();
         rightEarAudio.load();
+
         document.getElementById('currentlyPlayingLeftDisplay').innerText = leftEarSource + ", leftEarAudio.src:" + leftEarAudio.src;
         document.getElementById('currentlyPlayingRightDisplay').innerText = rightEarSource + ", rightEarAudio.src:" + rightEarAudio.src;
       }
