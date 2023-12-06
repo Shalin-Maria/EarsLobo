@@ -286,6 +286,22 @@ ActiveRecord::Schema.define(version: 2023_12_03_154235) do
     t.index ["user_id"], name: "index_week_threes_on_user_id"
   end
 
+  create_table "week_twos", force: :cascade do |t|
+    t.string "test_type"
+    t.string "client_name"
+    t.text "notes"
+    t.string "ear_advantage"
+    t.string "left_score"
+    t.string "right_score"
+    t.string "ear_advantage_score"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.bigint "tenant_id"
+    t.index ["tenant_id"], name: "index_week_twos_on_tenant_id"
+    t.index ["user_id"], name: "index_week_twos_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "clients", "tenants"
@@ -312,4 +328,6 @@ ActiveRecord::Schema.define(version: 2023_12_03_154235) do
   add_foreign_key "week_threes", "clients"
   add_foreign_key "week_threes", "tenants"
   add_foreign_key "week_threes", "users"
+  add_foreign_key "week_twos", "tenants"
+  add_foreign_key "week_twos", "users"
 end

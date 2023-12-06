@@ -80,6 +80,14 @@ Rails.application.routes.draw do
         get 'week_threes/:id', to: 'week_threes#show', as: 'show'
       end
     end
+    resources :week_twos do
+      collection do
+        get 'new_week_two_test_five', to: 'week_twos#new_week_two_test_five', as: 'week_two_test_five'
+        get 'new_week_two_test_six', to: 'week_twos#new_week_two_test_six', as: 'week_two_test_six'
+        get 'new_week_two_test_seven', to: 'week_twos#new_week_two_test_seven', as: 'week_two_test_seven'
+        get 'week_twos/:id', to: 'week_twos#show', as: 'show'
+      end
+    end
   end
     get 'clients/:client_id/trainings', to: 'trainings#index', as: 'client_trainings'
     get 'clients/:client_id/trainings/:id', to: 'trainings#show', as: 'client_training'
