@@ -84,8 +84,25 @@ Rails.application.routes.draw do
         get 'week_threes/:id', to: 'week_threes#show', as: 'show'
       end
     end
+    resources :week_twos do
+      post 'submit_with_counter', on: :member
+      collection do
+        get 'rddt_week_two_test1', to: 'week_twos#rddt_week_two_test1', as: 'week_two_test_one'
+        get 'dwt_week_two_test2', to: 'week_twos#dwt_week_two_test2', as: 'week_two_test_two'
+        get 'dwt_week_two_test3', to: 'week_twos#dwt_week_two_test3', as: 'week_two_test_three'
+        get 'dwt_week_two_test4', to: 'week_twos#dwt_week_two_test4', as: 'week_two_test_four'
+        get 'rddt_week_two_test5', to: 'week_twos#rddt_week_two_test5', as: 'week_two_test_five'
+        get 'dnw_week_two_test6', to: 'week_twos#dnw_week_two_test6', as: 'week_two_test_six'
+        get 'dwt_week_two_test7', to: 'week_twos#dwt_week_two_test7', as: 'week_two_test_seven'
+        get 'dwt_week_two_test8', to: 'week_twos#dwt_week_two_test8', as: 'week_two_test_eight'
+        get 'week_twos/:id', to: 'week_twos#show', as: 'show'
+      end
+    end
   end
     get 'clients/:client_id/trainings', to: 'trainings#index', as: 'client_trainings'
     get 'clients/:client_id/trainings/:id', to: 'trainings#show', as: 'client_training'
+
+  #ALLEARS Addition: Trying to fix audio path issues for Week_Ones
+  get '/audio_files/:file_name', to: 'audio_files#show', as: :audio_file
     
 end

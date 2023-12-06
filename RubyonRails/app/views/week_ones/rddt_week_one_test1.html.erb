@@ -29,8 +29,8 @@
           <div class="form-group row ">
             <div>
               <p>Ear Dominance</p>
-              <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
-              <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+              <button id="setLeftDominance" type="button" class="btn btn-info" onclick="setDominance('left')">Set Left Dominance</button>
+              <button id="setRightDominance" type="button" class="btn btn-info" onclick="setDominance('right')">Set Right Dominance</button>
             </div>
           </div>
           <div class="form-group row ">
@@ -61,6 +61,7 @@
             <hr/>
             <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
             <!-- ALLEARS Edited by Layton, removed default controls and added ids for easier access across javascript, html, and so-->
+            <!-- This will default to playing the base file-->
             <%= audio_tag "1-pair Dichotic Digits, List 1_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
             <%= audio_tag "1-pair Dichotic Digits, List 1_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
             <!-- Since this is the first test, this is hardcoded. Later, the deibels are controlled for as part of this file source pull -->
@@ -238,11 +239,18 @@
 
           <!-- ALLEARS ADDITIONS, added to submit as well-->
 
+          <%= hidden_field_tag 'currentlyPlayingRightField', id: 'currentlyPlayingRightField' %>
+          <%= hidden_field_tag 'currentlyPlayingLeftField', id: 'currentlyPlayingLeftField' %>
+         
+
+          <%= hidden_field_tag 'dominanceField', id: 'dominanceField' %>
+          
+
           <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
-          <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
+          <%= f.hidden_field :left_ear_decibel, id: "leftEarDecibelField" %>
           <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
-          <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+          <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %>
         <% end %>
           <!-- <div>
              <%= link_to "Save and Proceed",  week_one_test_two_client_week_ones_path(@client), class: "btn btn-primary btn-block"%> 
@@ -260,8 +268,13 @@
         </div>
 
 
-      <script>
+   
       
+    
+
+
+    <script>
+
 
       //function for keeping the buttons blue after being clicked
         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
@@ -347,8 +360,8 @@
 
           
           //ALLEARS ADDITIONS
-          let rightEarDecibel; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
-          let leftEarDecibel; // this is not yet attempted set up for server side at all, unlike right
+          let rightEarDecibel = 30; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
+          let leftEarDecibel = 50; // this is not yet attempted set up for server side at all, unlike right
 
 
           let direction = null;
@@ -418,18 +431,43 @@
       }
       //ALLEARS ADDITIONS
       // only works for first group rn, copy paste for more when relevant to test
-      function calculateRightEarDecibel() {
+
+      // This function combines the ear_decibel value and combines it with the audio file name to play the desired decibel level
+      function updateAudioSources() {
+        var leftEarSource = "/audio_files/" + leftEarDecibel + "1-pair Dichotic Digits, List 1_Left_HRTF";
+        var rightEarSource = "/audio_files/" + rightEarDecibel + "1-pair Dichotic Digits, List 1_Right_HRTF";
+  
+        leftEarAudio.src = leftEarSource;
+        rightEarAudio.src = rightEarSource;
+  
+        leftEarAudio.load();
+        rightEarAudio.load();
+
+        document.getElementById('currentlyPlayingLeftDisplay').innerText = leftEarSource + ", leftEarAudio.src:" + leftEarAudio.src;
+        document.getElementById('currentlyPlayingRightDisplay').innerText = rightEarSource + ", rightEarAudio.src:" + rightEarAudio.src;
+      }
+      //temo edit line ignore
+      function calculateEarDecibel() {
       
         const checkedCount1Group1 = document.querySelectorAll(".column1Group1-button input[type='checkbox']:checked").length;
         const checkedCount2Group1 = document.querySelectorAll(".column2Group1-button input[type='checkbox']:checked").length;
 
-        
-
-        if (checkedCount1Group1 >= (checkedCount2Group1 * 1.1)) {
-          rightEarDecibel = 35;
+        // these are only hardcoded because the first training will start the same for all with matching dominance.
+        if (document.getElementById("dominanceField").value == 'right') {
+          if (checkedCount1Group1 >= (checkedCount2Group1 * 1.1)) {
+            rightEarDecibel = 35;
+          }
+        } else if (document.getElementById("dominanceField").value == 'left') {
+          if (checkedCount2Group1 >= (checkedCount1Group1 * 1.1)) {
+           leftEarDecibel = 35;
+          }
         }
         // SETS VALUE of hidden field
         document.getElementById("rightEarDecibelField").value = rightEarDecibel;
+        document.getElementById("leftEarDecibelField").value = leftEarDecibel;
+        // Adds to display for debug buttons
+        document.getElementById("rightEarDecibelDisplay").innerText = rightEarDecibel;
+        document.getElementById("leftEarDecibelDisplay").innerText = leftEarDecibel;
       }
       //functions for setting ear dominance
       function setEarDominance(dominance) {
@@ -441,6 +479,10 @@
           rightEarDecibel = 30;
           leftEarDecibel = 50;
         }
+        // This dominance portion should be pulled from client in final product
+        document.getElementById("dominanceField").value = dominance;
+        document.getElementById("dominanceDisplay").innerText = dominance;
+
         document.getElementById("rightEarDecibelField").value = rightEarDecibel;
         document.getElementById("leftEarDecibelField").value = leftEarDecibel;
         document.getElementById('rightEarDecibelDisplay').innerText = document.getElementById("rightEarDecibelField").value;
@@ -448,9 +490,9 @@
       }
       //separate testing function, can be commented/deleted later
       // This is working, problem is with the user data then
-      function testRightEarDecibelUpdate() {
-        calculateRightEarDecibel();
-        // Update display of rightEarDecibel
+      function testEarDecibelUpdate() {
+        calculateEarDecibel();
+        // Update display of rightEarDecibel just in case
         document.getElementById('rightEarDecibelDisplay').innerText = document.getElementById("rightEarDecibelField").value;
       }
       //ALLEARS Audio control listener, buttons
@@ -469,6 +511,8 @@
           leftEarAudio.pause();
           rightEarAudio.pause();
         });
+
+        //dominacne listeners
         document.getElementById('setLeftDominance').addEventListener('click', function() {
         setEarDominance('left');
         });
@@ -480,6 +524,25 @@
       
 
     </script>
+      <div>
+
+        <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
+        <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
+        <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
+        <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
+        <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
+        <div>
+          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+        </div>
+
+        </div>
+
+      </div>
+
+      
+
+      
        <div>
         <%= link_to "Submit and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%> 
         <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>

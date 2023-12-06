@@ -1,0 +1,74 @@
+<div>
+
+  <h1 class="display-5" style="padding-bottom:20px"><strong>Hello <%= @client.first_name + " " + @client.last_name %>! Welcome to ARIA Training</strong></h1>
+</div>
+<div>
+              <button class="btn btn-primary rounded-pill btn-block btn-lg dropdown-toggle" type="button" data-toggle="dropdown">
+                Review Test Results
+                </button>
+                 <div class="dropdown-menu">  
+
+                  <a class="dropdown-item">
+    <table id="tableID">
+      <thead>
+        <tr>
+          
+          <th>Test Giver</th>
+          <th>Test Type</th>
+          <th>Left Score</th>
+          <th>Right Score</th>
+          <th>Ear Advantage</th>
+          <th>Ear Advantage Score</th>
+
+        </tr>
+      </thead></a>
+       <a class="dropdown-item"> 
+        <% @client.dwt_tests.each do |dwt_test, index| %>
+          <tr>
+               
+            <td><%= dwt_test.user.fname %> <%= dwt_test.user.lname %></td>
+            <td><%= dwt_test.test_type %></td>
+            <td><%= dwt_test.left_score %></td>
+            <td><%= dwt_test.right_score %></td>
+            <td><%= dwt_test.ear_advantage %></td>
+            <td><%= dwt_test.ear_advantage_score %></td>
+          </tr>
+        <% end %> </a>
+       <a class="dropdown-item"> 
+        <% @client.dnw_tests.each do |dnw_test, index| %>
+          <tr>
+            <td><%= dnw_test.user.fname %> <%= dnw_test.user.lname %></td>
+            <td><%= dnw_test.test_type %></td>
+            <td><%= dnw_test.left_score %></td>
+            <td><%= dnw_test.right_score %></td>
+            <td><%= dnw_test.ear_advantage %></td>
+            <td><%= dnw_test.ear_advantage_score %></td>
+          </tr>
+        <% end %></a>
+     <a class="dropdown-item"> 
+       <% @client.rddt_tests.each do |rddt_test, index| %>
+          <tr>
+            <td><%= rddt_test.user.fname %> <%= rddt_test.user.lname %></td>
+            <td><%= rddt_test.test_type %></td>
+            <td><%= rddt_test.left_score2 %></td>
+            <td><%= rddt_test.right_score2 %></td>
+            <td><%= rddt_test.ear_advantage %></td>
+            <td><%= rddt_test.ear_advantage_score %></td>
+          </tr>
+        <% end %></a>
+          </table>
+        </div>
+
+<div class="justify-content-center">
+<div class="table-responsive">
+  
+
+</div>
+</div>
+</div>
+<div>
+  <%= link_to 'Go back to Client information page', edit_client_path(@client), class: 'btn btn-outline-primary' %> | Start Training
+</div>
+<div>
+  <%= link_to "Start Training",  week_one_test_one_client_week_ones_path(@client), class: "btn btn-secondary"%>
+</div>

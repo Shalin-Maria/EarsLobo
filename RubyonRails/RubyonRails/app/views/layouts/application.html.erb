@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dichotics Inc</title>
+    <%= stylesheet_link_tag 'tabs', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'tabs', 'data-turbolinks-track': 'reload' %>
+  
+
+
+
+    
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%# the below tags allow for the javascript and jquery commands refereneced in the code to work DON'T DELETE %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+
+    <style id= "complied-css" type="text/css">
+  .navbardrop::after{
+    float:left;
+  }
+
+  
+  </style>
+
+  </head>
+  <body>
+
+  <nav id= "navbar"class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+    <div class="container-fluid clearfix ">
+    <div class="container-fluid clearfix justify-content-start">
+      <a class="navbar-brand" href="/home">
+      <%= image_tag 'AUDIA_RGB_single_letter.png', style: "width: 50px", class:"d-inline-block"%>
+      <%# <%= link_to edit_client_path(user) do %>
+      
+                    <%# <% end %>
+      
+      </a>
+
+        <ul class="navbar-nav flex-wrap">
+          <span class="navbar-brand">
+        <%= link_to image_tag('info.png', alt: 'Edit', width: 15), '/about', class:"d-inline-block" %>
+      </span>
+            <h5><small><li class='nav-item'>
+    <%= link_to 'Clients', (current_user&.global_moderator? ? global_moderator_index_path : clients_path), class: 'nav-link ' %> </small></h5>
+          </li>
+          <h5><small><li class='nav-item'>
+            <%# <%= image_tag 'headphones.png', style: "width: 50px", class:"d-inline-block"%>
+            <%= link_to 'Calibrate', "#", data: {toggle: "modal", target: '#myModal'}, class: 'nav-link ' %></small></h5>
+
+          </li>
+          </li>
+          </li>
+            <h5><small><li class='nav-item'>
+            <%= link_to 'Users',  users_path, class:'nav-link' %></small></h5>
+          </li>
+        </ul>
+
+                <form class="d-flex" role="search">
+      </div>
+      </div>
+
+      <%# This changes the text and link on the right-most side of the navbar to change whether a user is logged in or not %>
+
+      <ul class="navbar-nav">
+      <% if user_signed_in? %>
+      <h5><small><li class='nav-item'>
+        <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, data: { turbo: false }, class: 'nav-link text-white text-decoration-none' %>
+          </small></h5></li>
+      <%else%>
+      <h5><small><li class='nav-item'>
+        <%= link_to 'Login', new_user_session_path, class: "text-white nav-link #{active_class(new_user_session_path)}"%>
+        </small></h5></li>
+      <%end %>
+    </form>
+  </div>
+</nav>
+
+
+<%# all code for the calibration feature (inside modal made here) %>
+<div class="modal fade content-justify-center" id="myModal">
+
+ 
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header text-center">
+          <h1 class="modal-title"><strong>Calibrate Your Device</strong></h1>
+          <button type="button" class="close" data-dismiss="modal" >&times;
+          
+          </button>
+        </div>
+        
+        <!-- Modal body -->
+          <%# references audio file for the calibraion %>
+        <div class="modal-body text-center d-block">
+          <audio controls id="audio" class="center", style= 'w-100'>
+            <source src="assets/Track 02 Dichotic Words Test Track 1.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger rounded-pill" data-dismiss="modal">Close</button>
+        </div>
+        
+      </div>
+    </div>
+
+
+    <%# This script resets the calibraion audio in the modal after it is closed
+    this makes the audio to stop playing whenever you've closed the modal %>
+    <script>
+         $('#myModal').on('hide.bs.modal', function () { 
+          $('audio').each(function(){
+           this.pause(); // Stop playing
+            this.currentTime = 0; // Reset time
+           }); 
+          })
+    </script>
+  </div>
+  
+</div>
+    <main role="main" class="container">
+      <%= yield %>
+    </main>
+  </body>
+</html>
