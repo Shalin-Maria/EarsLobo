@@ -27,6 +27,7 @@
 #  encrypted_race_iv          :string
 #  encrypted_zip              :string
 #  encrypted_zip_iv           :string
+#  left_ear_decibel           :integer
 #  mgmt_ref                   :string
 #  right_ear_decibel          :integer
 #  state                      :string

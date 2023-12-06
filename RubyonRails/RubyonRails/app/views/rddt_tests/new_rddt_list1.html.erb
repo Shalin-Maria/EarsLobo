@@ -1,0 +1,633 @@
+
+<html>
+  <body id= "defBG">
+  <div class="container p-5 my-3 w-100 border rounded bg-white ">
+
+
+  <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <!-- Include jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <!--Test page for RDDT List 1 Contains everything for completing and submitting a test  -->
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+  
+  
+  <style>
+    div.sticky {
+        position: -webkit-sticky; /* Safari */
+        position: sticky;
+        top: 0;
+    }
+  </style>
+
+  <div class="container">
+    <%= form_with model: [@client, @rddt_test], local: true, html: { multipart: true } do |f| %>
+    <div class="row">
+      <div class="form-group row">
+        <div class="col-sm">
+          <div class="form-group row ">
+            <label for="exampleLabel">Label</label>
+              <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Rddt List One" %>
+          </div>
+          <div class="form-group row ">
+          <label for="clientName">Client</label>
+          <input class="form-control" type="text" id="clientName" placeholder="<%= @client.first_name + ' ' + @client.last_name %>" readonly>
+          </div>
+          <div class="form-group row ">
+            <label for="testType">Type</label>
+            <input class="form-control" type="text" id="testType" placeholder="RDDT" readonly>
+          </div>
+          <hr/>
+          <div class="form-group row ">
+            <label for="conditionSelect">Condition</label>
+            <input class="form-control" type="text" id="conditionSelect" placeholder="" readonly>
+          </div>
+
+          <hr/>
+          <div class="sticky">
+            <p>Notes</p>
+            <%= f.text_area :notes, class: 'form-control', rows: '3' %>
+            <hr/>
+            <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
+            <audio controls>
+              <source src="/assets/Track 08 RDDT-DirectedAttend 1.mp3" type="audio/mpeg">
+            </audio>
+            <hr/>
+            <!--Table for ear advantage percentage that is calculated in the script-->
+            <style>
+              .left-column {
+                background-color: lightblue;
+              }
+              
+              .right-column {
+                background-color: lightpink;
+              }
+              
+              .ear-advantage {
+                background-color: white;
+              }
+              
+              .ear-advantage.positive {
+                background-color: lightblue;
+              }
+              
+              .ear-advantage.negative {
+                background-color: lightpink;
+              }
+            </style>
+            
+
+            <p>Scores:</p>
+            <table class="table table-sm table-bordered m1-4" style="max-width: 25rem;">
+              <thead>
+                <tr>
+                  <th scope="col">Pairs</th>
+                  <th scope="col">Left</th>
+                  <th scope="col">Right</th>
+                  <th scope="col">Ear Adv</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td class="left-column"><span id="column1Group1-percent">0</span>%</td>
+                  <td class="right-column"><span id="column2Group1-percent">0</span>%</td>
+                  <td class="ear-advantage"><span id="Group1advantage-Diff">0</span>%</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td class="left-column"><span id="column1Group2-percent">0</span>%</td>
+                  <td class="right-column"><span id="column2Group2-percent">0</span>%</td>
+                  <td class="ear-advantage"><span id="Group2advantage-Diff">0</span>%</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>  
+                  <td class="left-column"><span id="column1Group3-percent">0</span>%</td>
+                  <td class="right-column"><span id="column2Group3-percent">0</span>%</td>
+                  <td class="ear-advantage"><span id="Group3advantage-Diff">0</span>%</td>         
+                </tr>
+              </tbody>
+            </table>
+            <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
+            <label for="read-Only">Ear Advantage</label>
+            <input class="form-control" type="text" id="read-Only" value="" readonly>
+            <span hidden id="advantage-Name"></span>
+            <label for="read-Only">Interpretation</label>
+            <input class="form-control" type="text" id="read-Only-diag" value="" readonly>
+            <span hidden id="Diagnosis"></span>
+          </div>
+        </div>
+      </div>
+        <style>
+          /* Center buttons in the table cells */
+          .btn-group-toggle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+          }
+
+          /* Make the font larger */
+          .btn.btn-outline-primary {
+            font-size: 16px; /* Adjust the font size as needed */
+            margin: 5px; /* Add some margin to separate the buttons */
+            min-width: 40px; /* Adjust the minimum width as needed */
+          }
+        </style>
+
+      
+
+      <div class="col-sm">
+            <table class="table table-sm table-striped ml-4">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Number</th>
+                  <th>Left</th>
+                  <th>Right</th>
+                </tr>
+              </thead>
+              <tbody>
+                
+              <!-- Loop for table of numbers and creation of all buttons, only loops 54 times and creates table for buttons-->
+                <% 54.times do |i| %>
+                  <% nums = [
+                    [[1,3],[4,9]],
+                    [[8],[6]],
+                    [[3],[9]],
+                    [[6,1,3],[5,10,2]],
+                    [[5,9,4],[6,8,1]],
+                    [[2,8],[10,3]],
+                    [[3],[1]],
+                    [[2,6,1],[5,10,4]],
+                    [[9,4,1],[6,3,10]],
+                    [[4],[1]],
+                    [[3,5],[2,8]],
+                    [[1,3],[6,5]],
+                    [[8,10,6],[3,2,1]],
+                    [[6,1],[5,10]],
+                    [[9],[6]],
+                    [[1,9,4],[3,2,5]],
+                    [[9,4],[6,3]],
+                    [[6,9,8],[4,5,10]],
+                    [[8,3],[10,4]],
+                    [[9,4,6],[3,2,5]],
+                    [[8],[4]],
+                    [[9,1],[10,2]],
+                    [[5,9],[8,10]],
+                    [[1,5,8],[10,9,6]],
+                    [[4],[9]],
+                    [[9],[2]],
+                    [[9],[5]],
+                    [[8,2,1],[5,10,9]],
+                    [[2,1],[6,3]],
+                    [[4],[8]],
+                    [[6],[2]],
+                    [[2,5],[8,3]],
+                    [[1,3,8],[4,9,5]],
+                    [[10,2],[1,9]],
+                    [[9],[10]],
+                    [[3,1,9],[6,5,10]],
+                    [[10],[8]],
+                    [[5,2],[10,3]],
+                    [[6,8,2],[10,1,4]],
+                    [[9],[3]],
+                    [[3,5],[4,10]],
+                    [[10,6,8],[3,4,9]],
+                    [[5],[3]],
+                    [[1,9,3],[2,6,5]],
+                    [[6,8],[10,1]],
+                    [[6],[9]],
+                    [[1],[4]],
+                    [[10,2],[5,1]],
+                    [[10,3,6],[9,8,2]],
+                    [[8,1,5],[6,9,2]],
+                    [[5,2],[4,6]],
+                    [[8],[1]],
+                    [[3,4],[9,8]],
+                    [[2,10,1],[3,9,6]]
+                    ] %>
+                  <tr>
+                    <td><%= i + 1 %></td>
+
+                    <td>
+                      <div class="btn-group-toggle" data="buttons">
+                        <% group_size = nums[i][0].length %>
+                        <% nums[i][0].each_with_index do |num, index| %>
+                          <% button_class = "column1Group#{group_size}-button" %>
+                          <label class="btn btn-outline-primary <%= button_class %>">
+                            <input type="checkbox" name="column1[<%= i %>][]" value="<%= num %>">
+                            <%= num %>
+                          </label>
+                        <% end %>
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="btn-group-toggle" data="buttons">
+                        <% group_size = nums[i][1].length %>
+                        <% nums[i][1].each_with_index do |num, index| %>
+                          <% button_class = "column2Group#{group_size}-button" %>
+                          <label class="btn btn-outline-primary <%= button_class %>">
+                            <input type="checkbox" name="column2[<%= i %>][]" value="<%= num %>">
+                            <%= num %>
+                          </label>
+                        <% end %>
+                      </div>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <div>
+        </div>  
+    </div>
+
+
+
+          <!-- Existing form fields -->
+          <%= f.hidden_field :client_name, value: "Example user" %>
+          <%= f.hidden_field :test_type, value: "RDDT" %>
+          <%= f.hidden_field :left_score2, id: "left_score" %>
+          <%= f.hidden_field :right_score2, id: "right_score" %>
+          <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
+          <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
+
+          <%= f.hidden_field :left_score1, id: "col1G1" %>
+          <%= f.hidden_field :right_score1, id: "col2G1" %>
+          <%= f.hidden_field :left_score3, id: "col1G3" %>
+          <%= f.hidden_field :right_score3, id: "col2G3" %>
+
+          <%= f.hidden_field :G1adv, id: "G1adv" %>
+          <%= f.hidden_field :G3adv, id: "G3adv" %>
+
+          <%= f.hidden_field :interpretation, id: "interpretation" %>
+
+          
+
+          <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
+        <% end %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <div>
+          <p><span hidden id="column1-count"></span></p>
+          <p><span id="column1Group1-percent"></span></p>
+          <p><span id="column1Group2-percent"></span></p>
+          <p><span id="column1Group3-percent"></span></p>
+
+          <p><span hidden id="column2-count"></span></p>
+          <p><span id="column2Group1-percent"></span></p>
+          <p><span id="column2Group2-percent"></span></p>
+          <p><span id="column2Group3-percent"></span></p>
+
+          <p><span id="Group1advantage-Diff"></span></p>
+          <p><span id="Group2advantage-Diff"></span></p>
+          <p><span id="Group3advantage-Diff"></span></p>
+        </div>
+
+
+
+
+
+      <script>
+      
+
+
+
+
+      //function for keeping the buttons blue after being clicked
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+        checkboxes.forEach(function(checkbox) {
+          checkbox.addEventListener('change', function() {
+            const label = this.closest('label');
+            if (this.checked) {
+              label.classList.add('active');
+            } else {
+              label.classList.remove('active');
+            }
+          });
+        });
+
+        //script completes all logic for calculating diagnosis and ear advantage values, It updates the percentages and lists the ear diag and advantage
+        // Get the toggle buttons and count elements
+        const column1ButtonsGroup1 = document.querySelectorAll(".column1Group1-button input[type='checkbox']");
+        const column1ButtonsGroup2 = document.querySelectorAll(".column1Group2-button input[type='checkbox']");
+        const column1ButtonsGroup3 = document.querySelectorAll(".column1Group3-button input[type='checkbox']");
+        const column2ButtonsGroup1 = document.querySelectorAll(".column2Group1-button input[type='checkbox']");
+        const column2ButtonsGroup2 = document.querySelectorAll(".column2Group2-button input[type='checkbox']");
+        const column2ButtonsGroup3 = document.querySelectorAll(".column2Group3-button input[type='checkbox']");
+
+        const allButtons = document.querySelectorAll(".column1Group1-button input[type='checkbox'], .column1Group2-button input[type='checkbox'], .column1Group3-button input[type='checkbox'], .column2Group1-button input[type='checkbox'], .column2Group2-button input[type='checkbox'], .column2Group3-button input[type='checkbox']");
+        
+        const column1Count = document.getElementById("column1-count");
+        const column2Count = document.getElementById("column2-count");
+        
+        const column1Group1Percent = document.getElementById("column1Group1-percent");
+        const column1Group2Percent = document.getElementById("column1Group2-percent");
+        const column1Group3Percent = document.getElementById("column1Group3-percent");
+        const column2Group1Percent = document.getElementById("column2Group1-percent");
+        const column2Group2Percent = document.getElementById("column2Group2-percent");
+        const column2Group3Percent = document.getElementById("column2Group3-percent");
+
+        const advantageDiffGroup1 = document.getElementById("Group1advantage-Diff");
+        const advantageDiffGroup2 = document.getElementById("Group2advantage-Diff");
+        const advantageDiffGroup3 = document.getElementById("Group3advantage-Diff");
+
+
+
+        const advantageName = document.getElementById("advantage-Name");
+        const testDiagnosis = document.getElementById("Diagnosis");
+        const readOnly = document.getElementById("read-Only");
+        const readOnlyDiag = document.getElementById("read-Only-diag");
+        
+
+
+        // Update the counts when a button is clicked
+        
+        allButtons.forEach(function(button) {
+          button.addEventListener("click", function() {
+          const checkedCount1Group1 = document.querySelectorAll(".column1Group1-button input[type='checkbox']:checked").length;
+          const checkedCount1Group2 = document.querySelectorAll(".column1Group2-button input[type='checkbox']:checked").length;
+          const checkedCount1Group3 = document.querySelectorAll(".column1Group3-button input[type='checkbox']:checked").length;
+          const checkedCount2Group1 = document.querySelectorAll(".column2Group1-button input[type='checkbox']:checked").length;
+          const checkedCount2Group2 = document.querySelectorAll(".column2Group2-button input[type='checkbox']:checked").length;
+          const checkedCount2Group3 = document.querySelectorAll(".column2Group3-button input[type='checkbox']:checked").length;
+
+          const totalCountColumn1Group1 = column1ButtonsGroup1.length;
+          const totalCountColumn1Group2 = column1ButtonsGroup2.length;
+          const totalCountColumn1Group3 = column1ButtonsGroup3.length;
+          const totalCountColumn2Group1 = column2ButtonsGroup1.length;
+          const totalCountColumn2Group2 = column2ButtonsGroup2.length;
+          const totalCountColumn2Group3 = column2ButtonsGroup3.length;
+
+
+          const percentColumn1Group1 = ((checkedCount1Group1 / totalCountColumn1Group1) * 100).toFixed(2);
+          const percentColumn1Group2 = ((checkedCount1Group2 / totalCountColumn1Group2) * 100).toFixed(2);
+          const percentColumn1Group3 = ((checkedCount1Group3 / totalCountColumn1Group3) * 100).toFixed(2);
+          const percentColumn2Group1 = ((checkedCount2Group1 / totalCountColumn2Group1) * 100).toFixed(2);
+          const percentColumn2Group2 = ((checkedCount2Group2 / totalCountColumn2Group2) * 100).toFixed(2);
+          const percentColumn2Group3 = ((checkedCount2Group3 / totalCountColumn2Group3) * 100).toFixed(2);
+
+          const group1Advantage = (percentColumn2Group1 - percentColumn1Group1).toFixed(2);
+          const group2Advantage = (percentColumn2Group2 - percentColumn1Group2).toFixed(2);
+          const group3Advantage = (percentColumn2Group3 - percentColumn1Group3).toFixed(2);
+
+
+
+
+
+          //calcs advantage side using average of all of them (ideal but not what client wants)
+
+          /*
+          const sumAdvantage = parseFloat(group1Advantage) + parseFloat(group2Advantage) + parseFloat(group3Advantage);
+          const threshold = 0.01; // Define the threshold value for neutrality
+
+          if (Math.abs(sumAdvantage) <= threshold) {
+            direction = "Neutral";
+          } else if (sumAdvantage > 0) {
+            direction = "Left";
+          } else {
+            direction = "Right";
+          }
+          */
+
+
+          let direction = null;
+          let interpretation = null;
+          let age = <%= @client.age_in_years %>;
+          let dom = null;
+          let nondom = null;
+
+          if (group2Advantage < 0) {
+            direction = "Left";
+            dom = percentColumn1Group2;
+            nondom = percentColumn2Group2;
+          } else if (group2Advantage > 0) {
+            direction = "Right";
+            dom = percentColumn2Group2;
+            nondom = percentColumn1Group2;
+          } else {
+            direction = "Neutral";
+          }
+
+
+  // IF else logic for diagnosis based on the childs age. Still unsure if this works as intended accoring to Employer, but we believe it does
+          if (age == 5 || age == 6){
+            if (direction == "Neutral"){
+              if (percentColumn1Group2 <= 33){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 67) || (nondom <= 33)) && ((group2Advantage <= -39) || (group2Advantage >= 39))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if ((dom <= 67) || (nondom <= 33)){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 67) && (nondom > 33)) && (group2Advantage <= -39)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 67) && (nondom > 33)) && (group2Advantage >= 39)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }            
+          }
+          if (age >= 7 && age <= 9){
+            if (direction == "Neutral"){
+              if (percentColumn1Group2 <= 56){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 83) || (nondom <= 56)) && ((group2Advantage <= -28) || (group2Advantage >= 28))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if ((dom <= 83) || (nondom <= 56)){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 83) && (nondom > 56)) && (group2Advantage <= -28)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 83) && (nondom > 56)) && (group2Advantage >= 28)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }         
+          }
+          if (age >= 10 && age <= 12){
+            if (direction == "Neutral"){
+              if (percentColumn1Group2 <= 72){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 89) || (nondom <= 72)) && ((group2Advantage <= -14) || (group2Advantage >= 14))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if ((dom <= 89) || (nondom <= 72)){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -14)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 14)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            } 
+          }
+          if (age >= 13 && age <= 15){
+            if (direction == "Neutral"){
+              if (percentColumn1Group2 <= 72){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 89) || (nondom <= 72)) && ((group2Advantage <= -17) || (group2Advantage >= 17))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if ((dom <= 89) || (nondom <= 72)){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -17)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 17)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }          
+          }
+          if (age >= 16 && age <= 18){
+            if (direction == "Neutral"){
+              if (percentColumn1Group2 <= 83){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 94) || (nondom <= 83)) && ((group2Advantage <= -11) || (group2Advantage >= 11))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if ((dom <= 94) || (nondom <= 83)){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 94) && (nondom > 83)) && (group2Advantage <= -11)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else if (((dom > 94) && (nondom > 83)) && (group2Advantage >= 11)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }          
+          }
+          
+          
+          // Passes values to strings so they can be pushed to the html above
+
+
+          column1Group1Percent.innerText = percentColumn1Group1.toString();
+          column1Group2Percent.innerText = percentColumn1Group2.toString();
+          column1Group3Percent.innerText = percentColumn1Group3.toString();
+
+          column2Group1Percent.innerText = percentColumn2Group1.toString();
+          column2Group2Percent.innerText = percentColumn2Group2.toString();
+          column2Group3Percent.innerText = percentColumn2Group3.toString();
+
+
+
+          advantageDiffGroup1.innerText = group1Advantage.toString();
+          advantageDiffGroup2.innerText = group2Advantage.toString();
+          advantageDiffGroup3.innerText = group3Advantage.toString();
+
+
+          advantageName.innerText = direction;
+          readOnly.value = advantageName.innerText;
+
+          
+          testDiagnosis.innerText = interpretation;
+          readOnlyDiag.value = testDiagnosis.innerText;
+
+          const earAdvantageCells = document.querySelectorAll('.ear-advantage');
+          // Loop through each ear advantage cell
+          earAdvantageCells.forEach(cell => {
+            // Get the value of the cell
+            const value = parseFloat(cell.textContent);
+
+            // Check the value and set the background color accordingly
+            if (value < 0) {
+              cell.style.backgroundColor = 'lightblue';
+            } else if (value > 0) {
+              cell.style.backgroundColor = 'lightpink';
+            } else {
+              cell.style.backgroundColor = 'white';
+            }
+          });
+          })
+        })
+      // gets the elements from hidden field submit above and populates them from the results in the script 
+      function populateHiddenFields() {
+        document.getElementById("left_score").value = column1Group2Percent.innerText;
+        document.getElementById("right_score").value = column2Group2Percent.innerText;
+        document.getElementById("ear_advantage").value = advantageName.innerText;
+        document.getElementById("ear_advantage_score").value = advantageDiffGroup2.innerText;
+
+
+        document.getElementById("col1G1").value = column1Group1Percent.innerText;
+        document.getElementById("col2G1").value = column2Group1Percent.innerText;
+        document.getElementById("col1G3").value = column1Group3Percent.innerText;
+        document.getElementById("col2G3").value = column2Group3Percent.innerText;
+
+        document.getElementById("G1adv").value = advantageDiffGroup1.innerText;
+        document.getElementById("G3adv").value = advantageDiffGroup3.innerText;
+
+        document.getElementById("interpretation").value = testDiagnosis.innerText;
+   
+      }
+
+        
+      </script>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

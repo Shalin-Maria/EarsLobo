@@ -1,0 +1,196 @@
+<body id="defBG" class="bg-white center">
+  <div id="whiteGrad" class="container p-5 my-3 w-100 bg-white border-0">
+    <!-- Heading for clients page -->
+    <h1 class="display-2" style='padding-bottom:20px'><strong>Clients<strong></h1>
+
+    <!--Filter options-->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <%= search_form_for @q, url: clients_path, method: :get, local: true, class: 'form-inline' do |f| %>
+          <%= f.search_field :first_name_or_last_name_cont, class: 'form-control mr-sm-2 rounded-pill' ,
+            placeholder: 'Filter by name' %>
+            <%= f.search_field :address1_or_state_or_city_or_country_or_zip_cont,
+              class: 'form-control mr-sm-2 rounded-pill' , placeholder: 'Filter by location' %>
+              <%= f.submit "Search" , class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
+                <% end %>
+                  <!-- Filter Button -->
+                  <button type="button" id="filterButton" class="btn btn-secondary rounded-pill mr-sm-2">Filter
+                    Options</button>
+      </div>
+
+      <!-- The filter modal -->
+      <div class="modal" id="filterModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Filter Options</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>Additional Filters Below</p>
+
+              <%= search_form_for @q, url: clients_path, method: :get, local: true, class: 'form-inline' do |f| %>
+                <!--Filter button for date-->
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label for="from_date">From Date:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <%= f.date_field :created_at_gteq, { class: 'form-control sort-select'} %>
+                  </div>
+                </div>
+                <!--Filter button for name-->
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label for="from_name">Name:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <%= f.select :sort_by_name, [['None', nil], ['First Name (A-Z)', 'first_name asc' ], ['First Name
+                      (Z-A)', 'first_name desc' ], ['Last Name (A-Z)', 'last_name asc' ], ['Last Name
+                      (Z-A)', 'last_name desc' ]], { selected: params[:q]&.dig(:sort_by_name) }, {
+                      class: 'form-control sort-select' , id: 'sort-by-name-select' , data: {
+                      button_id: 'filterButtonName' } } %>
+                  </div>
+                </div>
+                <!--Filter button for client-->
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label for="from_client">Client:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <%= f.select :sort_by_client, [['None', nil], ['Client Created (newest first)', 'created_at desc' ],
+                      ['Client Created (oldest first)', 'created_at asc' ]], { selected:
+                      params[:q]&.dig(:sort_by_client) }, { class: 'form-control sort-select' , data: {
+                      button_id: 'filterButtonClient' } } %>
+                  </div>
+                </div>
+                <!--Filter button for date of birth-->
+                <div class="row mb-2">
+                  <div class="col-md-4">
+                    <label for="from_date_birth">Date of Birth:</label>
+                  </div>
+                  <div class="col-md-8">
+                    <%= f.select :sort_by_date_birth, [['None', nil], ['Date of Birth (newest
+                      first)', 'date_of_birth desc' ], ['Date of Birth (oldest first)', 'date_of_birth asc' ]],
+                      {selected: params[:q]&.dig(:sort_by_date_birth)}, { class: 'form-control sort-select' , data: {
+                      button_id: 'filterButtonDateofBirth' } } %>
+                  </div>
+                </div>
+                <!--Filter option below is broken will need to fix later for age filtering, FIX ME-->
+                <!--
+                <div class="row mb-2">
+              <div class="col-md-4">
+                <label for="from_age">Age Range:</label>
+              </div>
+               <div class="col-md-8">
+                <%= f.number_field :age_gteq,  class: 'form-control', placeholder: 'Min Age' %>
+                <%= f.number_field :age_eq, class: 'form-control', placeholder: 'target Age' %>
+                <%= f.number_field :age_lteq, class: 'form-control', placeholder: 'Max Age' %>
+              </div>
+            </div>
+            -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn rounded-pill btn-outline-info my-2 my-sm-0" id="resetFiltersButton">Reset
+                Filters</button>
+              <%= f.submit "Apply Filter" , class: "btn rounded-pill btn-outline-info my-2 my-sm-0" %>
+                <button type="button" class="btn rounded-pill btn-outline-info my-2 my-sm-0"
+                  data-dismiss="modal">Close</button>
+                <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- JS functionality for the modal-->
+      <%= javascript_include_tag 'modalControlClientsIndex.js' %>
+
+        <div class="col-md-6 text-right">
+          <%= link_to 'Add New Client' , new_client_path, class: 'btn btn-primary rounded-pill btn-lg' %>
+        </div>
+    </div>
+    <%= link_to 'Download CSV', clients_path(format: "csv"), class: 'btn btn-secondary mb-3' %>
+   
+    <!--Designs the table for the following columns from Client model where data will be displayed-->
+    <div class="justify-content-center">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Edit</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Gender</th>
+              <th>Age</th>
+              <th>Date of Birth</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Country</th>
+              <th>State</th>
+              <th>City</th>
+              <th>Tenant_ID</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          
+          <!--Take data from the Client model database and show it in the table-->
+          <tbody>
+            <% @clients.each do |client| %>
+              <tr>
+                <td>
+                  <%= link_to edit_client_path(client) do %>
+                    <%= image_tag 'edit_icon.png' , alt: 'Edit' ,width: 20 %>
+                      <% end %>
+                </td>
+                <td>
+                  <%= client.first_name %>
+                </td>
+                <td>
+                  <%= client.last_name %>
+                </td>
+                <td>
+                  <%= client.email %>
+                </td>
+                <td>
+                  <%= client.gender %>
+                </td>
+                <td>
+                  <%= client.age_in_years %>
+                </td>
+                <td>
+                  <%= client.date_of_birth %>
+                </td>
+                <td>
+                  <%= client.phone1 %>
+                </td>
+                <td>
+                  <%= client.address1 %>
+                </td>
+                <td>
+                  <%= client.country %>
+                </td>
+                <td>
+                  <%= client.state %>
+                </td>
+                <td>
+                  <%= client.city %>
+                </td>
+                <td>
+                  <%= client.tenant_id %>
+                </td>
+                <td>
+                  <%= link_to client_path(client), method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <%= image_tag 'delete_icon.png' , alt: 'Delete' , width: 20 %>
+                      <% end %>
+                </td>
+              </tr>
+              <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>

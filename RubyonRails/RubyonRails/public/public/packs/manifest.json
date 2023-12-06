@@ -1,0 +1,44 @@
+{
+  "application.js": "/packs/js/application-ed5a8f8a56908968e9fe.js",
+  "application.js.map": "/packs/js/application-ed5a8f8a56908968e9fe.js.map",
+  "custom_tabs.js": "/packs/js/custom_tabs-8d3784691ad55996e9e2.js",
+  "custom_tabs.js.map": "/packs/js/custom_tabs-8d3784691ad55996e9e2.js.map",
+  "entrypoints": {
+    "application": {
+      "js": [
+        "/packs/js/application-ed5a8f8a56908968e9fe.js"
+      ],
+      "js.map": [
+        "/packs/js/application-ed5a8f8a56908968e9fe.js.map"
+      ]
+    },
+    "custom_tabs": {
+      "js": [
+        "/packs/js/custom_tabs-8d3784691ad55996e9e2.js"
+      ],
+      "js.map": [
+        "/packs/js/custom_tabs-8d3784691ad55996e9e2.js.map"
+      ]
+    },
+    "modal": {
+      "js": [
+        "/packs/js/modal-4b1623726f84857a5cb5.js"
+      ],
+      "js.map": [
+        "/packs/js/modal-4b1623726f84857a5cb5.js.map"
+      ]
+    },
+    "tabs": {
+      "js": [
+        "/packs/js/tabs-afae0f4d425cb352389d.js"
+      ],
+      "js.map": [
+        "/packs/js/tabs-afae0f4d425cb352389d.js.map"
+      ]
+    }
+  },
+  "modal.js": "/packs/js/modal-4b1623726f84857a5cb5.js",
+  "modal.js.map": "/packs/js/modal-4b1623726f84857a5cb5.js.map",
+  "tabs.js": "/packs/js/tabs-afae0f4d425cb352389d.js",
+  "tabs.js.map": "/packs/js/tabs-afae0f4d425cb352389d.js.map"
+}

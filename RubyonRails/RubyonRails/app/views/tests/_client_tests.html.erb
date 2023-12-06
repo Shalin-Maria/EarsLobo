@@ -1,0 +1,45 @@
+
+<!--This page shows all of the test's that are associated with a client !-->
+<h1>Saved Test Results for <%= @client.first_name %> <%= @client.last_name %></h1>
+<table>
+  <thead>
+    <tr>
+      <th>Test ID</th>
+      <th>Test Type</th>
+      <th>Label</th>
+      <th>Date</th>
+      <th>View</th>
+    </tr>
+  </thead>
+  <tbody>
+<!--For each test, output the id,test_type, etc !-->
+
+    <% @client.dwt_tests.each do |dwt_test| %>
+      <tr>
+        <td><%= dwt_test.id %></td>
+        <td><%= dwt_test.test_type %></td>
+        <td><%= dwt_test.label %></td>
+        <td><%= dwt_test.created_at.to_date %></td>
+        <td><%= link_to 'View', dwt_test_path(dwt_test) %></td>
+      </tr>
+    <% end %>
+    <% @client.dnw_tests.each do |dnw_test| %>
+      <tr>
+        <td><%= dnw_test.id %></td>
+        <td><%= dnw_test.test_type %></td>
+        <td><%= dnw_test.label %></td>
+        <td><%= dnw_test.created_at.to_date %></td>
+        <td><%= link_to 'View', dnw_test_path(dnw_test) %></td>
+      </tr>
+    <% end %>
+    <% @client.rddt_tests.each do |rddtt_test| %>
+      <tr>
+        <td><%= rddt_test.id %></td>
+        <td><%= rddt_test.test_type %></td>
+        <td><%= rddt_test.label %></td>
+        <td><%= rddt_test.created_at.to_date %></td>
+        <td><%= link_to 'View', rddt_test_path(rddt_test) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

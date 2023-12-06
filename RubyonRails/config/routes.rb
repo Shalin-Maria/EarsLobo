@@ -83,5 +83,8 @@ Rails.application.routes.draw do
   end
     get 'clients/:client_id/trainings', to: 'trainings#index', as: 'client_trainings'
     get 'clients/:client_id/trainings/:id', to: 'trainings#show', as: 'client_training'
+
+  #ALLEARS Addition: Trying to fix audio path issues for Week_Ones
+  get '/audio_files/:file_name', to: 'audio_files#show', as: :audio_file
     
 end

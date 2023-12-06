@@ -1,0 +1,34 @@
+<h1>Saved Test Results for <%= @client.first_name %> <%= @client.last_name %></h1>
+<%= link_to "Add New Test", new_client_test_path(@client), class: "btn btn-primary" %>
+
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Client Name</th>
+      <th>Tester</th>
+
+      <th>Test Type</th>
+      <th>Left Score</th>
+      <th>Right Score</th>
+      <th>Ear Advantage</th>
+      <th>Ear Advantage Score</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% client.tests.each do |test| %>
+      <tr>
+        <td><%= test.id %></td>
+        <td><%= @client.first_name + ' ' + @client.last_name %>
+        <td><%= test.test_type %></td>
+        <td><%= test.left_score %></td>
+        <td><%= test.right_score %></td>
+        <td><%= test.ear_advantage %></td>
+        <td><%= test.ear_advantage_score %></td>
+        <td><%= test.notes %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

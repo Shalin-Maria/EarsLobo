@@ -6,6 +6,7 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  fname                  :string
+#  left_ear_decibel       :integer
 #  lname                  :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
