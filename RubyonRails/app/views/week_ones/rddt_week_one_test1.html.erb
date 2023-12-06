@@ -10,7 +10,7 @@
   <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
   <!--Test page for RDDT List 1 Contains everything for completing and submitting a test  -->
   <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
-  <scrip src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
   
   
   <style>
@@ -29,8 +29,8 @@
           <div class="form-group row ">
             <div>
               <p>Ear Dominance</p>
-              <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
-              <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+              <button id="setLeftDominance" type="button" class="btn btn-info" onclick="setDominance('left')">Set Left Dominance</button>
+              <button id="setRightDominance" type="button" class="btn btn-info" onclick="setDominance('right')">Set Right Dominance</button>
             </div>
           </div>
           <div class="form-group row ">
@@ -400,8 +400,8 @@
 
           
           //ALLEARS ADDITIONS
-          let rightEarDecibel; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
-          let leftEarDecibel; // this is not yet attempted set up for server side at all, unlike right
+          let rightEarDecibel = 30; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
+          let leftEarDecibel = 50; // this is not yet attempted set up for server side at all, unlike right
 
 
           let direction = null;
@@ -474,9 +474,9 @@
 
       // This function combines the ear_decibel value and combines it with the audio file name to play the desired decibel level
       function updateAudioSources() {
-        var audioPath = "/app/assets/audio/"
-        var leftEarSource =  audioBasePath + leftEarDecibel + "1-pair Dichotic Digits, List 1_Left_HRTF.wav";
-        var rightEarSource = audioBasePath + rightEarDecibel + "1-pair Dichotic Digits, List 1_Right_HRTF.wav";
+        //var audioPath = "/app/assets/audio/"
+        var leftEarSource =  leftEarDecibel + "1-pair Dichotic Digits, List 1_Left_HRTF.wav";
+        var rightEarSource = rightEarDecibel + "1-pair Dichotic Digits, List 1_Right_HRTF.wav";
         leftEarAudio.src = leftEarSource;
         rightEarAudio.src = rightEarSource;
         leftEarAudio.load();
@@ -484,7 +484,7 @@
         document.getElementById('currentlyPlayingLeftDisplay').innerText = leftEarSource + ", leftEarAudio.src:" + leftEarAudio.src;
         document.getElementById('currentlyPlayingRightDisplay').innerText = rightEarSource + ", rightEarAudio.src:" + rightEarAudio.src;
       }
-      
+      //temo edit line ignore
       function calculateEarDecibel() {
       
         const checkedCount1Group1 = document.querySelectorAll(".column1Group1-button input[type='checkbox']:checked").length;
