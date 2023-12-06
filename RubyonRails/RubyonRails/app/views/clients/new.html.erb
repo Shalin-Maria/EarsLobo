@@ -1,0 +1,146 @@
+<body class="bg-light center">
+
+<!-- A container for the form -->
+<div class="container p-5 my-3 w-100 border rounded bg-white border-0">
+  <!-- A heading for the form -->
+  <h1 class="display-3" style='padding-bottom:20px'><strong>New Client</strong></h1>
+
+  <!-- A form that uses the bootstrap_form_with helper -->
+  <%= bootstrap_form_with url: clients_path, local: true do |f| %>
+
+    <!-- Fields for the client model -->
+    <%= f.fields :client, model: @client do |client_fields| %>
+
+    <!-- A submit button for the form -->
+    <%= f.submit "Save", class: "btn btn-block btn-secondary" %>
+
+    <!-- A row that contains two columns -->
+    <div class="row">
+
+      <!-- The first column -->
+      <div class="col-md-6">
+        <!-- A form group with a text field for the client's first name -->
+        <div class="form-group">
+          <%= client_fields.text_field :first_name, class: "form-control" %>
+        </div>
+
+        <!-- A form group with a text field for the client's last name -->
+        <div class="form-group">
+          <%= client_fields.text_field :last_name, class: "form-control" %>
+        </div>
+
+        <!-- A form group with a date field for the client's date of birth -->
+        <div class="form-group">
+          <%= client_fields.date_field :date_of_birth, class: "form-control" %>
+        </div>
+
+        <!-- A form group with an email field for the client's email address -->
+        <div class="form-group">
+          <%= client_fields.email_field :email, class: "form-control" %>
+        </div>
+
+        <!-- A form group with a text field for the client's management reference -->
+        <div class="form-group">
+          <%= client_fields.text_field :mgmt_ref, class: "form-control" %>
+        </div>
+
+        <!-- A form group with a select field for the client's gender -->
+        <div class="form-group">
+          <%= client_fields.select :gender, ['Male', 'Female', 'Other'], {}, class: "form-control" %>
+        </div>
+        <!-- A form group with a select field for the client's race -->
+        <div class="form-group">
+          <%= client_fields.select :race, ['American Indian or Alaska Native', 'Asian', 'Black or African American', 'Native Hawaiian or Other Pacific Islander', 'White'], {}, class: "form-control" %>
+        </div>
+
+ 
+      </div>
+
+      <!-- The second column -->
+      <div class="col-md-6">
+        <!-- A form group with a text field for the client's address -->
+        <div class="form-group">
+          <%= client_fields.text_field :address1, class: "form-control" %>
+        </div>
+
+        <!-- A form group with a text field for the client's country -->
+        <div class="form-group">
+          <%= client_fields.text_field :country, class: "form-control" %>
+        </div>
+
+        <!-- A form group with a text field for the client's state -->
+        <div class="form-group">
+          <%= client_fields.text_field :state, class: "form-control" %>
+        </div>
+
+        <!-- A form group with a text field for the client's city -->
+        <div class="form-group">
+          <%= client_fields.text_field :city, class: "form-control" %>
+        </div>
+
+        <!-- A form group with a text field for the client's zip code -->
+        <div class="form-group">
+          <%= client_fields.text_field :zip, class: "form-control" %>
+        </div>
+
+        <!-- A form group with a text field for the client's primary phone number -->
+      <div class="form-group">
+        <%= client_fields.text_field :phone1, class: "form-control" %>
+      </div>
+        <!-- A form group with a text field for the client's secondary phone number -->
+
+      <div class="form-group">
+        <%= client_fields.text_field :phone2, class: "form-control" %>
+      </div>
+
+    </div>
+
+ <!-- Emergency Contact Information form -->
+    <div class="col-md-12">
+        <h2 class= "display-4", style= 'padding-bottom:20px' ><strong>Emergency Contact Info</strong></h2>
+    </div>
+
+    <div class="col-md-6">
+
+        <!-- Define the nested form fields for the Emergency Contact Information -->
+        <%= client_fields.fields_for :emergency_contacts do |ec| %>
+            <div class="form-group">
+                <%= ec.text_field :first_name, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= ec.text_field :last_name, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= ec.text_field :phone_number, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= ec.text_field :address, class: "form-control" %>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <%= ec.text_field :email, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= ec.text_field :city, class: "form-control" %>
+            </div>
+
+            <div class="form-group">
+                <%= ec.text_field :state, class: "form-control" %>
+            </div>
+        </div>
+    </div>
+    <% end %>
+
+</div> <!-- This is the closing tag for the main "row" div -->
+
+  <% end %>
+<% end %>
+</div>
+</body>
+
