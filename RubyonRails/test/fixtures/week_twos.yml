@@ -4,6 +4,7 @@
 #
 #  id                  :bigint           not null, primary key
 #  client_name         :string
+#  counter             :integer
 #  ear_advantage       :string
 #  ear_advantage_score :string
 #  left_score          :string

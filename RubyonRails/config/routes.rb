@@ -82,6 +82,7 @@ Rails.application.routes.draw do
     end
     resources :week_twos do
       collection do
+        get 'rddt_week_two_test1', to: 'week_twos#rddt_week_two_test1', as: 'week_two_test_one'
         get 'new_week_two_test_five', to: 'week_twos#new_week_two_test_five', as: 'week_two_test_five'
         get 'new_week_two_test_six', to: 'week_twos#new_week_two_test_six', as: 'week_two_test_six'
         get 'new_week_two_test_seven', to: 'week_twos#new_week_two_test_seven', as: 'week_two_test_seven'
