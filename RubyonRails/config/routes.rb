@@ -70,6 +70,18 @@ Rails.application.routes.draw do
         get 'week_ones/:id', to: 'week_ones#show', as: 'show'
       end
     end
+    
+    resources :week_fours do
+      post 'submit_with_counter', on: :member
+      collection do
+        get 'dwt_week_four_test1', to: 'week_fours#dwt_week_four_test1', as: 'week_four_test_one'
+        get 'dwt_week_four_test2', to: 'week_fours#dwt_week_four_test2', as: 'week_four_test_two'
+        get 'rddt_week_four_test3', to: 'week_fours#rddt_week_four_test3', as: 'week_four_test_three'
+        get 'tales_week_four_test4', to: 'week_fours#tales_week_four_test4', as: 'week_four_test_four'
+        get 'tales_week_four_test5', to: 'week_fours#tales_week_four_test5', as: 'week_four_test_five'
+        get 'week_fours/:id', to: 'week_fours#show', as: 'show'
+      end
+    end
 
     resources :week_threes do
       post 'submit_with_counter', on: :member

@@ -40,7 +40,7 @@
         <input class="form-control" type="text" id="testType" placeholder="Dichotic Words" readonly>
       </div>
       <hr/>
-      <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
+      <!-- <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %> -->
 
       <hr/>
       <label for="Notes">Notes</label>
@@ -185,7 +185,7 @@
         </table>
 
         <%= f.hidden_field :client_name, value: "Example user" %>
-        <%= f.hidden_field :test_type, value: "DNW" %>
+        <%= f.hidden_field :test_type, value: "DWT" %>
         <%= f.hidden_field :counter, value: "5" %>
         <%= f.hidden_field :left_score, id: "left_score" %>
         <%= f.hidden_field :right_score, id: "right_score" %>

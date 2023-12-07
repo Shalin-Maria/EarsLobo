@@ -1,0 +1,152 @@
+<body class="bg-light center">
+  <div class="container p-5 my-3 w-100 border rounded bg-white ">
+    <h1 class="display-5" style='padding-bottom:20px'><strong><%= "Training " + @client.first_name + " " + @client.last_name %></strong></h1>
+
+    <!-- Fairy Tales Test Section -->
+    <%= form_with model: [@client, @week_four], local: true, html: { multipart: true } do |f| %>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <!-- Audio Controls -->
+            <div class="form-group row">
+              <div>
+                <p>Audio Controls</p>
+                <button id="playLeftButton" type="button" class="btn btn-info">Play Left</button>
+                <button id="playRightButton" type="button" class="btn btn-info">Play Right</button>
+                <button id="pauseButton" type="button" class="btn btn-info">Pause</button>
+                </div>
+            </div>
+            <div class="form-group row ">
+              <label for="exampleLabel">Label</label>
+              <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week Four Test Five" %>
+            </div>
+
+            <div class="form-group row">
+              <label for="clientName">Client</label>
+              <input class="form-control" type="text" id="clientName" placeholder="<%= @client.first_name + ' ' + @client.last_name %>" readonly>
+            </div>
+
+            <div class="form-group row">
+              <label for="testType">Type</label>
+              <input class="form-control" type="text" id="testType" placeholder="Fairy Tales" readonly>
+            </div>
+
+            <hr/>
+            <div class="sticky">
+              <label for="Notes">Notes</label>
+              <%= f.text_area :notes, class: 'form-control', rows: '3' %>
+              <hr/>
+
+              <!-- Audio Player for Fairy Tales Tracks -->
+              <%= audio_tag "Cinderella_Track2_R_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
+              <%= audio_tag "Cinderella_Track2_R_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
+              <!-- Add additional tracks as needed -->
+
+
+                <%= f.hidden_field :client_name, value: "Example user" %>
+                <%= f.hidden_field :test_type, value: "FT" %>
+                <%= f.hidden_field :counter, value: "5" %>
+                <%= f.hidden_field :left_score, id: "left_score" %>
+                <%= f.hidden_field :right_score, id: "right_score" %>
+                <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
+                <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
+
+                <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
+                <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
+
+                <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+
+            <% end %>
+            </div>
+          </div>
+
+          <div class="col-sm">
+            <!-- Instructions or additional content for the Fairy Tales Test -->
+            <div class="form-group row" id="leftContent">
+            <h4>Left</h4>
+            <p>
+                Seven, eight, old. 
+                From house to house with the glass slipper, and every hopeful young car tried to squeeze her dog into it. 
+                But it didn't fit any of them. At last the prince came to Cinderella's tile. 
+                First, one ugly sister tried and tried to squash her what into the slipper. 
+                A loathsome whiskered rat and six long green lizards. So Cinderella had to chair home when the ugly sisters howl. 
+                She was sitting quietly by the fire now when Cinderella ran from the royal pencil, the prince tried to follow her and he found the glass slipper. 
+                He said, “I shall marry the beautiful swim whose foot fits this clock and only her.” 
+                In the morning, the prince went from house to house with the glass slipper and every hopeful young car tried to squeeze her dog into it. 
+                But it didn't fit any of them. At last the prince came to Cinderella's tile. 
+                First one ugly sister tried and tried to squash her what into the slipper. 
+                But her foot was too wide and fat. Then the other ugly ball tried. 
+                He asked Cinderella to marry him, and then there was a happy wedding.
+            </p>
+            </div>
+          </div>
+
+            <div class="col-sm">
+            <div class="form-group row" id="rightContent" style="display: none;">
+            <h4>Right</h4>
+            <p>
+                In the morning the prince went. She ran on toward the golden coach. 10:11, noon. 
+                Then there was Cinderella in her old plain dress. 
+                A golden pumpkin lay at her feet, and scampering down the road were the six little gray tip. 
+                But her foot was too wide and fat. Then the other ugly ball tried, but her foot was too long and up. 
+                “Please,” said Cinderella, “let me try.” “The slipper certainly won't cat you,” said each of the fan sisters. 
+                “You didn't go to the ball.” But Cinderella slipped her foot into the shiny glass bird, and of course it fit perfectly. 
+                At the very next red, standing close beside Waite was the fairy godmother. 
+                She touched Cinderella with her wand, and suddenly Cinderella flat in a golden dress sparkling with jewels, and on her box all could see the prettiest pair of glass slippers ever. 
+                The ugly sisters were so cloud that for once they dike think of anything to say. 
+                But the prince knew what to scab. All tried, but her foot was too long and up. 
+                “Please,” said Cinderella, “let me try.”
+            </p>
+          </div>
+       </div>
+
+         <!-- Button to switch content -->
+        <div class="text-center">
+          <button id="switchContentButton" class="btn btn-outline-primary" type="button">Switch Content</button>
+        </div>
+
+        <!-- Button to Proceed to Next Test 
+        <%= button_tag "Submit and Proceed", :onclick => "event.preventDefault();" %> -->
+
+      </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+      const leftContent = document.getElementById('leftContent');
+      const rightContent = document.getElementById('rightContent');
+      const switchContentButton = document.getElementById('switchContentButton');
+      const leftEarAudio = document.getElementById('leftEarAudio');
+      const rightEarAudio = document.getElementById('rightEarAudio');
+
+      // Switch content button event
+      switchContentButton.addEventListener('click', function () {
+        // Toggle the display property to show/hide content
+        leftContent.style.display = (leftContent.style.display === 'none') ? 'block' : 'none';
+        rightContent.style.display = (rightContent.style.display === 'none') ? 'block' : 'none';
+      });
+
+      // Play left ear audio button event
+      document.getElementById('playLeftButton').addEventListener('click', function () {
+        leftEarAudio.play();
+      });
+
+      // Play right ear audio button event
+      document.getElementById('playRightButton').addEventListener('click', function () {
+        rightEarAudio.play();
+      });
+
+      // Pause button event
+      document.getElementById('pauseButton').addEventListener('click', function () {
+        leftEarAudio.pause();
+        rightEarAudio.pause();
+      });
+    });
+
+    </script>
+    <div>
+          <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
+          <%= link_to "Back",  week_four_test_four_client_week_fours_path(@client), class: "btn btn-primary btn-block"%>
+    </div>
+  </div>
+  </div>
+</body>
