@@ -1,5 +1,9 @@
 <body id="grad4Attempt2" class= "bg-light center">
 <div class="container p-5 my-3 w-100 border rounded bg-white ">
+
+
+
+
 <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training for " + @client.first_name + " " + @client.last_name%></strong></h1>
 
 <!--Test page for DNW List 1 Contains everything for completing and submitting a test  -->
@@ -13,7 +17,7 @@
     }
   </style>
   <div class="container">
-<%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
+<%= form_with model: [@client, @week_two], local: true, html: { multipart: true } do |f| %>
   <div class="row">
   <div class="form-group row">
     <div class="col-sm">
@@ -44,7 +48,6 @@
         <input class="form-control" type="text" id="testType" placeholder="Dichotic Spondees" readonly>
       </div>
       <hr/>
-      <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
 
       <hr/>
       <div class="sticky">
@@ -53,8 +56,8 @@
         <hr/>
         <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
         <hr/>
-        <%= audio_tag "Dichotic Words Track 12_R_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
-            <%= audio_tag "Dichotic Words Track 12_R_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
+        <%= audio_tag "Dichotic Spondees 16-35_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
+            <%= audio_tag "Dichotic Spondees 16-35_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
         <!--<%= audio_tag "1-pair Dichotic Digits, List 1_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
             <%= audio_tag "1-pair Dichotic Digits, List 1_Right_HRTF.wav", id: "rightEarAudio", controls: false %> -->
         <!--Table for ear advantage percentage that is calculated in the script-->
@@ -152,26 +155,26 @@
           <!-- Loop for table of words and creation of all buttons, only loops 25 times and creates table for buttons-->
             <% 20.times do |i| %>
               <% words = [
-                ["Hug", "Cave"],
-                ["Weave", "Vice"],
-                ["Joke", "Numb"],
-                ["Hot", "Win"],
-                ["Five", "Set"],
-                ["Shelf", "Rice"],
-                ["Cheek", "Bath"],
-                ["Goose", "Hedge"],
-                ["Not", "Cheer"],
-                ["Reap", "Patch"],
-                ["Fudge", "Ship"],
-                ["Foam", "Days"],
-                ["June", "Both"],
-                ["Sheep", "Move"],
-                ["Doll", "Jug"],
-                ["Him", "Deep"],
-                ["Tooth", "Well"],
-                ["Got", "Bug"],
-                ["Wish", "Phone"],
-                ["Vote", "Half"]
+                ["Northwest", "Hothouse"],
+                ["Iceberg", "Daybreak"],
+                ["Toothbrush", "Airplane"],
+                ["Sunset", "Birthday"],
+                ["Railroad", "Mushroom"],
+                ["Inkwell", "Baseball"],
+                ["Hardware", "Mousetrap"],
+                ["Farewell", "Headlight"],
+                ["Schoolboy", "NorthWest"],
+                ["Armchair", "Grandson"],
+                ["Eardrum", "Padlock"],
+                ["Pothouse", "Whitewash"],
+                ["Woodwork", "Pancake"],
+                ["Cowboy", "Duckpawn"],
+                ["Oatmeal", "Hotdog"],
+                ["Daybreak", "Workshop"],
+                ["Greyhound", "Playground"],
+                ["Drawbridge", "Stairway"],
+                ["Doormat", "Iceberg"],
+                ["Airplane", "Sidewalk"]
                 ] %>
               <tr>
                 <td><%= i + 1 %></td>
@@ -197,7 +200,7 @@
 
         <%= f.hidden_field :client_name, value: "Example user" %>
         <%= f.hidden_field :test_type, value: "DNW" %>
-        <%= f.hidden_field :counter, value: "8" %>
+        <%= f.hidden_field :counter, value: "6" %>
         <%= f.hidden_field :left_score, id: "left_score" %>
         <%= f.hidden_field :right_score, id: "right_score" %>
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
@@ -211,6 +214,9 @@
       
       <% end %>
 
+        <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
+        <%= link_to "Back",  week_two_test_five_client_week_twos_path(@client), class: "btn btn-primary btn-block"%>
+    
       <div>
         <p><span hidden id="column1-count"></span></p>
         <p><span id="column1-percent"></span></p>
@@ -289,142 +295,7 @@
         } else {
           direction = "Neutral";
           }
-// IF else logic for diagnosis based on the childs age. Still unsure if this works as intended accoring to Employer, but we believe it does
-        if (age == 5 || age == 6){
-          if (direction == "Neutral"){
-            if (percent1 <= 44){
-              interpretation = "Dichotic Dysaudia";
-            }
-            else{
-              interpretation = "Within Normal Limits";
-            }
-          }
-          else{
-            if (((dom <= 64) || (nondom <= 44)) && ((advantage <= -32) || (advantage >= 32))){
-              interpretation = "Amblyaudia + Dichotic Dysaudia";
-            }
-            else if ((dom <= 64) || (nondom <= 44)){
-              interpretation = "Dichotic Dysaudia";
-            }
-            else if (((dom > 64) && (nondom > 44)) && (advantage <= -32)){
-              interpretation = "Ambylaudia Right Ear Dominant";
-            }
-            else if (((dom > 64) && (nondom > 44)) && (advantage >= 32)){
-              interpretation = "Ambylaudia Left Ear Dominant";
-            }
-            else{
-              interpretation = "Within Normal Limits";
-            }
-          }            
-        }
-        if (age >= 7 && age <= 9){
-          if (direction == "Neutral"){
-            if (percent1 <= 60){
-              interpretation = "Dichotic Dysaudia";
-            }
-            else{
-              interpretation = "Within Normal Limits";
-            }
-          }
-          else{
-            if (((dom <= 76) || (nondom <= 60)) && ((advantage <= -24) || (advantage >= 24))){
-              interpretation = "Amblyaudia + Dichotic Dysaudia";
-            }
-            else if ((dom <= 76) || (nondom <= 60)){
-              interpretation = "Dichotic Dysaudia";
-            }
-            else if (((dom > 76) && (nondom > 60)) && (advantage <= -24)){
-              interpretation = "Ambylaudia Right Ear Dominant";
-            }
-            else if (((dom > 76) && (nondom > 60)) && (advantage >= 24)){
-              interpretation = "Ambylaudia Left Ear Dominant";
-            }
-            else{
-              interpretation = "Within Normal Limits";
-            }
-          }          
-        }
-        if (age >= 10 && age <= 12){
-          if (direction == "Neutral"){
-            if (percent1 <= 72){
-              interpretation = "Dichotic Dysaudia";
-            }
-            else{
-              interpretation = "Within Normal Limits";
-            }
-          }
-          else{
-            if (((dom <= 84) || (nondom <= 72)) && ((advantage <= -20) || (advantage >= 20))){
-              interpretation = "Amblyaudia + Dichotic Dysaudia";
-            }
-            else if ((dom <= 84) || (nondom <= 72)){
-              interpretation = "Dichotic Dysaudia";
-            }
-            else if (((dom > 84) && (nondom > 72)) && (advantage <= -20)){
-              interpretation = "Ambylaudia Right Ear Dominant";
-            }
-            else if (((dom > 84) && (nondom > 72)) && (advantage >= 20)){
-              interpretation = "Ambylaudia Left Ear Dominant";
-            }
-            else{
-              interpretation = "Within Normal Limits";
-            }
-          }
-        }
-        if (age >= 13 && age <= 15){
-          if (direction == "Neutral"){
-            if (percent1 <= 76){
-              interpretation = "Dichotic Dysaudia";
-            }
-            else{
-              interpretation = "Within Normal Limits";
-            }
-          }
-          else{
-            if (((dom <= 92) || (nondom <= 76)) && ((advantage <= -16) || (advantage >= 16))){
-              interpretation = "Amblyaudia + Dichotic Dysaudia";
-            }
-            else if ((dom <= 92) || (nondom <= 76)){
-              interpretation = "Dichotic Dysaudia";
-            }
-            else if (((dom > 92) && (nondom > 76)) && (advantage <= -16)){
-              interpretation = "Ambylaudia Right Ear Dominant";
-            }
-            else if (((dom > 92) && (nondom > 76)) && (advantage >= 16)){
-              interpretation = "Ambylaudia Left Ear Dominant";
-            }
-            else{
-              interpretation = "Within Normal Limits";
-            }
-          }          
-        }
-        if (age >= 16 && age <= 18){
-          if (direction == "Neutral"){
-            if (percent1 <= 80){
-              interpretation = "Dichotic Dysaudia";
-            }
-            else{
-              interpretation = "Within Normal Limits";
-            }
-          }
-          else{
-            if (((dom <= 88) || (nondom <= 80)) && ((advantage <= -14) || (advantage >= 14))){
-              interpretation = "Amblyaudia + Dichotic Dysaudia";
-            }
-            else if ((dom <= 88) || (nondom <= 80)){
-              interpretation = "Dichotic Dysaudia";
-            }
-            else if (((dom > 88) && (nondom > 80)) && (advantage <= -14)){
-              interpretation = "Ambylaudia Right Ear Dominant";
-            }
-            else if (((dom > 88) && (nondom > 80)) && (advantage >= 14)){
-              interpretation = "Ambylaudia Left Ear Dominant";
-            }
-            else{
-              interpretation = "Within Normal Limits";
-            }
-          }          
-        }
+
         // Passes values to strings so they can be pushed to the html above
         column1Count.innerText = checkedCount1.toString();
         column1Percent.innerText = percent1.toString();
@@ -525,10 +396,7 @@
       });
 
     </script>
-    <div>
-        <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
-        <%= link_to "Back",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
-       </div>
+    
     <div>
 
         <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
@@ -536,11 +404,7 @@
         <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
         <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
         <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
-        <div>
-          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
-          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
-        </div>
-
+        
         </div>
      
     </div>

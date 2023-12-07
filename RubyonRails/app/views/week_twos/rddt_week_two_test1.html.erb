@@ -22,7 +22,7 @@
   </style>
 
   <div class="container">
-    <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
+    <%= form_with model: [@client, @week_two], local: true, html: { multipart: true } do |f| %>
     <div class="row">
       <div class="form-group row">
         <div class="col-sm">
@@ -39,10 +39,7 @@
             <input class="form-control" type="text" id="testType" placeholder="RDDT" readonly>
           </div>
           <hr/>
-          <div class="form-group row ">
-            <label for="conditionSelect">Condition</label>
-            <input class="form-control" type="text" id="conditionSelect" placeholder="" readonly>
-          </div>
+          
 
           <hr/>
           <div class="sticky">
@@ -116,9 +113,6 @@
             <label for="read-Only">Ear Advantage</label>
             <input class="form-control" type="text" id="read-Only" value="" readonly>
             <span hidden id="advantage-Name"></span>
-            <label for="read-Only">Interpretation</label>
-            <input class="form-control" type="text" id="read-Only-diag" value="" readonly>
-            <span hidden id="Diagnosis"></span>
           </div>
         </div>
       </div>
@@ -218,6 +212,7 @@
           
             <%= f.hidden_field :client_name, value: "Example user" %>
             <%= f.hidden_field :test_type, value: "RDDT" %>
+            <%= f.hidden_field :counter, value: "1" %>
             <%= f.hidden_field :left_score2, id: "left_score" %>
             <%= f.hidden_field :right_score2, id: "right_score" %>
             <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
@@ -225,10 +220,8 @@
 
           <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %>
         <% end %>
-           <div>
-            <%= link_to "Save and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
-            <%= link_to "Back",  week_one_test_one_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
-        </div>  
+          
+        <%= link_to "Save and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
     </div>
 
 
@@ -361,143 +354,7 @@
           }
 
 
-  // IF else logic for diagnosis based on the childs age. Still unsure if this works as intended accoring to Employer, but we believe it does
-          if (age == 5 || age == 6){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 33){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 67) || (nondom <= 33)) && ((group2Advantage <= -39) || (group2Advantage >= 39))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 67) || (nondom <= 33)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 67) && (nondom > 33)) && (group2Advantage <= -39)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 67) && (nondom > 33)) && (group2Advantage >= 39)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }            
-          }
-          if (age >= 7 && age <= 9){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 56){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 83) || (nondom <= 56)) && ((group2Advantage <= -28) || (group2Advantage >= 28))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 83) || (nondom <= 56)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 83) && (nondom > 56)) && (group2Advantage <= -28)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 83) && (nondom > 56)) && (group2Advantage >= 28)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }         
-          }
-          if (age >= 10 && age <= 12){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 72){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 89) || (nondom <= 72)) && ((group2Advantage <= -14) || (group2Advantage >= 14))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 89) || (nondom <= 72)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -14)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 14)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            } 
-          }
-          if (age >= 13 && age <= 15){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 72){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 89) || (nondom <= 72)) && ((group2Advantage <= -17) || (group2Advantage >= 17))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 89) || (nondom <= 72)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -17)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 17)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }          
-          }
-          if (age >= 16 && age <= 18){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 83){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 94) || (nondom <= 83)) && ((group2Advantage <= -11) || (group2Advantage >= 11))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 94) || (nondom <= 83)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 94) && (nondom > 83)) && (group2Advantage <= -11)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 94) && (nondom > 83)) && (group2Advantage >= 11)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }          
-          }
-          
+ 
           
           // Passes values to strings so they can be pushed to the html above
 
@@ -552,7 +409,10 @@
 
         
       </script>
+       <div>
+
        
+       </div>
       </div>
     </div>
   </div>

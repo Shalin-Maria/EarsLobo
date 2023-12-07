@@ -54,7 +54,7 @@ class Client < ApplicationRecord
     has_many :dwt_tests,dependent: :destroy
     has_many :dnw_tests,dependent: :destroy
     has_many :rddt_tests,dependent: :destroy
-    has_many :week_twos, dependent: :destroy
+   
     has_many(
       :week_ones,
       class_name: 'WeekOne',
@@ -62,6 +62,14 @@ class Client < ApplicationRecord
       inverse_of: :client,
       dependent: :destroy
       )
+      has_many(
+        :week_twos,
+        class_name: 'WeekTwo',
+        foreign_key: 'client_id',
+        inverse_of: :client,
+        dependent: :destroy
+        )
+   
     has_many(
       :week_threes,
       class_name: 'WeekThree',

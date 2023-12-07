@@ -1,6 +1,5 @@
 class WeekTwosController < ApplicationController
-end
-class WeekOnesController < ApplicationController
+
     def rddt_week_two_test1
         @client = Client.find(params[:client_id])
         @week_two = @client.week_twos.build
@@ -10,7 +9,7 @@ class WeekOnesController < ApplicationController
       @client = Client.find(params[:client_id])
       @week_two = @client.week_twos.build
      end
-     def dwt_week_two_test3
+     def dwt_week_two_test3 
       @client = Client.find(params[:client_id])
       @week_two = @client.week_twos.build
      end
@@ -80,23 +79,23 @@ class WeekOnesController < ApplicationController
       submit_with_counter()
     end
     def submit_with_counter
-      if @week_one.save
-        case @week_one.counter
+      if @week_two.save
+        case @week_two.counter
         when 1
           session[:test_one_completed] = true
-          redirect_to week_two_test_two_client_week_ones_path(@client)
+          redirect_to week_two_test_two_client_week_twos_path(@client)
         when 2
-          redirect_to week_two_test_three_client_week_ones_path(@client)
+          redirect_to week_two_test_three_client_week_twos_path(@client)
         when 3
-          redirect_to week_two_test_four_client_week_ones_path(@client)
+          redirect_to week_two_test_four_client_week_twos_path(@client)
         when 4
-          redirect_to week_two_test_five_client_week_ones_path(@client)
+          redirect_to week_two_test_five_client_week_twos_path(@client)
         when 5
-          redirect_to week_two_test_six_client_week_ones_path(@client)
+          redirect_to week_two_test_six_client_week_twos_path(@client)
         when 6
-          redirect_to week_two_test_seven_client_week_ones_path(@client)
+          redirect_to week_two_test_seven_client_week_twos_path(@client)
         when 7
-          redirect_to week_two_test_eight_client_week_ones_path(@client)
+          redirect_to week_two_test_eight_client_week_twos_path(@client)
         when 8
           redirect_to client_trainings_path(@client)
         else

@@ -13,7 +13,7 @@
     }
   </style>
   <div class="container">
-<%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
+<%= form_with model: [@client, @week_two], local: true, html: { multipart: true } do |f| %>
   <div class="row">
   <div class="form-group row">
     <div class="col-sm">
@@ -43,10 +43,7 @@
         <label for="testType">Type</label>
         <input class="form-control" type="text" id="testType" placeholder="Dichotic Spondees" readonly>
       </div>
-      <hr/>
-      <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
-
-      <hr/>
+     
       <div class="sticky">
         <label for="Notes">Notes</label>
         <%= f.text_area :notes, class: 'form-control', rows: '3' %>
@@ -210,6 +207,7 @@
        <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %> 
       
       <% end %>
+        <%= link_to "Back",  week_two_test_seven_client_week_twos_path(@client), class: "btn btn-primary btn-block"%>
 
       <div>
         <p><span hidden id="column1-count"></span></p>
@@ -525,10 +523,7 @@
       });
 
     </script>
-    <div>
-        <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
-        <%= link_to "Back",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
-       </div>
+    
     <div>
 
         <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>

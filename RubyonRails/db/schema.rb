@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_06_060612) do
+ActiveRecord::Schema.define(version: 2023_12_07_060803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -289,18 +289,22 @@ ActiveRecord::Schema.define(version: 2023_12_06_060612) do
   end
 
   create_table "week_twos", force: :cascade do |t|
-    t.string "test_type"
     t.string "client_name"
-    t.text "notes"
     t.string "ear_advantage"
-    t.string "left_score"
-    t.string "right_score"
-    t.string "ear_advantage_score"
+    t.float "ear_advantage_score"
+    t.float "left_ear_decibel"
+    t.float "left_score"
+    t.text "notes"
+    t.float "right_ear_decibel"
+    t.float "right_score"
+    t.string "test_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
-    t.bigint "tenant_id"
     t.integer "counter"
+    t.bigint "tenant_id"
+    t.bigint "user_id", null: false
+    t.bigint "client_id", null: false
+    t.index ["client_id"], name: "index_week_twos_on_client_id"
     t.index ["tenant_id"], name: "index_week_twos_on_tenant_id"
     t.index ["user_id"], name: "index_week_twos_on_user_id"
   end
@@ -331,6 +335,7 @@ ActiveRecord::Schema.define(version: 2023_12_06_060612) do
   add_foreign_key "week_threes", "clients"
   add_foreign_key "week_threes", "tenants"
   add_foreign_key "week_threes", "users"
+  add_foreign_key "week_twos", "clients"
   add_foreign_key "week_twos", "tenants"
   add_foreign_key "week_twos", "users"
 end
