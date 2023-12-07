@@ -46,10 +46,7 @@
         <label for="testType">Type</label>
         <input class="form-control" type="text" id="testType" placeholder="Dichotic Spondees" readonly>
       </div>
-      <hr/>
-      <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
-
-      <hr/>
+     
       <label for="Notes">Notes</label>
       <%= f.text_area :notes, class: 'form-control', rows: '3' %>
       <hr/>
