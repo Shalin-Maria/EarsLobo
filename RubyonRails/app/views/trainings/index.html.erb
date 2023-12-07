@@ -177,6 +177,49 @@
     <%= link_to "Week Two", week_two_test_one_client_week_twos_path(@client) %>
     <%= link_to "Week Three", week_three_test_one_client_week_threes_path(@client) %>
   </div>
+</div>
+</div>
+
+<div class="justify-content-center mt-3">
+  <div class="dropdown-item">
+    <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#weekFourResultsTable">
+      Week Four Results
+    </button>
+    <div class="collapse table-responsive" id="weekFourResultsTable">
+    <table id="tableID">
+      <thead>
+        <tr>
+          <th>ID</th>
+          
+          <th>Test Giver</th>
+          <th>Test Type</th>
+          <th>Left Score</th>
+          <th>Right Score</th>
+          <th>Ear Advantage</th>
+          <th>Ear Advantage Score</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <% @client.week_fours.each do |week_four| %>
+          <tr>
+            <td><%= week_four.id %></td>
+            <td><%= week_four.client.full_name %></td>
+            <td><%= week_four.test_type %></td>
+            <td><%= week_four.left_score %></td>
+            <td><%= week_four.right_score %></td>
+            <td><%= week_four.ear_advantage %></td>
+            <td><%= week_four.ear_advantage_score %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="mt-3">
+    <%= link_to "Week Four", week_four_test_one_client_week_fours_path(@client) %>
+  </div>
+
+</div>   
+</div>
 <div>
   <%= link_to 'Go back to Client information page', edit_client_path(@client), class: 'btn btn-outline-primary' %> </div> 
   <%= link_to "Start Training",  week_one_test_one_client_week_ones_path(@client), class: "btn btn-secondary"%>

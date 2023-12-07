@@ -70,16 +70,36 @@ Rails.application.routes.draw do
         get 'week_ones/:id', to: 'week_ones#show', as: 'show'
       end
     end
+    
+    resources :week_fours do
+      post 'submit_with_counter', on: :member
+      collection do
+        get 'dwt_week_four_test1', to: 'week_fours#dwt_week_four_test1', as: 'week_four_test_one'
+        get 'dwt_week_four_test2', to: 'week_fours#dwt_week_four_test2', as: 'week_four_test_two'
+        get 'rddt_week_four_test3', to: 'week_fours#rddt_week_four_test3', as: 'week_four_test_three'
+        get 'tales_week_four_test4', to: 'week_fours#tales_week_four_test4', as: 'week_four_test_four'
+        get 'tales_week_four_test5', to: 'week_fours#tales_week_four_test5', as: 'week_four_test_five'
+        get 'week_fours/:id', to: 'week_fours#show', as: 'show'
+      end
+    end
 
     resources :week_threes do
+      post 'submit_with_counter', on: :member
       collection do
         get 'rddt_week_three_test1', to: 'week_threes#rddt_week_three_test1', as: 'week_three_test_one'
+        get 'tales_week_three_test2', to: 'week_threes#tales_week_three_test2', as: 'week_three_test_two'
+        get 'tales_week_three_test3', to: 'week_threes#tales_week_three_test3', as: 'week_three_test_three'
         get 'dwt_week_three_test4', to: 'week_threes#dwt_week_three_test4', as: 'week_three_test_four'
         get 'dwt_week_three_test5', to: 'week_threes#dwt_week_three_test5', as: 'week_three_test_five'
+        get 'dnw_week_three_test6', to: 'week_threes#dnw_week_three_test6', as: 'week_three_test_six'
+        get 'dnw_week_three_test7', to: 'week_threes#dnw_week_three_test7', as: 'week_three_test_seven'
         get 'rddt_week_three_test8', to: 'week_threes#rddt_week_three_test8', as: 'week_three_test_eight'
+        get 'dwt_week_three_test9', to: 'week_threes#dwt_week_three_test9', as: 'week_three_test_nine'
+        get 'dwt_week_three_test10', to: 'week_threes#dwt_week_three_test10', as: 'week_three_test_ten'
         get 'week_threes/:id', to: 'week_threes#show', as: 'show'
       end
     end
+
     resources :week_twos do
       post 'submit_with_counter', on: :member
       collection do

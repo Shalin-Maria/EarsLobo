@@ -2,7 +2,7 @@
 <div class="container p-5 my-3 w-100 border rounded bg-white ">
 <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training for " + @client.first_name + " " + @client.last_name%></strong></h1>
 
-<!--Test page for DNW List 1 Contains everything for completing and submitting a test  -->
+<!--Test page for DWT List 1 Contains everything for completing and submitting a test  -->
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 <style>
@@ -12,28 +12,27 @@
         top: 0;
     }
   </style>
-  <div class="container">
 <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
+<div class="container">
   <div class="row">
-  <div class="form-group row">
     <div class="col-sm">
-      <div class="form-group row">
+      <div class="form-group row"> 
       <div>
-              <p>Ear Dominance</p>
-              <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
-              <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
-            </div>
-          </div>
-          <div class="form-group row ">
-            <div>
-              <p>Audio Controls</p>
-              <button id="playButton" type="button">Play</button>
-              <button id="pauseButton" type="button">Pause</button>
-            </div>
-          </div>
-          <div class="form-group row ">
+        <p>Ear Dominance</p>
+          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+        </div>
+      </div> 
+      <div class="form-group row">
+        <div>
+          <p>Audio Controls</p>
+          <button id="playButton" type="button">Play</button>
+          <button id="pauseButton" type="button">Pause</button>
+        </div>
+      </div> 
+      <div class="form-group row">
         <label for="exampleLabel">Label</label>
-          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week One Test Six" %>
+          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week One Test Eight" %>
       </div>
       <div class="form-group row">
         <label for="clientName">Client</label>
@@ -41,22 +40,20 @@
       </div>
       <div class="form-group row">
         <label for="testType">Type</label>
-        <input class="form-control" type="text" id="testType" placeholder="Dichotic Spondees" readonly>
+        <input class="form-control" type="text" id="testType" placeholder="Dichotic Words" readonly>
       </div>
       <hr/>
-      <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
+      <!-- <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %> -->
 
       <hr/>
       <div class="sticky">
         <label for="Notes">Notes</label>
         <%= f.text_area :notes, class: 'form-control', rows: '3' %>
-        <hr/>
+      <hr/>
         <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
-        <hr/>
+
         <%= audio_tag "Dichotic Words Track 12_R_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
-            <%= audio_tag "Dichotic Words Track 12_R_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
-        <!--<%= audio_tag "1-pair Dichotic Digits, List 1_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
-            <%= audio_tag "1-pair Dichotic Digits, List 1_Right_HRTF.wav", id: "rightEarAudio", controls: false %> -->
+        <%= audio_tag "Dichotic Words Track 12_R_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
         <!--Table for ear advantage percentage that is calculated in the script-->
         <style>
             .left-column {
@@ -104,22 +101,12 @@
             </tbody>
           </thead>
         </table>
-      </div>
 
-      <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
-      <label for="read-Only">Ear Advantage</label>
-      <input class="form-control" type="text" id="read-Only" value="" readonly>
-      <span hidden id="advantage-Name"></span>
-      <span hidden id="Diagnosis"></span>
-       <!-- ALL EARS Table for ear score-->
-            <label for="read-Only">training Left Score</label>
-            <input class="form-control" type="number" id="read-Only" value="" readonly>
-            <span hidden id="taining-Left-Score"></span>
-            <label for="read-Only">training Right Score</label>
-            <input class="form-control" type="number" id="read-Only" value="" readonly>
-            <span hidden id="taining-Right-Score"></span>
+        <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
+        <label for="read-Only">Ear Advantage</label>
+        <input class="form-control" type="text" id="read-Only" value="" readonly>
+        <span hidden id="advantage-Name"></span>
     </div>
-
 </div>
     <style>
       /* Center buttons in the table cells */
@@ -196,7 +183,7 @@
         </table>
 
         <%= f.hidden_field :client_name, value: "Example user" %>
-        <%= f.hidden_field :test_type, value: "DNW" %>
+        <%= f.hidden_field :test_type, value: "DWT" %>
         <%= f.hidden_field :counter, value: "8" %>
         <%= f.hidden_field :left_score, id: "left_score" %>
         <%= f.hidden_field :right_score, id: "right_score" %>
@@ -529,20 +516,6 @@
         <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
         <%= link_to "Back",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
        </div>
-    <div>
-
-        <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
-        <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
-        <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
-        <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
-        <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
-        <div>
-          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
-          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
-        </div>
-
-        </div>
-     
     </div>
   </div>
 </div>

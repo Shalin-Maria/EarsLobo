@@ -3,7 +3,7 @@
   <div class="container p-5 my-3 w-100 border rounded bg-white ">
 
 
-  <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
+  <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training " + @client.first_name + " " + @client.last_name%></strong></h1>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
   <!-- Include jQuery -->
@@ -21,10 +21,10 @@
     }
   </style>
 
+  <!-- <div class="container"> -->
+  <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
   <div class="container">
-    <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
     <div class="row">
-      <div class="form-group row">
         <div class="col-sm">
           <div class="form-group row ">
             <div>
@@ -42,7 +42,7 @@
           </div>
           <div class="form-group row ">
             <label for="exampleLabel">Label</label>
-              <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Rddt List One" %>
+              <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week One Test One" %>
           </div>
           <div class="form-group row ">
           <label for="clientName">Client</label>
@@ -50,13 +50,9 @@
           </div>
           <div class="form-group row ">
             <label for="testType">Type</label>
-            <input class="form-control" type="text" id="testType" placeholder="RDDT" readonly>
+            <input class="form-control" type="text" id="testType" placeholder="VA Double Digits" readonly>
           </div>
           <hr/>
-          <div class="form-group row ">
-            <label for="conditionSelect">Condition</label>
-            <input class="form-control" type="text" id="conditionSelect" placeholder="" readonly>
-          </div>
 
           <hr/>
           <div class="sticky">
@@ -124,15 +120,8 @@
             <input class="form-control" type="text" id="read-Only" value="" readonly>
             <span hidden id="advantage-Name"></span>
           </div>
-            <!-- ALL EARS Table for ear score-->
-            <label for="read-Only">training Left Score</label>
-            <input class="form-control" type="number" id="read-Only" value="" readonly>
-            <span hidden id="taining-Left-Score"></span>
-            <label for="read-Only">training Right Score</label>
-            <input class="form-control" type="number" id="read-Only" value="" readonly>
-            <span hidden id="taining-Right-Score"></span>
         </div>
-      </div>
+
         <style>
           /* Center buttons in the table cells */
           .btn-group-toggle {
@@ -249,13 +238,13 @@
           <%= f.hidden_field :left_ear_decibel, id: "leftEarDecibelField" %>
           <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
-          <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields();" %>
+          <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %>
         <% end %>
-          <div>
-            <!-- <%= link_to "Save and Proceed",  week_one_test_two_client_week_ones_path(@client), class: "btn btn-primary btn-block"%> -->
+          <!-- <div>
+             <%= link_to "Save and Proceed",  week_one_test_two_client_week_ones_path(@client), class: "btn btn-primary btn-block"%> 
             <%= link_to "Save and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
         </div>  
-    </div>
+    </div> -->
 
 
         <div>
@@ -524,16 +513,16 @@
 
     </script>
       <div>
-        <button id="testButton" type="button" class="btn btn-info" onclick="testEarDecibelUpdate()">Test Ear Decibel Update</button>
+
+        <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
         <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
         <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
         <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
-        <p>DEBUG: Client Value: Left Ear Decibel: <%= @client.left_ear_decibel %></p>
         <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
-        <p>DEBUG: Current dominance:  <span id="dominanceDisplay"></span></p>
-        <button id="testButton" type="button" class="btn btn-info" onclick="updateAudioSources()">Run function for updating audio sources.</button>
-        <p>DEBUG: Current left audio file: <span id="currentlyPlayingLeftDisplay"></span></p>
-        <p>DEBUG: Current right audio file: <span id="currentlyPlayingRightDisplay"></span></p>
+        <div>
+          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+        </div>
 
         </div>
 
@@ -545,9 +534,6 @@
        <div>
         <%= link_to "Submit and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%> 
         <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
-      </div>
-      
-</div>
       </div>
     </div>
   </div>

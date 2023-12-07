@@ -249,6 +249,27 @@ ActiveRecord::Schema.define(version: 2023_12_07_060803) do
     t.index ["tenant_id"], name: "index_users_on_tenant_id"
   end
 
+  create_table "week_fours", force: :cascade do |t|
+    t.string "test_type"
+    t.string "client_name"
+    t.text "notes"
+    t.string "ear_advantage"
+    t.string "left_score"
+    t.string "right_score"
+    t.string "ear_advantage_score"
+    t.integer "left_ear_decibel"
+    t.integer "right_ear_decibel"
+    t.integer "counter"
+    t.bigint "client_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "tenant_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_week_fours_on_client_id"
+    t.index ["tenant_id"], name: "index_week_fours_on_tenant_id"
+    t.index ["user_id"], name: "index_week_fours_on_user_id"
+  end
+
   create_table "week_ones", force: :cascade do |t|
     t.string "test_type"
     t.string "client_name"
@@ -283,6 +304,9 @@ ActiveRecord::Schema.define(version: 2023_12_07_060803) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "tenant_id"
     t.bigint "user_id", null: false
+    t.integer "counter"
+    t.integer "left_ear_decibel"
+    t.integer "right_ear_decibel"
     t.index ["client_id"], name: "index_week_threes_on_client_id"
     t.index ["tenant_id"], name: "index_week_threes_on_tenant_id"
     t.index ["user_id"], name: "index_week_threes_on_user_id"
@@ -329,6 +353,9 @@ ActiveRecord::Schema.define(version: 2023_12_07_060803) do
   add_foreign_key "tests", "users"
   add_foreign_key "trainings", "clients"
   add_foreign_key "users", "tenants"
+  add_foreign_key "week_fours", "clients"
+  add_foreign_key "week_fours", "tenants"
+  add_foreign_key "week_fours", "users"
   add_foreign_key "week_ones", "clients"
   add_foreign_key "week_ones", "tenants"
   add_foreign_key "week_ones", "users"

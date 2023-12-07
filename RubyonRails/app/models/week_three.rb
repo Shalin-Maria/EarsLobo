@@ -4,10 +4,13 @@
 #
 #  id                  :bigint           not null, primary key
 #  client_name         :string
+#  counter             :integer
 #  ear_advantage       :string
 #  ear_advantage_score :string
+#  left_ear_decibel    :integer
 #  left_score          :string
 #  notes               :text
+#  right_ear_decibel   :integer
 #  right_score         :string
 #  test_type           :string
 #  created_at          :datetime         not null
