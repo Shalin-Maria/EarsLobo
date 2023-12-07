@@ -4,7 +4,7 @@
 
 
 
-<h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
+<h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training " + @client.first_name + " " + @client.last_name%></strong></h1>
 
 <!--Test page for DWT List 1 Contains everything for completing and submitting a test  -->
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
@@ -13,9 +13,23 @@
 <div class="container">
   <div class="row">
     <div class="col-sm">
+      <div class="form-group row"> 
+      <div>
+        <p>Ear Dominance</p>
+          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+        </div>
+      </div> 
+      <div class="form-group row">
+        <div>
+          <p>Audio Controls</p>
+          <button id="playButton" type="button">Play</button>
+          <button id="pauseButton" type="button">Pause</button>
+        </div>
+      </div> 
       <div class="form-group row">
         <label for="exampleLabel">Label</label>
-          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "DNW List One" %>
+          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week Three Test Six" %>
       </div>
       <div class="form-group row">
         <label for="clientName">Client</label>
@@ -23,10 +37,9 @@
       </div>
       <div class="form-group row">
         <label for="testType">Type</label>
-        <input class="form-control" type="text" id="testType" placeholder="DNW" readonly>
+        <input class="form-control" type="text" id="testType" placeholder="Dichotic Spondees" readonly>
       </div>
       <hr/>
-      
 
       <hr/>
       <label for="Notes">Notes</label>
@@ -37,13 +50,6 @@
       <%= audio_tag "Dichotic Spondees 1-15_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
       <%= audio_tag "Dichotic Spondees 1-15_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
             
-      <!-- <audio controls>
-        <source src="/assets/Dichotic Words Track 6_R_Left_HRTF.wav" type="audio/wav">
-      </audio>
-      <audio controls>
-        <source src="/assets/Dichotic Words Track 6_R_Right_HRTF.wav" type="audio/wav">
-      </audio>
-      <hr/> -->
       <!--Table for ear advantage percentage that is calculated in the script-->
       <style>
           .left-column {
@@ -95,17 +101,8 @@
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
       <span hidden id="advantage-Name"></span>
-      <label for="read-Only">Interpretation</label>
-      <input class="form-control" type="text" id="read-Only-diag" value="" readonly>
-      <span hidden id="Diagnosis"></span>
-    </div>
-    <!-- ALL EARS Table for ear score-->
-      <label for="read-Only">training Left Score</label>
-      <input class="form-control" type="number" id="read-Only" value="" readonly>
-      <span hidden id="taining-Left-Score"></span>
-      <label for="read-Only">training Right Score</label>
-      <input class="form-control" type="number" id="read-Only" value="" readonly>
-      <span hidden id="taining-Right-Score"></span>
+
+      </div>
 
     <style>
       /* Center buttons in the table cells */
@@ -183,14 +180,15 @@
         <%= f.hidden_field :right_score, id: "right_score" %>
         <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
-    
-        <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
-        <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
 
         <!-- AllEARS -->
         <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
         <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
         <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
+
+    
+        <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
+        <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
 
       <% end %>
 
@@ -238,9 +236,6 @@
       const readOnly = document.getElementById("read-Only");
       const readOnlyDiag = document.getElementById("read-Only-diag");
       
-      //ALL EARS ADDITION
-      //TODO REMOVE POLACEHOLDER
-      let decibel = 9999999999;
 
       // Update the counts when a button is clicked
       

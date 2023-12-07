@@ -1,0 +1,178 @@
+<body class="bg-light center">
+  <div class="container p-5 my-3 w-100 border rounded bg-white ">
+    <h1 class="display-5" style='padding-bottom:20px'><strong><%= "Training " + @client.first_name + " " + @client.last_name %></strong></h1>
+
+    <!-- Fairy Tales Test Section -->
+    <%= form_with model: [@client, @week_three], local: true, html: { multipart: true } do |f| %>
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <!-- Audio Controls -->
+            <div class="form-group row">
+              <div>
+                <p>Audio Controls</p>
+                <button id="playLeftButton" type="button" class="btn btn-info">Play Left</button>
+                <button id="playRightButton" type="button" class="btn btn-info">Play Right</button>
+                <button id="pauseButton" type="button" class="btn btn-info">Pause</button>
+                </div>
+            </div>
+            <div class="form-group row ">
+              <label for="exampleLabel">Label</label>
+              <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week Three Test Three" %>
+            </div>
+
+            <div class="form-group row">
+              <label for="clientName">Client</label>
+              <input class="form-control" type="text" id="clientName" placeholder="<%= @client.first_name + ' ' + @client.last_name %>" readonly>
+            </div>
+
+            <div class="form-group row">
+              <label for="testType">Type</label>
+              <input class="form-control" type="text" id="testType" placeholder="Fairy Tales" readonly>
+            </div>
+
+            <hr/>
+            <div class="sticky">
+              <label for="Notes">Notes</label>
+              <%= f.text_area :notes, class: 'form-control', rows: '3' %>
+              <hr/>
+
+              <!-- Audio Player for Fairy Tales Tracks -->
+              <%= audio_tag "LRRH_Track1_Left_HRTF.wav", id: "leftEarAudio1", controls: false %>
+              <%= audio_tag "LRRH_Track1_Right_HRTF.wav", id: "rightEarAudio1", controls: false %>
+              <%= audio_tag "LRRH_Track2_Left_HRTF.wav", id: "leftEarAudio2", controls: false %>
+              <%= audio_tag "LRRH_Track2_Right_HRTF.wav", id: "rightEarAudio2", controls: false %>
+              <!-- Add additional tracks as needed -->
+
+                <%= f.hidden_field :client_name, value: "Example user" %>
+                <%= f.hidden_field :test_type, value: "FT" %>
+                <%= f.hidden_field :counter, value: "3" %>
+                <%= f.hidden_field :left_score, id: "left_score" %>
+                <%= f.hidden_field :right_score, id: "right_score" %>
+                <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
+                <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
+
+                <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
+                <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
+
+                <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+
+            <% end %>
+            </div>
+          </div>
+
+          <div class="col-sm">
+            <!-- Instructions or additional content for the Fairy Tales Test -->
+            <div class="form-group row" id="leftContent">
+            <h4>Left</h4>
+            <p>
+                Once upon a time, there was a little girl who lived with her mother in a cottage in the baseball.
+                She was very sweet and pretty. Her mother loved Pyn dearly and so did Jobs’ grandmother who doted on her with shoelaces. 
+                The grandmother flew the girl a beautiful red cape and with a hood eaten on, which was comfy and pretty. 
+                So she always wore car because she always wore boat. 
+                They called her little bell riding hood. 
+                One morning the mother said to her, “Come, Little Red Riding Hood, take this basket to Foot's grandmother. 
+                She has been ill at Moon, and this cake I have farmed.”
+            </p>
+            </div>
+          </div>
+
+            <div class="col-sm">
+            <div class="form-group row" id="rightContent" style="display: none;">
+            <h4>Right</h4>
+            <p>
+                She stopped to pick a barn of wildflowers for her doghouse. 
+                Meanwhile, the wolf soon reached the grandmother's drumstick. 
+                “Who knocked on the door? Who is there?” asked a voice from inside the drugstore. 
+                “Your granddaughter,” answered the wolf, imitating little Red Riding Hood's voice. 
+                “And I have brought a boat, a drink, and a pot of butter for you, for Mama.” 
+                The grandmother, who was in church because she was still green and weak, called “pull the handle and the lock will go sad.” 
+                So the wolf pulled the lampshade, pushed open the door and went into the sandbox. 
+                He quickly ate the grandmother. 
+            </p>
+          </div>
+       </div>
+
+         <!-- Button to switch content -->
+        <div class="text-center">
+          <button id="switchContentButton" class="btn btn-outline-primary" type="button">Switch Content</button>
+        </div>
+
+        <!-- Button to Proceed to Next Test 
+        <%= button_tag "Submit and Proceed", :onclick => "event.preventDefault();" %> -->
+
+      </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+      const leftContent = document.getElementById('leftContent');
+      const rightContent = document.getElementById('rightContent');
+      const switchContentButton = document.getElementById('switchContentButton');
+      const leftEarAudio1 = document.getElementById('leftEarAudio1');
+      const rightEarAudio1 = document.getElementById('rightEarAudio1');
+      const leftEarAudio2 = document.getElementById('leftEarAudio2');
+      const rightEarAudio2 = document.getElementById('rightEarAudio2');
+
+      const audioList = [leftEarAudio1, leftEarAudio2, rightEarAudio1, rightEarAudio2];
+      let currentAudioIndex = 0;
+
+      function playNextAudio() {
+        if (currentAudioIndex < audioList.length) {
+            audioList[currentAudioIndex].play();
+            currentAudioIndex++;
+        }
+       }
+      // Switch content button event
+      switchContentButton.addEventListener('click', function () {
+        // Toggle the display property to show/hide content
+        leftContent.style.display = (leftContent.style.display === 'none') ? 'block' : 'none';
+        rightContent.style.display = (rightContent.style.display === 'none') ? 'block' : 'none';
+      });
+
+      // Play left ear audio button event
+      /* document.getElementById('playLeftButton').addEventListener('click', function () {
+        leftEarAudio.play();
+      });
+
+      // Play right ear audio button event
+      document.getElementById('playRightButton').addEventListener('click', function () {
+        rightEarAudio.play();
+      });
+
+      // Pause button event
+      document.getElementById('pauseButton').addEventListener('click', function () {
+        leftEarAudio.pause();
+        rightEarAudio.pause();
+      }); */
+
+      // Play left ear audio button event
+        document.getElementById('playLeftButton').addEventListener('click', function () {
+          playNextAudio();
+        });
+
+        // Play right ear audio button event
+        document.getElementById('playRightButton').addEventListener('click', function () {
+          playNextAudio();
+        });
+
+        // Pause button event
+        document.getElementById('pauseButton').addEventListener('click', function () {
+          audioList.forEach(audio => audio.pause());
+          currentAudioIndex = 0;
+        });
+
+    });
+
+    function playAudioSequentially() {
+        // Start playing the first audio in the list
+        playNextAudio();
+    }
+
+    </script>
+    <div>
+          <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
+          <%= link_to "Back",  week_three_test_two_client_week_threes_path(@client), class: "btn btn-primary btn-block"%>
+    </div>
+  </div>
+  </div>
+</body>
