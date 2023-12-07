@@ -1,0 +1,7 @@
+Meeting Notes
+●	Planning on week 1+2, trying 3
+●	Currently working on Client model and audio player
+●	Clarified files (decibel controlled by client)
+●	Wireframes good, try to made side bar scroll with the page rather than scrolling away
+○	Cut unneeded fields for training vs test (we may need to keep some as hidden fields?)
+●	Discussed test expectations (mono vs dual ear on tests)
