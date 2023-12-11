@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_07_233458) do
+ActiveRecord::Schema.define(version: 2023_12_11_053359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -254,9 +254,9 @@ ActiveRecord::Schema.define(version: 2023_12_07_233458) do
     t.string "client_name"
     t.text "notes"
     t.string "ear_advantage"
-    t.string "left_score"
-    t.string "right_score"
-    t.string "ear_advantage_score"
+    t.float "left_score"
+    t.float "right_score"
+    t.float "ear_advantage_score"
     t.integer "left_ear_decibel"
     t.integer "right_ear_decibel"
     t.integer "counter"
@@ -275,9 +275,9 @@ ActiveRecord::Schema.define(version: 2023_12_07_233458) do
     t.string "client_name"
     t.text "notes"
     t.string "ear_advantage"
-    t.string "left_score"
-    t.string "right_score"
-    t.string "ear_advantage_score"
+    t.float "left_score"
+    t.float "right_score"
+    t.float "ear_advantage_score"
     t.bigint "client_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
