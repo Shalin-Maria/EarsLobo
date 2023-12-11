@@ -6,12 +6,12 @@
 #  client_name         :string
 #  counter             :integer
 #  ear_advantage       :string
-#  ear_advantage_score :string
+#  ear_advantage_score :float
 #  left_ear_decibel    :integer
-#  left_score          :string
+#  left_score          :float
 #  notes               :text
 #  right_ear_decibel   :integer
-#  right_score         :string
+#  right_score         :float
 #  test_type           :string
 #  created_at          :datetime         not null
 #  updated_at          :datetime         not null
