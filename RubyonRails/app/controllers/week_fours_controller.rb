@@ -23,6 +23,22 @@ class WeekFoursController < ApplicationController
       @client = Client.find(params[:client_id])
       @week_four = @client.week_fours.build
     end
+    def dnw_week_four_test6
+      @client = Client.find(params[:client_id])
+      @week_four = @client.week_fours.build
+    end
+    def dwt_week_four_test7
+      @client = Client.find(params[:client_id])
+      @week_four = @client.week_fours.build
+    end
+    def dwt_week_four_test8
+      @client = Client.find(params[:client_id])
+      @week_four = @client.week_fours.build
+    end
+    def rddt_week_four_test9
+      @client = Client.find(params[:client_id])
+      @week_four = @client.week_fours.build
+    end
 
     def index
         @week_four = WeekFours.all
@@ -77,6 +93,14 @@ class WeekFoursController < ApplicationController
         when 4
           redirect_to week_four_test_five_client_week_fours_path(@client)
         when 5
+          redirect_to week_four_test_six_client_week_fours_path(@client)
+        when 6
+          redirect_to week_four_test_seven_client_week_fours_path(@client)
+        when 7
+          redirect_to week_four_test_eight_client_week_fours_path(@client)
+        when 8
+          redirect_to week_four_test_nine_client_week_fours_path(@client)
+        when 9
           redirect_to client_trainings_path(@client)
         else
           render 'new'
