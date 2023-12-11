@@ -21,8 +21,8 @@
     }
   </style>
 
+  <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
   <div class="container">
-    <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
     <div class="row">
       <div class="form-group row">
         <div class="col-sm">
@@ -233,11 +233,10 @@
             <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
 
             <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+            <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
+            <%= link_to "Back",  week_one_test_one_client_week_ones_path(@client), class: "btn btn-secondary btn-block"%>
         <% end %>
-           <div>
-            <%= link_to "Save and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
-            <%= link_to "Back",  week_one_test_one_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
-        </div>  
+      
     </div>
 
 
@@ -288,9 +287,15 @@
         const column2Group2Percent = document.getElementById("column2Group2-percent");
         const column2Group3Percent = document.getElementById("column2Group3-percent");
 
+
         const advantageDiffGroup1 = document.getElementById("Group1advantage-Diff");
+        advantageDiffGroup1.innerText = group1Advantage.toString();
+
         const advantageDiffGroup2 = document.getElementById("Group2advantage-Diff");
+        advantageDiffGroup2.innerText = group2Advantage.toString();
+
         const advantageDiffGroup3 = document.getElementById("Group3advantage-Diff");
+        advantageDiffGroup3.innerText = group3Advantage.toString();
 
 
 
@@ -373,144 +378,7 @@
           }
 
 
-  // IF else logic for diagnosis based on the childs age. Still unsure if this works as intended accoring to Employer, but we believe it does
-          if (age == 5 || age == 6){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 33){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 67) || (nondom <= 33)) && ((group2Advantage <= -39) || (group2Advantage >= 39))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 67) || (nondom <= 33)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 67) && (nondom > 33)) && (group2Advantage <= -39)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 67) && (nondom > 33)) && (group2Advantage >= 39)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }            
-          }
-          if (age >= 7 && age <= 9){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 56){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 83) || (nondom <= 56)) && ((group2Advantage <= -28) || (group2Advantage >= 28))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 83) || (nondom <= 56)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 83) && (nondom > 56)) && (group2Advantage <= -28)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 83) && (nondom > 56)) && (group2Advantage >= 28)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }         
-          }
-          if (age >= 10 && age <= 12){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 72){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 89) || (nondom <= 72)) && ((group2Advantage <= -14) || (group2Advantage >= 14))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 89) || (nondom <= 72)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -14)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 14)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            } 
-          }
-          if (age >= 13 && age <= 15){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 72){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 89) || (nondom <= 72)) && ((group2Advantage <= -17) || (group2Advantage >= 17))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 89) || (nondom <= 72)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -17)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 17)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }          
-          }
-          if (age >= 16 && age <= 18){
-            if (direction == "Neutral"){
-              if (percentColumn1Group2 <= 83){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }
-            else{
-              if (((dom <= 94) || (nondom <= 83)) && ((group2Advantage <= -11) || (group2Advantage >= 11))){
-                interpretation = "Amblyaudia + Dichotic Dysaudia";
-              }
-              else if ((dom <= 94) || (nondom <= 83)){
-                interpretation = "Dichotic Dysaudia";
-              }
-              else if (((dom > 94) && (nondom > 83)) && (group2Advantage <= -11)){
-                interpretation = "Ambylaudia Left Ear Dominant";
-              }
-              else if (((dom > 94) && (nondom > 83)) && (group2Advantage >= 11)){
-                interpretation = "Ambylaudia Right Ear Dominant";
-              }
-              else{
-                interpretation = "Within Normal Limits";
-              }
-            }          
-          }
-          
-          
+ 
           // Passes values to strings so they can be pushed to the html above
 
 
@@ -624,7 +492,14 @@
         });
       });
       
+      function submitAndExit() {
+        // Calculate right ear decibel and populate hidden fields
+          calculateRightEarDecibel();
+          populateHiddenFields();
 
+        // Redirect to the client training index page
+          window.location.href = '<%= client_trainings_path(@client) %>';
+      }
         
       </script>
        

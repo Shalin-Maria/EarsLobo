@@ -200,6 +200,8 @@
         <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
         <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+        <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
+        <%= link_to "Back",  week_one_test_four_client_week_ones_path(@client), class: "btn btn-secondary btn-block"%>
       <% end %>
      
 
@@ -519,6 +521,16 @@
         setEarDominance('right');
         });
       });
+
+      function submitAndExit() {
+        // Calculate right ear decibel and populate hidden fields
+          calculateRightEarDecibel();
+          populateHiddenFields();
+
+        // Redirect to the client training index page
+          window.location.href = '<%= client_trainings_path(@client) %>';
+      }
+      
 </script>
     
      <div>

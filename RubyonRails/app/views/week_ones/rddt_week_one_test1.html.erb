@@ -239,12 +239,14 @@
           <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
           <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %>
+          <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
+          <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-secondary btn-block"%>
         <% end %>
         <!-- >   <div>
         <%= link_to "Submit and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%> 
         <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
       </div> -->
-
+</div>
 
         <div>
           <p><span hidden id="column1-count"></span></p>
@@ -523,10 +525,10 @@
       }
 
     </script>
-      <div>
+      <!-- <div>
         <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
         <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-secondary btn-block"%>
-      </div>
+      </div> -->
       <div>
 
         <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>

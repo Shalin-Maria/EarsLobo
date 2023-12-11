@@ -204,11 +204,10 @@
         <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
         <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
     
-       <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %> 
-      
+        <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %> 
+        <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
+        <%= link_to "Back",  week_two_test_seven_client_week_twos_path(@client), class: "btn btn-secondary btn-block"%>
       <% end %>
-        <%= link_to "Back",  week_two_test_seven_client_week_twos_path(@client), class: "btn btn-primary btn-block"%>
-
       <div>
         <p><span hidden id="column1-count"></span></p>
         <p><span id="column1-percent"></span></p>
@@ -521,6 +520,15 @@
         setEarDominance('right');
         });
       });
+
+      function submitAndExit() {
+        // Calculate right ear decibel and populate hidden fields
+          calculateRightEarDecibel();
+          populateHiddenFields();
+
+        // Redirect to the client training index page
+          window.location.href = '<%= client_trainings_path(@client) %>';
+      }
 
     </script>
     

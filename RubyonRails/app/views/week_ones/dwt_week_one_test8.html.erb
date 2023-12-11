@@ -194,8 +194,9 @@
         <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
         <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
     
-       <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %> 
-      
+        <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %> 
+        <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
+        <%= link_to "Back",  week_one_test_seven_client_week_ones_path(@client), class: "btn btn-secondary btn-block"%>
       <% end %>
 
       <div>
@@ -511,11 +512,20 @@
         });
       });
 
+      function submitAndExit() {
+        // Calculate right ear decibel and populate hidden fields
+          calculateRightEarDecibel();
+          populateHiddenFields();
+
+        // Redirect to the client training index page
+          window.location.href = '<%= client_trainings_path(@client) %>';
+      }
+
     </script>
-    <div>
+    <!-- <div>
         <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
         <%= link_to "Back",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
-       </div>
+       </div> -->
     </div>
   </div>
 </div>

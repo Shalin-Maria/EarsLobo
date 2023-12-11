@@ -15,7 +15,7 @@
     <div class="col-sm">
       <div class="form-group row">
         <label for="exampleLabel">Label</label>
-          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week Four TEst Eight" %>
+          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week Four Test Eight" %>
       </div>
       <div class="form-group row">
         <label for="clientName">Client</label>
@@ -187,7 +187,8 @@
         <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
           
         <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
-      
+        <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
+        <%= link_to "Back",  week_four_test_seven_client_week_fours_path(@client), class: "btn btn-secondary btn-block"%>
       <% end %>
 
       <div>
@@ -518,12 +519,17 @@
         setEarDominance('right');
         });
       });
+
+      function submitAndExit() {
+        // Calculate right ear decibel and populate hidden fields
+          calculateRightEarDecibel();
+          populateHiddenFields();
+
+        // Redirect to the client training index page
+          window.location.href = '<%= client_trainings_path(@client) %>';
+      }
     
     </script>
-    <div>
-        <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
-        <%= link_to "Back",  week_four_test_seven_client_week_fours_path(@client), class: "btn btn-primary btn-block"%>
-       </div>
     </div>
   </div>
 </div>

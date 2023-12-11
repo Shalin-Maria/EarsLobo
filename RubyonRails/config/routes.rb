@@ -82,7 +82,7 @@ Rails.application.routes.draw do
         get 'dnw_week_four_test6', to: 'week_fours#dnw_week_four_test6', as: 'week_four_test_six'
         get 'dwt_week_four_test7', to: 'week_fours#dwt_week_four_test7', as: 'week_four_test_seven'
         get 'dwt_week_four_test8', to: 'week_fours#dwt_week_four_test8', as: 'week_four_test_eight'
-        get 'rddtt_week_four_test9', to: 'week_fours#rddt_week_four_test9', as: 'week_four_test_nine'
+        get 'rddt_week_four_test9', to: 'week_fours#rddt_week_four_test9', as: 'week_four_test_nine'
         get 'week_fours/:id', to: 'week_fours#show', as: 'show'
       end
     end

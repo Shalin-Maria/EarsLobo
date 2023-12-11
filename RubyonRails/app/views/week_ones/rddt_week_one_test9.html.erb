@@ -242,12 +242,11 @@
           <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
           <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
-          <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %>
+          <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %> -->
+          <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+          <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
+          <%= link_to "Back",  week_one_test_eight_client_week_ones_path(@client), class: "btn btn-secondary btn-block"%>
         <% end %>
-        <!-- <div>
-        <%= link_to "Submit and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%> 
-        <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
-      </div> -->
             
     </div>
 
@@ -299,10 +298,15 @@
         const column2Group2Percent = document.getElementById("column2Group2-percent");
         const column2Group3Percent = document.getElementById("column2Group3-percent");
 
+      
         const advantageDiffGroup1 = document.getElementById("Group1advantage-Diff");
-        const advantageDiffGroup2 = document.getElementById("Group2advantage-Diff");
-        const advantageDiffGroup3 = document.getElementById("Group3advantage-Diff");
+        //advantageDiffGroup1.innerText = group1Advantage.toString();
 
+        const advantageDiffGroup2 = document.getElementById("Group2advantage-Diff");
+        //advantageDiffGroup2.innerText = group2Advantage.toString();
+
+        const advantageDiffGroup3 = document.getElementById("Group3advantage-Diff");
+        //advantageDiffGroup3.innerText = group3Advantage.toString();
 
 
         const advantageName = document.getElementById("advantage-Name");
@@ -357,6 +361,19 @@
           let age = <%= @client.age_in_years %>;
           let dom = null;
           let nondom = null;
+
+          if (group2Advantage < 0) {
+            direction = "Left";
+            dom = percentColumn1Group2;
+            nondom = percentColumn2Group2;
+          } else if (group2Advantage > 0) {
+            direction = "Right";
+            dom = percentColumn2Group2;
+            nondom = percentColumn1Group2;
+          } else {
+            direction = "Neutral";
+          }
+
 
           column1Group1Percent.innerText = percentColumn1Group1.toString();
           column1Group2Percent.innerText = percentColumn1Group2.toString();
@@ -479,6 +496,14 @@
         });
       });
       
+      function submitAndExit() {
+        // Calculate right ear decibel and populate hidden fields
+          calculateRightEarDecibel();
+          populateHiddenFields();
+
+        // Redirect to the client training index page
+          window.location.href = '<%= client_trainings_path(@client) %>';
+      }
 
     </script>
 

@@ -15,7 +15,7 @@
     <div class="col-sm">
       <div class="form-group row">
         <label for="exampleLabel">Label</label>
-          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "DWT List One" %>
+          <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week Three Test Five" %>
       </div>
       <div class="form-group row">
         <label for="clientName">Client</label>
@@ -23,14 +23,13 @@
       </div>
       <div class="form-group row">
         <label for="testType">Type</label>
-        <input class="form-control" type="text" id="testType" placeholder="DWT" readonly>
+        <input class="form-control" type="text" id="testType" placeholder="Dichotic Words" readonly>
       </div>
       <hr/>
       <div class="form-group row">
         <label for="conditionSelect">Condition</label>
         <input class="form-control" type="text" id="testType" placeholder="" readonly>
       </div>
-      <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %>
 
       <hr/>
       <label for="Notes">Notes</label>
@@ -195,7 +194,8 @@
         <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
           
         <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
-      
+        <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
+        <%= link_to "Back",  week_three_test_four_client_week_threes_path(@client), class: "btn btn-secondary btn-block"%>
       <% end %>
 
       <div>
@@ -536,11 +536,6 @@
           window.location.href = '<%= client_trainings_path(@client) %>';
         }
       </script>
-        <div>
-          <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
-          <!-- <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %> -->
-          <%= link_to "Back",  week_three_test_four_client_week_threes_path(@client), class: "btn btn-primary btn-block"%>
-       </div>
     </div>
   </div>
 </div>
