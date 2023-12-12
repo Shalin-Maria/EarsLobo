@@ -1,9 +1,10 @@
+
 <html>
   <body id= "defBG">
   <div class="container p-5 my-3 w-100 border rounded bg-white ">
 
 
-  <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training " + @client.first_name + " " + @client.last_name%></strong></h1>
+  <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
   <!-- Include jQuery -->
@@ -21,13 +22,13 @@
     }
   </style>
 
-  <!-- <div class="container"> -->
-  <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
   <div class="container">
+    <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
     <div class="row">
+      <div class="form-group row">
         <div class="col-sm">
           <div class="form-group row ">
-            <div>
+          <div>
               <p>Ear Dominance</p>
               <button id="setLeftDominance" type="button" class="btn btn-info" onclick="setDominance('left')">Set Left Dominance</button>
               <button id="setRightDominance" type="button" class="btn btn-info" onclick="setDominance('right')">Set Right Dominance</button>
@@ -50,9 +51,13 @@
           </div>
           <div class="form-group row ">
             <label for="testType">Type</label>
-            <input class="form-control" type="text" id="testType" placeholder="VA Double Digits" readonly>
+            <input class="form-control" type="text" id="testType" placeholder="RDDT" readonly>
           </div>
           <hr/>
+          <div class="form-group row ">
+            <label for="conditionSelect">Condition</label>
+            <input class="form-control" type="text" id="conditionSelect" placeholder="" readonly>
+          </div>
 
           <hr/>
           <div class="sticky">
@@ -72,6 +77,7 @@
               <source src="/app/assets/audio/1-pair Dichotic Digits, List 1_Right_HRTF.wav" type="audio/wav">
             </audio>
             <hr/>-->
+    
             <!--Table for ear advantage percentage that is calculated in the script-->
             <style>
               .left-column {
@@ -113,7 +119,7 @@
                   <td class="right-column"><span id="column2Group1-percent">0</span>%</td>
                   <td class="ear-advantage"><span id="Group1advantage-Diff">0</span>%</td>
                 </tr>
-                <tr>
+               <!-- <tr>
                   <th scope="row">2</th>
                   <td class="left-column"><span id="column1Group2-percent">0</span>%</td>
                   <td class="right-column"><span id="column2Group2-percent">0</span>%</td>
@@ -124,19 +130,19 @@
                   <td class="left-column"><span id="column1Group3-percent">0</span>%</td>
                   <td class="right-column"><span id="column2Group3-percent">0</span>%</td>
                   <td class="ear-advantage"><span id="Group3advantage-Diff">0</span>%</td>         
-                </tr>
+                </tr> -->
               </tbody>
             </table>
             <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
-            <label for="read-Only">Ear Advantage</label>
+           <!-- <label for="read-Only">Ear Advantage</label>
             <input class="form-control" type="text" id="read-Only" value="" readonly>
             <span hidden id="advantage-Name"></span>
             <label for="read-Only">Interpretation</label>
             <input class="form-control" type="text" id="read-Only-diag" value="" readonly>
-            <span hidden id="Diagnosis"></span>
+            <span hidden id="Diagnosis"></span> -->
           </div>
         </div>
-
+      </div>
         <style>
           /* Center buttons in the table cells */
           .btn-group-toggle {
@@ -168,7 +174,7 @@
               <tbody>
                 
               <!-- Loop for table of numbers and creation of all buttons, only loops 54 times and creates table for buttons-->
-                <% 25.times do |i| %>
+             <% 25.times do |i| %>
                   <% nums = [
                     [[10],[2]],
                     [[6],[10]],
@@ -211,6 +217,7 @@
                         <% end %>
                       </div>
                     </td>
+
                     <td>
                       <div class="btn-group-toggle" data="buttons">
                         <% group_size = nums[i][1].length %>
@@ -226,30 +233,33 @@
                   </tr>
                 <% end %>
               </tbody>
-              <!--Hidden table for submission items-->
             </table>
-
-          
-            <%= f.hidden_field :client_name, value: "Example user" %>
-            <%= f.hidden_field :test_type, value: "RDDT" %>
-            <%= f.hidden_field :counter, value: "1" %>
-            <%= f.hidden_field :left_score2, id: "left_score" %>
-            <%= f.hidden_field :right_score2, id: "right_score" %>
-            <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
-            <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
-
-            <%= f.hidden_field :left_score1, id: "col1G1" %>
-            <%= f.hidden_field :right_score1, id: "col2G1" %>
-            <%= f.hidden_field :left_score3, id: "col1G3" %>
-            <%= f.hidden_field :right_score3, id: "col2G3" %>
-
-            <%= f.hidden_field :G1adv, id: "G1adv" %>
-            <%= f.hidden_field :G3adv, id: "G3adv" %>
-
-            <%= f.hidden_field :interpretation, id: "interpretation" %>
+          <div>
+        </div>  
+    </div>
 
 
-          <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
+
+          <!-- Existing form fields -->
+          <%= f.hidden_field :client_name, value: "Example user" %>
+          <%= f.hidden_field :test_type, value: "RDDT" %>
+          <%= f.hidden_field :counter, value: "1" %>
+          <%= f.hidden_field :left_score2, id: "left_score" %>
+          <%= f.hidden_field :right_score2, id: "right_score" %>
+          <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
+          <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
+
+          <%= f.hidden_field :left_score1, id: "col1G1" %>
+          <%= f.hidden_field :right_score1, id: "col2G1" %>
+          <%= f.hidden_field :left_score3, id: "col1G3" %>
+          <%= f.hidden_field :right_score3, id: "col2G3" %>
+
+          <%= f.hidden_field :G1adv, id: "G1adv" %>
+          <%= f.hidden_field :G3adv, id: "G3adv" %>
+
+          <%= f.hidden_field :interpretation, id: "interpretation" %>
+
+                    <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
 
           <!-- ALLEARS ADDITIONS, added to submit as well-->
 
@@ -274,12 +284,24 @@
       </div> -->
 </div>
 
+          
+
+
+
+
+
+
+
+
+
+
+
+
         <div>
           <p><span hidden id="column1-count"></span></p>
-          <p><span id="column1-percent"></span></p>
-          <p><span hidden id="column2-count"></span></p>
-          <p><span id="column2-percent"></span></p>
-          <p><span id="advantage-Diff"></span></p>
+          <p><span id="column1Group1-percent"></span></p>
+          <p><span id="column1Group2-percent"></span></p>
+          <p><span id="column1Group3-percent"></span></p>
 
           <p><span hidden id="column2-count"></span></p>
           <p><span id="column2Group1-percent"></span></p>
@@ -292,12 +314,13 @@
         </div>
 
 
-   
+
+
+
+      <script>
       
-    
 
 
-    <script>
 
 
       //function for keeping the buttons blue after being clicked
@@ -336,13 +359,9 @@
         const column2Group3Percent = document.getElementById("column2Group3-percent");
 
         const advantageDiffGroup1 = document.getElementById("Group1advantage-Diff");
-        advantageDiffGroup1.innerText = group1Advantage.toString();
-
         const advantageDiffGroup2 = document.getElementById("Group2advantage-Diff");
-        advantageDiffGroup2.innerText = group2Advantage.toString();
-
         const advantageDiffGroup3 = document.getElementById("Group3advantage-Diff");
-        advantageDiffGroup3.innerText = group3Advantage.toString();
+
 
 
         const advantageName = document.getElementById("advantage-Name");
@@ -350,6 +369,7 @@
         const readOnly = document.getElementById("read-Only");
         const readOnlyDiag = document.getElementById("read-Only-diag");
         
+
 
         // Update the counts when a button is clicked
         
@@ -381,15 +401,26 @@
           const group2Advantage = (percentColumn2Group2 - percentColumn1Group2).toFixed(2);
           const group3Advantage = (percentColumn2Group3 - percentColumn1Group3).toFixed(2);
 
-
-          
-
-
-
-          
-          //ALLEARS ADDITIONS
+           //ALLEARS ADDITIONS
           let rightEarDecibel = 30; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
           let leftEarDecibel = 50; // this is not yet attempted set up for server side at all, unlike right
+
+
+
+          //calcs advantage side using average of all of them (ideal but not what client wants)
+
+          /*
+          const sumAdvantage = parseFloat(group1Advantage) + parseFloat(group2Advantage) + parseFloat(group3Advantage);
+          const threshold = 0.01; // Define the threshold value for neutrality
+
+          if (Math.abs(sumAdvantage) <= threshold) {
+            direction = "Neutral";
+          } else if (sumAdvantage > 0) {
+            direction = "Left";
+          } else {
+            direction = "Right";
+          }
+          */
 
 
           let direction = null;
@@ -409,6 +440,148 @@
           } else {
             direction = "Neutral";
           }
+
+
+  // IF else logic for diagnosis based on the childs age. Still unsure if this works as intended accoring to Employer, but we believe it does
+          if (age == 5 || age == 6){
+            if (direction == "Neutral"){
+              if (percentColumn1Group2 <= 33){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 67) || (nondom <= 33)) && ((group2Advantage <= -39) || (group2Advantage >= 39))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if ((dom <= 67) || (nondom <= 33)){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 67) && (nondom > 33)) && (group2Advantage <= -39)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 67) && (nondom > 33)) && (group2Advantage >= 39)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }            
+          }
+          if (age >= 7 && age <= 9){
+            if (direction == "Neutral"){
+              if (percentColumn1Group2 <= 56){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 83) || (nondom <= 56)) && ((group2Advantage <= -28) || (group2Advantage >= 28))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if ((dom <= 83) || (nondom <= 56)){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 83) && (nondom > 56)) && (group2Advantage <= -28)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 83) && (nondom > 56)) && (group2Advantage >= 28)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }         
+          }
+          if (age >= 10 && age <= 12){
+            if (direction == "Neutral"){
+              if (percentColumn1Group2 <= 72){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 89) || (nondom <= 72)) && ((group2Advantage <= -14) || (group2Advantage >= 14))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if ((dom <= 89) || (nondom <= 72)){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -14)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 14)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            } 
+          }
+          if (age >= 13 && age <= 15){
+            if (direction == "Neutral"){
+              if (percentColumn1Group2 <= 72){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 89) || (nondom <= 72)) && ((group2Advantage <= -17) || (group2Advantage >= 17))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if ((dom <= 89) || (nondom <= 72)){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 89) && (nondom > 72)) && (group2Advantage <= -17)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 89) && (nondom > 72)) && (group2Advantage >= 17)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }          
+          }
+          if (age >= 16 && age <= 18){
+            if (direction == "Neutral"){
+              if (percentColumn1Group2 <= 83){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }
+            else{
+              if (((dom <= 94) || (nondom <= 83)) && ((group2Advantage <= -11) || (group2Advantage >= 11))){
+                interpretation = "Amblyaudia + Dichotic Dysaudia";
+              }
+              else if ((dom <= 94) || (nondom <= 83)){
+                interpretation = "Dichotic Dysaudia";
+              }
+              else if (((dom > 94) && (nondom > 83)) && (group2Advantage <= -11)){
+                interpretation = "Ambylaudia Left Ear Dominant";
+              }
+              else if (((dom > 94) && (nondom > 83)) && (group2Advantage >= 11)){
+                interpretation = "Ambylaudia Right Ear Dominant";
+              }
+              else{
+                interpretation = "Within Normal Limits";
+              }
+            }          
+          }
+          
+          
+          // Passes values to strings so they can be pushed to the html above
+
 
           column1Group1Percent.innerText = percentColumn1Group1.toString();
           column1Group2Percent.innerText = percentColumn1Group2.toString();
@@ -447,7 +620,6 @@
               cell.style.backgroundColor = 'white';
             }
           });
-
           })
         })
       // gets the elements from hidden field submit above and populates them from the results in the script 
@@ -469,7 +641,7 @@
         document.getElementById("interpretation").value = testDiagnosis.innerText;
    
       }
-      //ALLEARS ADDITIONS
+           //ALLEARS ADDITIONS
       // only works for first group rn, copy paste for more when relevant to test
 
       // This function combines the ear_decibel value and combines it with the audio file name to play the desired decibel level
@@ -535,7 +707,8 @@
         // Update display of rightEarDecibel just in case
         document.getElementById('rightEarDecibelDisplay').innerText = document.getElementById("rightEarDecibelField").value;
       }
-      //ALLEARS Audio control listener, buttons
+
+           //ALLEARS Audio control listener, buttons
       document.addEventListener('DOMContentLoaded', (event) => {
         const leftEarAudio = document.getElementById('leftEarAudio');
         const rightEarAudio = document.getElementById('rightEarAudio');
@@ -572,11 +745,17 @@
       }
 
     </script>
-      <!-- <div>
-        <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
-        <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-secondary btn-block"%>
-      </div> -->
-      
+    <div>
+
+        <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
+        <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
+        <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
+        <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
+        <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
+        <div>
+          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+        </div>
 
         </div>
 
@@ -589,15 +768,5 @@
     </div>
   </div>
   </body>
-  <div>
-
-        <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
-        <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
-        <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
-        <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
-        <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
-        <div>
-          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
-          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
-        </div>
+  
 </html>
