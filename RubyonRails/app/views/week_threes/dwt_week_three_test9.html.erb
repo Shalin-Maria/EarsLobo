@@ -13,6 +13,20 @@
 <div class="container">
   <div class="row">
     <div class="col-sm">
+      <div class="form-group row"> 
+      <div>
+        <p>Ear Dominance</p>
+          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+        </div>
+      </div> 
+      <div class="form-group row">
+        <div>
+          <p>Audio Controls</p>
+          <button id="playButton" type="button">Play</button>
+          <button id="pauseButton" type="button">Pause</button>
+        </div>
+      </div>
       <div class="form-group row">
         <label for="exampleLabel">Label</label>
           <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week Three Test Nine" %>
@@ -88,7 +102,7 @@
       <input class="form-control" type="text" id="read-Only" value="" readonly>
       <span hidden id="advantage-Name"></span>
     </div>
-</div>
+
     <style>
       /* Center buttons in the table cells */
       .btn-group-toggle {

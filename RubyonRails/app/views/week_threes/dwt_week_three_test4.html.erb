@@ -102,6 +102,7 @@
       <input class="form-control" type="text" id="read-Only" value="" readonly>
       <span hidden id="advantage-Name"></span>
     </div>
+    
     <style>
       /* Center buttons in the table cells */
       .btn-group-toggle {
@@ -187,7 +188,7 @@
         <!-- ALLEARS ADDITIONS, added to submit as well-->
 
         <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
-        <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
+        <%= f.hidden_field :left_ear_decibel, id: "leftEarDecibelField" %>
           
         <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
         <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
@@ -238,9 +239,6 @@
       const readOnly = document.getElementById("read-Only");
       const readOnlyDiag = document.getElementById("read-Only-diag");
       
-      //ALL EARS ADDITION
-      //TODO REMOVE POLACEHOLDER
-      let decibel = 9999999999;
 
       // Update the counts when a button is clicked
       
