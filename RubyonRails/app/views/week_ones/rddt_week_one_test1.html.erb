@@ -28,13 +28,22 @@
         <div class="col-sm">
           <div class="form-group row ">
             <div>
-              <p>Ear Dominance</p>
-              <button id="setLeftDominance" type="button" class="btn btn-info" onclick="setDominance('left')">Set Left Dominance</button>
-              <button id="setRightDominance" type="button" class="btn btn-info" onclick="setDominance('right')">Set Right Dominance</button>
+              <p>Page Function Demo Buttons:</p>
+              <p>Ear Dominance Demo</p>
+              <button id="setLeftDominance" type="button" class="btn btn-info" onclick="setDominance('left')">Set values for left ear dominant.</button>
+              <button id="setRightDominance" type="button" class="btn btn-info" onclick="setDominance('right')">Set values for right ear dominant.</button>
+              <p>Current dominance value:  <span id="dominanceDisplay"></span></p>
+              <p>Current right ear decibel: <span id="rightEarDecibelDisplay"></span></p>
+              <p>Current left ear decibel: <span id="leftEarDecibelDisplay"></span></p>
+              <p>Audio Source and File Switching Demo</p>
+              <p>Switched left ear to audio file: <span id="currentlyPlayingLeftDisplay"></span></p>
+              <p>Switched right ear to audio file: <span id="currentlyPlayingRightDisplay"></span></p>
+              <button id="testButton" type="button" class="btn btn-info" onclick="updateAudioSources()">Run audio update for demo.</button>
             </div>
           </div>
           <div class="form-group row ">
             <div>
+
               <p>Audio Controls</p>
               <button id="playButton" type="button">Play</button>
               <button id="pauseButton" type="button">Pause</button>
@@ -456,8 +465,8 @@
         leftEarAudio.load();
         rightEarAudio.load();
 
-        document.getElementById('currentlyPlayingLeftDisplay').innerText = leftEarSource + ", leftEarAudio.src:" + leftEarAudio.src;
-        document.getElementById('currentlyPlayingRightDisplay').innerText = rightEarSource + ", rightEarAudio.src:" + rightEarAudio.src;
+        document.getElementById('currentlyPlayingLeftDisplay').innerText = leftEarSource;
+        document.getElementById('currentlyPlayingRightDisplay').innerText = rightEarSource;
       }
       //temo edit line ignore
       function calculateEarDecibel() {
@@ -538,7 +547,7 @@
 
     </script>
       <div>
-        <button id="testButton" type="button" class="btn btn-info" onclick="testEarDecibelUpdate()">Test Ear Decibel Update</button>
+        <!-- <button id="testButton" type="button" class="btn btn-info" onclick="testEarDecibelUpdate()">Test Ear Decibel Update</button>
         <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
         <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
         <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
@@ -548,7 +557,7 @@
         <button id="testButton" type="button" class="btn btn-info" onclick="updateAudioSources()">Run function for updating audio sources.</button>
         <p>DEBUG: Current left audio file: <span id="currentlyPlayingLeftDisplay"></span></p>
         <p>DEBUG: Current right audio file: <span id="currentlyPlayingRightDisplay"></span></p>
-
+        -->
         </div>
 
       </div>
