@@ -6,7 +6,7 @@
 
 <h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Training " + @client.first_name + " " + @client.last_name%></strong></h1>
 
-<!--Test page for DWT List 1 Contains everything for completing and submitting a test  -->
+<!--Test page for Week One Test Five Contains everything for completing and submitting a test  -->
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 <%= form_with model: [@client, @week_one], local: true do |f| %>
@@ -50,14 +50,6 @@
       <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
       <%= audio_tag "Dichotic Words Track 7_R_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
       <%= audio_tag "Dichotic Words Track 7_R_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
-                  
-      <!-- <audio controls>
-        <source src="/assets/Dichotic Words Track 7_R_Left_HRTF.wav" type="audio/wav">
-      </audio>
-      <audio controls>
-        <source src="/assets/Dichotic Words Track 7_R_Right_HRTF.wav" type="audio/wav">
-      </audio>
-      <hr/> -->
       <!--Table for ear advantage percentage that is calculated in the script-->
       <style>
           .left-column {
@@ -109,8 +101,10 @@
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
       <span hidden id="advantage-Name"></span>
+      <span hidden id="Diagnosis"></span>
     </div>
 </div>
+
     <style>
       /* Center buttons in the table cells */
       .btn-group-toggle {
@@ -202,11 +196,8 @@
         <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
         <%= link_to "Back",  week_one_test_three_client_week_ones_path(@client), class: "btn btn-secondary btn-block"%>
       <% end %>
-      <!-- <div>
-          <%= link_to "Submit and Proceed",  week_one_test_five_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
-          <%= link_to "Submit and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
-      </div>  
-    </div> -->
+     
+
 
       <div>
         <p><span hidden id="column1-count"></span></p>
@@ -267,10 +258,10 @@
         const advantage = (percent2 - percent1).toFixed(2);
         const avgPercent = ((+percent1 + +percent2) / 2).toFixed(2);
 
-      //ALLEARS ADDITIONS
+
+        //ALLEARS ADDITIONS
         let rightEarDecibel; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
         let leftEarDecibel; // this is not yet attempted set up for server side at all, unlike right
-
 
         let direction = null;
         let interpretation = null;
@@ -462,7 +453,7 @@
       document.getElementById("ear_advantage_score").value = advantageDiff.innerText;
     }
 
-    //ALLEARS ADDITIONS
+      //ALLEARS ADDITIONS
       // only works for first group rn, copy paste for more when relevant to test
       function calculateRightEarDecibel() {
       
@@ -523,7 +514,7 @@
         setEarDominance('right');
         });
       });
-      
+
       function submitAndExit() {
         // Calculate right ear decibel and populate hidden fields
           calculateRightEarDecibel();
@@ -532,13 +523,15 @@
         // Redirect to the client training index page
           window.location.href = '<%= client_trainings_path(@client) %>';
       }
-
-    </script>
-    <!-- <div>
+      
+</script>
+    
+     <!-- <div>
         <%= link_to "Submit and Exit", client_trainings_path(@client), class: "btn btn-primary btn-block" %>
-        <%= link_to "Back",  week_one_test_three_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
+        <%= link_to "Back",  week_one_test_four_client_week_ones_path(@client), class: "btn btn-primary btn-block"%>
        </div> -->
     </div>
   </div>
 </div>
+
 </body>
