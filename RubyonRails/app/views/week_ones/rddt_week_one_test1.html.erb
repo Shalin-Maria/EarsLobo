@@ -27,15 +27,44 @@
     <div class="row">
       <div class="form-group row">
         <div class="col-sm">
-          <div class="form-group row ">
-          <div>
-              <p>Ear Dominance</p>
-              <button id="setLeftDominance" type="button" class="btn btn-info" onclick="setDominance('left')">Set Left Dominance</button>
-              <button id="setRightDominance" type="button" class="btn btn-info" onclick="setDominance('right')">Set Right Dominance</button>
-            </div>
-          </div>
+          <div class="form-group row" style="padding: 20px; border: 1px solid #ddd; background-color: #f9f9f9;">
+    <div>
+        <p style="font-weight: bold; color: #333; font-size: 24px;">Page Function Demo Buttons:</p>
+        
+        <p style="color: #4a90e2; font-size: 18px;">Ear Dominance Demo</p>
+        
+        <button id="setLeftDominance" type="button" class="btn btn-info" 
+                style="margin-right: 10px; background-color: #17a2b8; color: white;" 
+                onclick="setDominance('left')">Set values for left ear dominant.</button>
+        
+        <button id="setRightDominance" type="button" class="btn btn-info" 
+                style="background-color: #17a2b8; color: white;" 
+                onclick="setDominance('right')">Set values for right ear dominant.</button>
+        
+        
+        
+        <p>Current dominance value: <span id="dominanceDisplay"></span></p>
+        <p>Current right ear decibel: <span id="rightEarDecibelDisplay"></span></p>
+        <p>Current left ear decibel: <span id="leftEarDecibelDisplay"></span></p>
+        
+        <p style="color: #34a853; font-size: 18px;">Audio Source and File Switching Demo</p>
+        
+        <p>Switched left ear to audio file: <span id="currentlyPlayingLeftDisplay"></span></p>
+        <p>Switched right ear to audio file: <span id="currentlyPlayingRightDisplay"></span></p>
+        
+        <button id="testButton" type="button" class="btn btn-info" 
+                style="margin-right: 10px; background-color: #28a745; color: white;" 
+                onclick="updateAudioSources()">Run audio update for demo.</button>
+        
+        <button id="testCalculateEarDecibel" type="button" class="btn btn-info" 
+                style="background-color: #28a745; color: white;" 
+                onclick="calculateEarDecibel()">Evaluate Training and Update Decibel Value</button>
+    </div>
+</div>
+
           <div class="form-group row ">
             <div>
+
               <p>Audio Controls</p>
               <button id="playButton" type="button">Play</button>
               <button id="pauseButton" type="button">Pause</button>
@@ -655,8 +684,8 @@
         leftEarAudio.load();
         rightEarAudio.load();
 
-        document.getElementById('currentlyPlayingLeftDisplay').innerText = leftEarSource + ", leftEarAudio.src:" + leftEarAudio.src;
-        document.getElementById('currentlyPlayingRightDisplay').innerText = rightEarSource + ", rightEarAudio.src:" + rightEarAudio.src;
+        document.getElementById('currentlyPlayingLeftDisplay').innerText = leftEarSource;
+        document.getElementById('currentlyPlayingRightDisplay').innerText = rightEarSource;
       }
       //temo edit line ignore
       function calculateEarDecibel() {
@@ -745,18 +774,17 @@
       }
 
     </script>
-    <div>
-
-        <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
+      <div>
+        <!-- <button id="testButton" type="button" class="btn btn-info" onclick="testEarDecibelUpdate()">Test Ear Decibel Update</button>
         <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
         <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
         <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
         <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
-        <div>
-          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
-          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
-        </div>
-
+        <p>DEBUG: Current dominance:  <span id="dominanceDisplay"></span></p>
+        <button id="testButton" type="button" class="btn btn-info" onclick="updateAudioSources()">Run function for updating audio sources.</button>
+        <p>DEBUG: Current left audio file: <span id="currentlyPlayingLeftDisplay"></span></p>
+        <p>DEBUG: Current right audio file: <span id="currentlyPlayingRightDisplay"></span></p>
+        -->
         </div>
 
       </div>
@@ -768,5 +796,5 @@
     </div>
   </div>
   </body>
-  
 </html>
+
