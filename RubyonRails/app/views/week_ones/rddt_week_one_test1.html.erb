@@ -113,12 +113,27 @@
                   <td class="right-column"><span id="column2Group1-percent">0</span>%</td>
                   <td class="ear-advantage"><span id="Group1advantage-Diff">0</span>%</td>
                 </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td class="left-column"><span id="column1Group2-percent">0</span>%</td>
+                  <td class="right-column"><span id="column2Group2-percent">0</span>%</td>
+                  <td class="ear-advantage"><span id="Group2advantage-Diff">0</span>%</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>  
+                  <td class="left-column"><span id="column1Group3-percent">0</span>%</td>
+                  <td class="right-column"><span id="column2Group3-percent">0</span>%</td>
+                  <td class="ear-advantage"><span id="Group3advantage-Diff">0</span>%</td>         
+                </tr>
               </tbody>
             </table>
             <!--Table for ear advantage that is calculated in the script and ear diagnosis/interpretation-->
             <label for="read-Only">Ear Advantage</label>
             <input class="form-control" type="text" id="read-Only" value="" readonly>
             <span hidden id="advantage-Name"></span>
+            <label for="read-Only">Interpretation</label>
+            <input class="form-control" type="text" id="read-Only-diag" value="" readonly>
+            <span hidden id="Diagnosis"></span>
           </div>
         </div>
 
@@ -223,6 +238,17 @@
             <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
             <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
 
+            <%= f.hidden_field :left_score1, id: "col1G1" %>
+            <%= f.hidden_field :right_score1, id: "col2G1" %>
+            <%= f.hidden_field :left_score3, id: "col1G3" %>
+            <%= f.hidden_field :right_score3, id: "col2G3" %>
+
+            <%= f.hidden_field :G1adv, id: "G1adv" %>
+            <%= f.hidden_field :G3adv, id: "G3adv" %>
+
+            <%= f.hidden_field :interpretation, id: "interpretation" %>
+
+
           <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
 
           <!-- ALLEARS ADDITIONS, added to submit as well-->
@@ -254,6 +280,15 @@
           <p><span hidden id="column2-count"></span></p>
           <p><span id="column2-percent"></span></p>
           <p><span id="advantage-Diff"></span></p>
+
+          <p><span hidden id="column2-count"></span></p>
+          <p><span id="column2Group1-percent"></span></p>
+          <p><span id="column2Group2-percent"></span></p>
+          <p><span id="column2Group3-percent"></span></p>
+
+          <p><span id="Group1advantage-Diff"></span></p>
+          <p><span id="Group2advantage-Diff"></span></p>
+          <p><span id="Group3advantage-Diff"></span></p>
         </div>
 
 
@@ -362,6 +397,18 @@
           let age = <%= @client.age_in_years %>;
           let dom = null;
           let nondom = null;
+
+          if (group2Advantage < 0) {
+            direction = "Left";
+            dom = percentColumn1Group2;
+            nondom = percentColumn2Group2;
+          } else if (group2Advantage > 0) {
+            direction = "Right";
+            dom = percentColumn2Group2;
+            nondom = percentColumn1Group2;
+          } else {
+            direction = "Neutral";
+          }
 
           column1Group1Percent.innerText = percentColumn1Group1.toString();
           column1Group2Percent.innerText = percentColumn1Group2.toString();
@@ -529,17 +576,7 @@
         <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
         <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-secondary btn-block"%>
       </div> -->
-      <div>
-
-        <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
-        <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
-        <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
-        <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
-        <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
-        <div>
-          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
-          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
-        </div>
+      
 
         </div>
 
@@ -552,4 +589,15 @@
     </div>
   </div>
   </body>
+  <div>
+
+        <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
+        <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
+        <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
+        <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
+        <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
+        <div>
+          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
+          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
+        </div>
 </html>
