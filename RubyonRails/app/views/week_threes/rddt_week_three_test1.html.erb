@@ -232,6 +232,7 @@
             <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
 
             <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+            <!-- <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %> -->
             <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
             <%= link_to "Back", client_trainings_path(@client), class: "btn btn-secondary btn-block"%>
         <% end %>
