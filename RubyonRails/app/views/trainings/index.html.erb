@@ -219,12 +219,12 @@
 </div>   
 </div>
 <div class="mt-3">
-    <%= link_to "Week One", week_one_test_one_client_week_ones_path(@client) %>
-    <%= link_to "Week Two", week_two_test_one_client_week_twos_path(@client) %>
-    <%= link_to "Week Three", week_three_test_one_client_week_threes_path(@client) %>
-    <%= link_to "Week Four", week_four_test_one_client_week_fours_path(@client) %>
+    <%= link_to "Week One", week_one_test_one_client_week_ones_path(@client), class: "btn btn-secondary" %>
+    <%= link_to "Week Two", week_two_test_one_client_week_twos_path(@client), class: "btn btn-secondary" %>
+    <%= link_to "Week Three", week_three_test_one_client_week_threes_path(@client), class: "btn btn-secondary" %>
+    <%= link_to "Week Four", week_four_test_one_client_week_fours_path(@client), class: "btn btn-secondary" %>
   </div>
 <div>
-  <%= link_to 'Go back to Client information page', edit_client_path(@client), class: 'btn btn-outline-primary' %> </div> 
-  <%= link_to "Start Training",  week_one_test_one_client_week_ones_path(@client), class: "btn btn-secondary"%>
+  <%= link_to 'Go back to Client information page', edit_client_path(@client), class: 'btn btn-outline-secondary' %> 
+ <!-- <%= link_to "Start Training",  week_one_test_one_client_week_ones_path(@client), class: "btn btn-secondary"%> -->
 </div>
