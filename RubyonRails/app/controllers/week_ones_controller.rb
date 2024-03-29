@@ -1,8 +1,27 @@
 class WeekOnesController < ApplicationController
     
     def rddt_week_one_test1
+      #Layton Testing Additions
+      # Initialize @week_one with parameters for a new record or find an existing one
+      @week_one = @client.week_ones.build(week_one_params)
       @client = Client.find(params[:client_id])
-      @week_one = @client.week_ones.build
+
+      # This SHOULD trigger when a POST (form submission) occurs
+      if request.post?
+        # Set additional attributes if necessary
+        # all right side of equal need to be defined for submission, might need additions to training view page itself for this
+        @week_one.user = current_user 
+        # This SHOULD occur if we save week_one. It redirects to the next test, 
+        if @week_one.save
+          # WIP: REDIRECT NEEDS ACTUAL PATH CORRECTED - CURRENTLY JUST FOR EXAMPLE -Redirect to the next test or a confirmation page on success
+          # try to use their counter implementations? Probably won't work as is.
+          # redirect_to submit_with_counter, 
+          notice: 'Test 1 saved successfully.'
+        else
+          # Render the form again with errors
+          render :new
+        end
+      end
     end
 
     def rddt_week_one_test2

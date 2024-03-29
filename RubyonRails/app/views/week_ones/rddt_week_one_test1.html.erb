@@ -24,6 +24,8 @@
   <!-- <div class="container"> -->
   <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
   <div class="container">
+  <!-- ALL EARS: LAYTON: Attempted to add POST for cleaner form submission -- not AJAX so need local: true -- changed multipart to not have 'html: { multipart: true }'-->
+    <%= form_with model: [@client, @week_one], method: :post, local: true, multipart: true do |f| %>
     <div class="row">
         <div class="col-sm">
           <div class="form-group row ">
