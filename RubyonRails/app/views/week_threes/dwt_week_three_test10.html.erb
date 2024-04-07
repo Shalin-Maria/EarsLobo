@@ -1,18 +1,16 @@
 <body class= "bg-light center">
 <div class="container p-5 my-3 w-100 border rounded bg-white ">
+  <h1 class= "display-5 text-center", style= 'padding-bottom:20px' >
+    <strong><%= "Training " + @client.first_name + " " + @client.last_name%></strong>
+  </h1>
 
-
-
-
-<h1 class= "display-5", style= 'padding-bottom:20px' ><strong><%= "Testing " + @client.first_name + " " + @client.last_name%></strong></h1>
-
-<!--Test page for DWT List 1 Contains everything for completing and submitting a test  -->
+<!--Test page for Week One Test Five Contains everything for completing and submitting a test  -->
 <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 <%= form_with model: [@client, @week_three], local: true do |f| %>
 <div class="container">
   <div class="row">
-    <div class="col-sm">
+    <div class="col-md-4">
       <div class="form-group row"> 
       <div>
         <p>Ear Dominance</p>
@@ -26,7 +24,7 @@
           <button id="playButton" type="button">Play</button>
           <button id="pauseButton" type="button">Pause</button>
         </div>
-      </div>
+      </div> 
       <div class="form-group row">
         <label for="exampleLabel">Label</label>
           <%= f.text_field :label, class: "form-control", type: "text", id: "exampleLabel", value: "Week Three Test Ten" %>
@@ -39,24 +37,14 @@
         <label for="testType">Type</label>
         <input class="form-control" type="text" id="testType" placeholder="Dichotic Words" readonly>
       </div>
-      <hr/>
-      <!-- <%= button_tag "Switch left/right", :onclick => "event.preventDefault();" %> -->
-
-      <hr/>
-      <label for="Notes">Notes</label>
-      <%= f.text_area :notes, class: 'form-control', rows: '3' %>
-      <hr/>
-      <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
-      <%= audio_tag "Dichotic Words Track 7_R_Left_HRTF.wav", id: "leftEarAudio", controls: false %>
-      <%= audio_tag "Dichotic Words Track 7_R_Right_HRTF.wav", id: "rightEarAudio", controls: false %>
-                  
-      <!-- <audio controls>
-        <source src="/assets/Dichotic Words Track 7_R_Left_HRTF.wav" type="audio/wav">
-      </audio>
-      <audio controls>
-        <source src="/assets/Dichotic Words Track 7_R_Right_HRTF.wav" type="audio/wav">
-      </audio>
+      <!-- <div class="sticky">
+        <label for="Notes">Notes</label>
+        <%= f.text_area :notes, class: 'form-control', rows: '3' %>
       <hr/> -->
+      <!--AUDIO PLAYER FOR AUDIO FILES STORED IN ASSETS/AUDIO/ETC.MP3-->
+      <audio id="audioPlayer">
+        <source src="<%= audio_path('DWTtrack9_HRTF_2024.wav') %>" type="audio/wav">
+      </audio>
       <!--Table for ear advantage percentage that is calculated in the script-->
       <style>
           .left-column {
@@ -108,9 +96,9 @@
       <label for="read-Only">Ear Advantage</label>
       <input class="form-control" type="text" id="read-Only" value="" readonly>
       <span hidden id="advantage-Name"></span>
+      <span hidden id="Diagnosis"></span>
     </div>
 
-</div>
     <style>
       /* Center buttons in the table cells */
       .btn-group-toggle {
@@ -128,9 +116,9 @@
       }
     </style>
 
-    <div class="col-sm">
+    <div class="col-md-8">
 
-        <table class="table table-sm table-striped ml-4" style="max-width: 25rem;">
+        <table class="table table-sm table-striped ml-4" style="max-width: 45rem;">
           <thead class="thead-dark">
             <tr>
               <th>Number</th>
@@ -142,26 +130,26 @@
           <!-- Loop for table of words and creation of all buttons, only loops 25 times and creates table for buttons-->
             <% 20.times do |i| %>
               <% words = [
-                ["Youth", "Chain"],
-                ["Lean", "Mood"],
-                ["King", "Brush"],
-                ["Shore", "Life"],
-                ["Chat", "Turn"],
-                ["Drag", "Lot"],
-                ["Ripe", "Vote"],
-                ["Voice", "Fought"],
-                ["Get", "Bath"],
-                ["Live", "Jug"],
-                ["Raid", "Chair"],
-                ["Weak", "Five"],
-                ["Judge", "Team"],
-                ["Rat", "Hush"],
-                ["Kill", "Tape"],
-                ["Red", "Comb"],
-                ["Sell", "Dodge"],
-                ["Path", "Brought"],
-                ["Young", "Name"],
-                ["Time", "Neat"]
+                ["Yard", "Them"],
+                ["Dumb", "Car/Carve"],
+                ["Felt", "What"],
+                ["Smart", "Stove"],
+                ["Hunt", "Done"],
+                ["Shove", "Ran"],
+                ["Knees", "Close"],
+                ["Mood", "Not"],
+                ["Chest", "Star"],
+                ["Comb", "Wet"],
+                ["Nuts", "Hit"],
+                ["What", "Kill"],
+                ["Bread", "Give"],
+                ["Move", "Twins"],
+                ["Could", "Near"],
+                ["Deaf", "Ton"],
+                ["Dime", "Tare"],
+                ["None", "Jam"],
+                ["Poor", "Men"],
+                ["Him", "Book"]
                 ] %>
               <tr>
                 <td><%= i + 1 %></td>
@@ -184,6 +172,7 @@
           </tbody>
           <!--Hidden table for submition items-->
         </table>
+      </div>
 
         <%= f.hidden_field :client_name, value: "Example user" %>
         <%= f.hidden_field :test_type, value: "DWT" %>
@@ -194,14 +183,25 @@
         <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
     
         <!-- ALLEARS ADDITIONS, added to submit as well-->
-
         <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
         <%= f.hidden_field :right_ear_decibel, id: "leftEarDecibelField" %>
-          
-        <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
-        <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
-        <%= link_to "Back",  week_three_test_nine_client_week_threes_path(@client), class: "btn btn-secondary btn-block"%>
+
+        
+        <style>
+          .longer-button {
+            width: 600px;
+          }
+        </style>
+        <!-- Submit buttons -->
+        <div class="col-md-12 text-center mt-3 d-flex justify-content-center">
+          <%= link_to "Back",  week_three_test_nine_client_week_threes_path(@client), class: "btn btn-secondary mr-3 float-left"%>  
+          <%= f.submit "Submit and Proceed", class: "btn btn-primary mx-3 longer-button", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
+          <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-secondary mr-3 float-right", onclick: "submitAndExit();" %>
+        </div>
+      </div>
       <% end %>
+     
+
 
       <div>
         <p><span hidden id="column1-count"></span></p>
@@ -262,10 +262,10 @@
         const advantage = (percent2 - percent1).toFixed(2);
         const avgPercent = ((+percent1 + +percent2) / 2).toFixed(2);
 
-      //ALLEARS ADDITIONS
+
+        //ALLEARS ADDITIONS
         let rightEarDecibel; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
         let leftEarDecibel; // this is not yet attempted set up for server side at all, unlike right
-
 
         let direction = null;
         let interpretation = null;
@@ -457,7 +457,7 @@
       document.getElementById("ear_advantage_score").value = advantageDiff.innerText;
     }
 
-    //ALLEARS ADDITIONS
+      //ALLEARS ADDITIONS
       // only works for first group rn, copy paste for more when relevant to test
       function calculateRightEarDecibel() {
       
@@ -496,20 +496,37 @@
       }
       //ALLEARS Audio control listener, buttons
       document.addEventListener('DOMContentLoaded', (event) => {
-        const leftEarAudio = document.getElementById('leftEarAudio');
+        /* const leftEarAudio = document.getElementById('leftEarAudio');
         const rightEarAudio = document.getElementById('rightEarAudio');
+        */
+        const playButton = document.getElementById('playButton');
+        const pauseButton = document.getElementById('pauseButton');
 
         // Play button event
         document.getElementById('playButton').addEventListener('click', function() {
-          leftEarAudio.play();
+          /* leftEarAudio.play();
           rightEarAudio.play();
+          */
+          const audioPlayer = document.getElementById('audioPlayer');
+          if (audioPlayer.paused) {
+              audioPlayer.play();
+              playButton.innerText = "Pause";
+          } else {
+              audioPlayer.pause();
+              playButton.innerText = "Play";
+          }
         });
 
         // Pause button event
         document.getElementById('pauseButton').addEventListener('click', function() {
-          leftEarAudio.pause();
+          /* leftEarAudio.pause();
           rightEarAudio.pause();
+          */
+          const audioPlayer = document.getElementById('audioPlayer');
+          audioPlayer.pause();
+          playButton.innerText = "Play";
         });
+
         document.getElementById('setLeftDominance').addEventListener('click', function() {
         setEarDominance('left');
         });
@@ -518,7 +535,7 @@
         setEarDominance('right');
         });
       });
-      
+
       function submitAndExit() {
         // Calculate right ear decibel and populate hidden fields
           calculateRightEarDecibel();
@@ -527,9 +544,11 @@
         // Redirect to the client training index page
           window.location.href = '<%= client_trainings_path(@client) %>';
       }
-
-    </script>
+      
+      </script>
+    
+      </div>
     </div>
   </div>
-</div>
+
 </body>
