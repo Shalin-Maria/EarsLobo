@@ -21,13 +21,9 @@
     }
   </style>
 
-  <!-- <div class="container"> -->
   <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
-  <div class="container">
-  <!-- ALL EARS: LAYTON: Attempted to add POST for cleaner form submission -- not AJAX so need local: true -- changed multipart to not have 'html: { multipart: true }'-->
-    <%= form_with model: [@client, @week_one], method: :post, local: true, multipart: true do |f| %>
-    <div class="row">
-        <div class="col-sm">
+        <div class="row">
+          <div class="col-sm">
           <div class="form-group row ">
             <div>
               <p>Ear Dominance</p>
@@ -225,30 +221,19 @@
             <%= f.hidden_field :ear_advantage, id: "ear_advantage" %>
             <%= f.hidden_field :ear_advantage_score, id: "ear_advantage_score" %>
 
-          <!-- <%= f.submit "Submit", class: "btn btn-primary btn-block", onclick: "populateHiddenFields()" %> -->
+            <%= hidden_field_tag 'currentlyPlayingRightField', id: 'currentlyPlayingRightField' %>
+            <%= hidden_field_tag 'currentlyPlayingLeftField', id: 'currentlyPlayingLeftField' %>
+            <%= hidden_field_tag 'dominanceField', id: 'dominanceField' %>
+            <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
+            <%= f.hidden_field :left_ear_decibel, id: "leftEarDecibelField" %>
 
-          <!-- ALLEARS ADDITIONS, added to submit as well-->
+            <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %>
+            <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
+            <%= link_to "Back", client_trainings_path(@client), class: "btn btn-secondary btn-block" %>
 
-          <%= hidden_field_tag 'currentlyPlayingRightField', id: 'currentlyPlayingRightField' %>
-          <%= hidden_field_tag 'currentlyPlayingLeftField', id: 'currentlyPlayingLeftField' %>
-         
-
-          <%= hidden_field_tag 'dominanceField', id: 'dominanceField' %>
-          
-
-          <%= f.hidden_field :right_ear_decibel, id: "rightEarDecibelField" %>
-          <%= f.hidden_field :left_ear_decibel, id: "leftEarDecibelField" %>
           <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
-
-          <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %>
-          <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
-          <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-secondary btn-block"%>
         <% end %>
-        <!-- >   <div>
-        <%= link_to "Submit and Exit",  client_trainings_path(@client), class: "btn btn-primary btn-block"%> 
-        <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-primary btn-block"%>
-      </div> -->
-</div>
+      </div>
 
         <div>
           <p><span hidden id="column1-count"></span></p>
@@ -257,12 +242,6 @@
           <p><span id="column2-percent"></span></p>
           <p><span id="advantage-Diff"></span></p>
         </div>
-
-
-   
-      
-    
-
 
     <script>
 
