@@ -6,6 +6,14 @@ class WeekOnesController < ApplicationController
       @week_one = @client.week_ones.build(week_one_params)
       @client = Client.find(params[:client_id])
 
+      # Layton Debug log for he submitted parameters
+      Rails.logger.debug("Submitted parameters: #{week_one_params.inspect}")
+
+      #L: Adding a simplified debug form for more specific and limited scope testing of parameters working or not
+      def debug_form
+        @week_one = WeekOne.new
+      end
+
       # This SHOULD trigger when a POST (form submission) occurs
       if request.post?
         # Set additional attributes if necessary
@@ -97,6 +105,18 @@ class WeekOnesController < ApplicationController
       @week_one = @client.week_ones.build(week_one_params)
       @week_one.user = current_user
       @week_one.client = @client
+
+      # Logging for parameter passing debug - Layton addition
+      Rails.logger.debug("Submitted parameters: #{week_one_params.inspect}")
+      if @week_one.save
+        # Log a success message
+        Rails.logger.info("Week One data saved successfully for client: #{@client.full_name}")
+        redirect_to client_trainings_path(@client), notice: 'Week One data was successfully created.'
+      else
+        # Log the errors
+      Rails.logger.error("Error saving Week One data: #{@week_one.errors.full_messages.join(', ')}")
+      render :new
+      end
       submit_with_counter()
     end
     

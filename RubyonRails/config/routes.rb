@@ -124,5 +124,12 @@ Rails.application.routes.draw do
 
   #ALLEARS Addition: Trying to fix audio path issues for Week_Ones
   get '/audio_files/:file_name', to: 'audio_files#show', as: :audio_file
+
+  #L: Adding route for simple debug form
+  resources :clients do
+    resources :week_ones do
+      get 'debug_form', on: :collection
+    end
+  end
     
 end

@@ -1,0 +1,20 @@
+<!-- This is all hardcoded for testing on the views side! -->
+
+<%= form_with(model: [@client, @week_one], local: true) do |form| %>
+
+<!-- Can add more parameters to pass for testing, right now testing text field notes and the left score passing from field to server -->
+
+  <div>
+    <%= form.label :notes %>
+    <%= form.text_area :notes, value: 'Hard-coded notes' %>
+  </div>
+
+  <div>
+    <%= form.label :left_score %>
+    <%= form.text_field :left_score, value: 80 %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
