@@ -16,7 +16,11 @@ class AudioFilesController < ApplicationController
     #can be positive for increase, can pass negative for decrease
     #TODO: Add ear distinction? Could be added views side potentially?
     system("ffmpeg -i #{input_file} -filter:a \"volume=#{decibel_change}dB\" #{output_file}")
+
+    # confirmation message for debugging and such
+    render json: { message: 'Audio decibel level successfully changed'}
   end
+end
 
 =begin 
     old code, deprecated by gem change
