@@ -1,0 +1,8 @@
+<audio id="audio-player" controls>
+  <source src="<%= url_for(controller: 'audio_files', action: 'play') %>" type="audio/wav">
+</audio>
+
+<%= form_with(url: adjust_audio_path, method: :post) do |form| %>
+  <%= form.number_field :decibel_change, step: 0.1, placeholder: 'Enter decibel change' %>
+  <%= form.submit 'Change Decibel Level' %>
+<% end %>

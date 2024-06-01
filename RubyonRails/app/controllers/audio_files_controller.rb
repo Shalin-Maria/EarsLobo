@@ -1,12 +1,28 @@
 #ALLEARS ADDITION
  #app/controllers/audio_files_controller.rb
-class AudioFilesController < ApplicationController
-  
+class AudioFilesController < ApplicationController\
+  #needed to avoid audio file clutter from constant adjustments!
+  require 'tempfile'
   #new for streamio-ffmpeg
   # Doing in javascript requires some jank, so trying it as a parameter call to this controller
+
+  # for playing the file
+  def play
+    # currently hardcoded for easy testing
+    audio_file = Rails.root.join('app', 'assets', 'audio', '1-pair Dichotic Digits, List 1_Left_HRTF.wav')
+    
+    # this is currently coded for .wav!!
+    movie = FFMPEG::Movie.new(audio_file)
+    send_data(movie.transcode(nil, custom: %w(-f wav -acodec pcm_s16le -)), type: 'audio/wav', disposition: 'inline')
+  end
+
+  # for adjusting decibels
+  # currently hard coded audio!!!
   def adjust
-    input_file = #TODO: Specify path
-    output_file = #TODO: Set to same as input for overwrite
+    input_file = Rails.root.join('app', 'assets', 'audio', '1-pair Dichotic Digits, List 1_Left_HRTF.wav')
+
+    # Create a temporary file for the output
+    output_file = Tempfile.new(['adjusted_audio', '.wav'])
 
     #adjusting decibels by param, must be specified when the controller is called to change volume
     # ie POST /adjust_audo?decibel_change=10 would increase decibels by 10
@@ -15,10 +31,18 @@ class AudioFilesController < ApplicationController
     #this is the actual ffmpeg command
     #can be positive for increase, can pass negative for decrease
     #TODO: Add ear distinction? Could be added views side potentially?
-    system("ffmpeg -i #{input_file} -filter:a \"volume=#{decibel_change}dB\" #{output_file}")
+    system("ffmpeg -i #{input_file} -filter:a \"volume=#{decibel_change}dB\" #{output_file.path}")
 
-    # confirmation message for debugging and such
-    render json: { message: 'Audio decibel level successfully changed'}
+    # serves the adjusted audio file to the user's view page
+    send_file output_file.path, type: 'audio/wav', disposition: 'inline'
+    #TODO Find a good place to clean up the temporary file later when done
+
+    # This should hopefully allow for an AJAX request
+    # this is a javascript response
+    # this will likely bne needed for live update using buttons in the future
+    #respond_to do |format|
+    #  format.js
+    #end
   end
 end
 
