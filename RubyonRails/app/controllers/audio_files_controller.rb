@@ -1,15 +1,20 @@
 #ALLEARS ADDITION
  #app/controllers/audio_files_controller.rb
-class AudioFilesController < ApplicationController\
+class AudioFilesController < ApplicationController
   #needed to avoid audio file clutter from constant adjustments!
   require 'tempfile'
   #new for streamio-ffmpeg
   # Doing in javascript requires some jank, so trying it as a parameter call to this controller
 
+  def audio_testing
+    # For rendering the view
+    render 'debug/audio_testing'
+  end
   # for playing the file
   def play
     # currently hardcoded for easy testing
     audio_file = Rails.root.join('app', 'assets', 'audio', '1-pair Dichotic Digits, List 1_Left_HRTF.wav')
+    #TODO Make sure that the updated temp file is being player here (currently downloaded?) Need to un-hardcode this for further testing
     
     # this is currently coded for .wav!!
     movie = FFMPEG::Movie.new(audio_file)
@@ -34,6 +39,7 @@ class AudioFilesController < ApplicationController\
     system("ffmpeg -i #{input_file} -filter:a \"volume=#{decibel_change}dB\" #{output_file.path}")
 
     # serves the adjusted audio file to the user's view page
+    # currently downloads the value
     send_file output_file.path, type: 'audio/wav', disposition: 'inline'
     #TODO Find a good place to clean up the temporary file later when done
 
