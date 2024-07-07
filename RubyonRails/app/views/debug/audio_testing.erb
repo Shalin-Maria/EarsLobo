@@ -1,8 +1,38 @@
 <audio id="audio-player" controls>
-  <source src="<%= url_for(controller: 'audio_files', action: 'play') %>" type="audio/wav">
+  <source id="audio-source" src="" type="audio/wav">
 </audio>
 
-<%= form_with(url: adjust_audio_path, method: :post) do |form| %>
+<%= form_with(url: adjust_audio_path, method: :post, local: false) do |form| %>
   <%= form.number_field :decibel_change, step: 0.1, placeholder: 'Enter decibel change' %>
   <%= form.submit 'Change Decibel Level' %>
 <% end %>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const audioPlayer = document.getElementById('audio-player');
+  const audioSource = document.getElementById('audio-source');
+  
+  // Set initial audio source
+  audioSource.src = '<%= url_for(controller: 'audio_files', action: 'play') %>';
+  audioPlayer.load();
+
+  // Handle form submission
+  const form = document.querySelector('form');
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+    
+    fetch('<%= adjust_audio_path %>', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.blob())
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      audioSource.src = url;
+      audioPlayer.load();
+      audioPlayer.play();
+    });
+  });
+});
+</script>

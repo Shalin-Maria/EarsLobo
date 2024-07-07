@@ -15,10 +15,14 @@ class AudioFilesController < ApplicationController
     # currently hardcoded for easy testing
     audio_file = Rails.root.join('app', 'assets', 'audio', '1-pair Dichotic Digits, List 1_Left_HRTF.wav')
     #TODO Make sure that the updated temp file is being player here (currently downloaded?) Need to un-hardcode this for further testing
-    
+    #debug to check for file being uploaded etc
+    if File.exist?(audio_file)
+      send_file audio_file, type: 'audio/wav', disposition: 'inline'
+    else
+      Rails.logger.error "Audio file not found: #{audio_file}"
+      head :not_found
+    end
     # this is currently coded for .wav!!
-    movie = FFMPEG::Movie.new(audio_file)
-    send_data(movie.transcode(nil, custom: %w(-f wav -acodec pcm_s16le -)), type: 'audio/wav', disposition: 'inline')
   end
 
   # for adjusting decibels
@@ -33,23 +37,40 @@ class AudioFilesController < ApplicationController
     # ie POST /adjust_audo?decibel_change=10 would increase decibels by 10
     decibel_change = params[:decibel_change].to_f
 
+    # defining succes for debug
+    command = "ffmpeg -i #{input_file} -filter:a \"volume=#{decibel_change}dB\" #{output_file.path}"
+    success = system(command)
+
     #this is the actual ffmpeg command
     #can be positive for increase, can pass negative for decrease
     #TODO: Add ear distinction? Could be added views side potentially?
-    system("ffmpeg -i #{input_file} -filter:a \"volume=#{decibel_change}dB\" #{output_file.path}")
 
     # serves the adjusted audio file to the user's view page
     # currently downloads the value
-    send_file output_file.path, type: 'audio/wav', disposition: 'inline'
+    
     #TODO Find a good place to clean up the temporary file later when done
 
+    #file change success debug
+    if success
+      send_file output_file.path, type: 'audio/wav', disposition: 'inline'
+    else
+      Rails.logger.error "FFmpeg command failed: #{command}"
+      head :internal_server_error
+    end
+  rescue => e
+    Rails.logger.error "Error in adjust method: #{e.message}"
+    head :internal_server_error
+  ensure
+    output_file.close
+    output_file.unlink
+  end
     # This should hopefully allow for an AJAX request
-    # this is a javascript response
+    # this is a javascript responsea
     # this will likely bne needed for live update using buttons in the future
     #respond_to do |format|
     #  format.js
     #end
-  end
+  
 end
 
 =begin 
