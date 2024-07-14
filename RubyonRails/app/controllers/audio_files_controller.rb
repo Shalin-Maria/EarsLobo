@@ -29,7 +29,8 @@ class AudioFilesController < ApplicationController
   # currently hard coded audio!!!
   def adjust
     input_file = Rails.root.join('app', 'assets', 'audio', '1-pair Dichotic Digits, List 1_Left_HRTF.wav')
-
+    Rails.logger.debug "Input file path: #{input_file}"
+    Rails.logger.debug "Input file exists: #{File.exist?(input_file)}"
     # Create a temporary file for the output
     output_file = Tempfile.new(['adjusted_audio', '.wav'])
 
@@ -38,7 +39,7 @@ class AudioFilesController < ApplicationController
     decibel_change = params[:decibel_change].to_f
 
     # defining succes for debug
-    command = "ffmpeg -i #{input_file} -filter:a \"volume=#{decibel_change}dB\" #{output_file.path}"
+    command = "ffmpeg -i \"#{input_file}\" -filter:a \"volume=#{decibel_change}dB\" \"#{output_file.path}\""
     success = system(command)
 
     #this is the actual ffmpeg command
@@ -64,6 +65,8 @@ class AudioFilesController < ApplicationController
     output_file.close
     output_file.unlink
   end
+
+
     # This should hopefully allow for an AJAX request
     # this is a javascript responsea
     # this will likely bne needed for live update using buttons in the future
