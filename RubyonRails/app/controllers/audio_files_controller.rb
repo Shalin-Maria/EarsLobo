@@ -53,6 +53,15 @@ class AudioFilesController < ApplicationController
 
     #file change success debug
     if success
+
+      #this hooks into our method for debugging/checking decibel change
+      original_analysis = analyze_audio(input_file)
+      adjusted_analysis = analyze_audio(output_file.path)
+
+      Rails.logger.debug "Original audio analysis: #{original_analysis}"
+      Rails.logger.debug "Adjusted audio analysis: #{adjusted_analysis}"
+
+      # this is the actual portion where the file is sent to be output
       send_file output_file.path, type: 'audio/wav', disposition: 'inline'
     else
       Rails.logger.error "FFmpeg command failed: #{command}"
@@ -74,6 +83,14 @@ class AudioFilesController < ApplicationController
     #  format.js
     #end
   
+    # This is for testing that the decibels are being change appropriately!
+    def analyze_audio(file_path)
+      command = "ffmpeg -i \"#{file_path}\" -af volumedetect -f null /dev/null 2>&1"
+      output = `#{command}`
+      mean_volume = output.match(/mean_volume: ([-\d.]+) dB/)&.captures&.first
+      max_volume = output.match(/max_volume: ([-\d.]+) dB/)&.captures&.first
+      { mean_volume: mean_volume, max_volume: max_volume }
+    end
 end
 
 =begin 
