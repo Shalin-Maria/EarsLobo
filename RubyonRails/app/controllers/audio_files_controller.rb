@@ -31,16 +31,22 @@ class AudioFilesController < ApplicationController
     input_file = Rails.root.join('app', 'assets', 'audio', '1-pair Dichotic Digits, List 1_Left_HRTF.wav')
     Rails.logger.debug "Input file path: #{input_file}"
     Rails.logger.debug "Input file exists: #{File.exist?(input_file)}"
+
+    # Generates a unique filename for the new file
+    output_filename = "adjusted_audio_#{Time.now.to_i}_#{rand(1000)}.wav"
     # Create a temporary file for the output
-    output_file = Tempfile.new(['adjusted_audio', '.wav'])
+    output_file = Rails.root.join('tmp', output_filename)
 
     #adjusting decibels by param, must be specified when the controller is called to change volume
     # ie POST /adjust_audo?decibel_change=10 would increase decibels by 10
     decibel_change = params[:decibel_change].to_f
 
     # defining succes for debug
-    command = "ffmpeg -i \"#{input_file}\" -filter:a \"volume=#{decibel_change}dB\" \"#{output_file.path}\""
-    success = system(command)
+    command = "ffmpeg -i \"#{input_file}\" -filter:a \"volume=#{decibel_change}dB\" \"#{output_file}\""
+    output = `#{command} 2>&1`
+    success = $?.success?
+    Rails.logger.debug "FFmpeg output: #{output}"
+    Rails.logger.debug "FFmpeg command success: #{success}"
 
     #this is the actual ffmpeg command
     #can be positive for increase, can pass negative for decrease
@@ -54,25 +60,30 @@ class AudioFilesController < ApplicationController
     #file change success debug
     if success
 
+      cleanup_old_temp_files
+
       #this hooks into our method for debugging/checking decibel change
       original_analysis = analyze_audio(input_file)
-      adjusted_analysis = analyze_audio(output_file.path)
+      adjusted_analysis = analyze_audio(output_file)
 
       Rails.logger.debug "Original audio analysis: #{original_analysis}"
       Rails.logger.debug "Adjusted audio analysis: #{adjusted_analysis}"
 
       # this is the actual portion where the file is sent to be output
-      send_file output_file.path, type: 'audio/wav', disposition: 'inline'
+      send_file output_file, type: 'audio/wav', disposition: 'inline'
     else
       Rails.logger.error "FFmpeg command failed: #{command}"
       head :internal_server_error
     end
   rescue => e
     Rails.logger.error "Error in adjust method: #{e.message}"
+    Rails.logger.error e.backtrace.join("\n")
     head :internal_server_error
   ensure
-    output_file.close
-    output_file.unlink
+    # Makes sure to delete output file if there's an error
+    
+    File.delete(output_file) if File.exist?(output_file)
+    
   end
 
 
@@ -90,6 +101,19 @@ class AudioFilesController < ApplicationController
       mean_volume = output.match(/mean_volume: ([-\d.]+) dB/)&.captures&.first
       max_volume = output.match(/max_volume: ([-\d.]+) dB/)&.captures&.first
       { mean_volume: mean_volume, max_volume: max_volume }
+    end
+
+    # Handles cleanup of temp files the site no longer needs to avoid file bloat
+    def cleanup_old_temp_files
+      temp_dir = Rails.root.join('tmp')
+      threshold_time = 1.hour.ago
+    
+      Dir.glob(temp_dir.join('adjusted_audio_*')).each do |file|
+        if File.mtime(file) < threshold_time
+          File.delete(file)
+          Rails.logger.info "Deleted old temp file: #{file}"
+        end
+      end
     end
 end
 
