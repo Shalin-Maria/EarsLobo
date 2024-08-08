@@ -1,64 +1,163 @@
 
-<!-- Audio player for WAV files ONLY -->
-<audio id="audio-player" controls>
-  <source id="audio-source" src="<%= url_for(controller: 'audio_files', action: 'play') %>" type="audio/wav">
-</audio>
+<!-- Audio player for WAV files ONLY 
+ Dual audio player - two players, one for left and right, appearing as only one in the view-->
+<div id="dichotic-player" class="audio-player">
+  <audio id="left-player" style="display: none;">
+    <source id="left-source" src="<%= url_for(controller: 'audio_files', action: 'play_left') %>" type="audio/wav">
+  </audio>
+  <audio id="right-player" style="display: none;">
+    <source id="right-source" src="<%= url_for(controller: 'audio_files', action: 'play_right') %>" type="audio/wav">
+  </audio>
+  <button id="play-pause">Play</button>
+  <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
+  <span id="current-time">0:00</span> / <span id="duration">0:00</span>
+</div>
 
-<!-- Form for adjusting audio decibel levels -->
-<%= form_with(url: adjust_audio_path, method: :post, local: false) do |form| %>
+<!-- Forms for adjusting audio decibel levels -->
+<!-- Form for adjusting both channels -->
+<h3>Adjust Both Channels</h3>
+<%= form_with(url: adjust_audio_path, method: :post, local: false, class: 'adjust-form') do |form| %>
   <%= form.number_field :decibel_change, step: 0.1, placeholder: 'Enter decibel change' %>
-  <%= form.submit 'Change Decibel Level' %>
+  <%= form.submit 'Change Both Channels' %>
 <% end %>
 
-<!-- Div section for displaying error messages that aren't exclusively console -->
+<!-- Form for adjusting left ear channel -->
+<h3>Adjust Left Channel</h3>
+<%= form_with(url: adjust_audio_path, method: :post, local: false, class: 'adjust-form') do |form| %>
+  <%= form.hidden_field :channel, value: 'left' %>
+  <%= form.number_field :decibel_change, step: 0.1, placeholder: 'Enter decibel change' %>
+  <%= form.submit 'Change Left Channel' %>
+<% end %>
+
+<!-- Form for adjusting right ear channel -->
+<h3>Adjust Right Channel</h3>
+<%= form_with(url: adjust_audio_path, method: :post, local: false, class: 'adjust-form') do |form| %>
+  <%= form.hidden_field :channel, value: 'right' %>
+  <%= form.number_field :decibel_change, step: 0.1, placeholder: 'Enter decibel change' %>
+  <%= form.submit 'Change Right Channel' %>
+<% end %>
+
+<!-- Div for displaying audio analysis results (this is for debug, probably hide of real pages, or convert to soemthing we want to show them for 'haptic' feedback)-->
+<div id="analysis-results" style="display: none;">
+  <h3>Audio Analysis Results</h3>
+  <div id="left-analysis"></div>
+  <div id="right-analysis"></div>
+</div>
+
+<!-- Div for displaying error messages that aren't exclusively console -->
 <div id="error-message" style="color: red; display: none;"></div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   // Get references to the audio player and its source (for the script portion of page)
-  const audioPlayer = document.getElementById('audio-player');
-  const audioSource = document.getElementById('audio-source');
+  // sets up various params for our single player
+  const leftPlayer = document.getElementById('left-player');
+  const rightPlayer = document.getElementById('right-player');
+  const leftSource = document.getElementById('left-source');
+  const rightSource = document.getElementById('right-source');
+  const playPauseButton = document.getElementById('play-pause');
+  const volumeControl = document.getElementById('volume');
+  const currentTimeSpan = document.getElementById('current-time');
+  const durationSpan = document.getElementById('duration');
   // Used to display errors in div
   const errorMessage = document.getElementById('error-message');
  
+
+  // functions for custom single player with two player channels
+  // this should help ensure our two audio players stay in synch!
+  function checkSync() {
+    const timeDifference = Math.abs(leftPlayer.currentTime - rightPlayer.currentTime);
+    // If out of sync by more than 100 milliseconds
+    if (timeDifference > 0.1) {
+      // displays the synch issue amd severity
+      console.log('Sync correction needed. Difference:', timeDifference);
+      // attempts to correct the issue by setting right to left (left is our master)
+      rightPlayer.currentTime = leftPlayer.currentTime;
+    }
+  }
   // Path is set by helper in form_with above, this is for player
   // This loads the original unadjusted audio file
-  audioSource.src = '<%= url_for(controller: 'audio_files', action: 'play') %>';
-  audioPlayer.load();
-  // Handles form submission for changing decibels
-  const form = document.querySelector('form');
-  form.addEventListener('submit', function(e) {
-    // Prevents using a default form submission for our specific
-    e.preventDefault();
-    const formData = new FormData(form);
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  }
+
+  function updateTimeDisplay() {
+    currentTimeSpan.textContent = formatTime(leftPlayer.currentTime);
+    durationSpan.textContent = formatTime(leftPlayer.duration);
+    // runs the check sync function to make sure both files are properly lined up
+    checkSync();
+  }
+
+  playPauseButton.addEventListener('click', function() {
+    if (leftPlayer.paused) {
+      // promise should hopefully ensure these both occur at the same time
+      Promise.all([leftPlayer.play(), rightPlayer.play()]).then(() => {
+        playPauseButton.textContent = 'Pause';
+      }).catch(error => {
+        console.error('Error playing audio:', error);
+      });
+    } else {
+      leftPlayer.pause();
+      rightPlayer.pause();
+      playPauseButton.textContent = 'Play';
+    }
+  });
+
+  // Sync right player when 'seeking' in left player - left is our master player
+  leftPlayer.addEventListener('seeking', function() {
+    rightPlayer.currentTime = leftPlayer.currentTim
+
+  volumeControl.addEventListener('input', function() {
+    leftPlayer.volume = this.value;
+    rightPlayer.volume = this.value;
+  });
+
+  leftPlayer.addEventListener('timeupdate', updateTimeDisplay);
+  leftPlayer.addEventListener('loadedmetadata', updateTimeDisplay);
+
+  document.querySelectorAll('.adjust-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+      // overrides any default form behavior for ours
+      e.preventDefault();
+      const formData = new FormData(form);
    
     // This is an AJAX request for when we want to adjust the audio. Goal is to adjust without page refresh.
     fetch('<%= adjust_audio_path %>', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response error');
-      }
-      return response.blob();
-    })
-    .then(blob => {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response error');
+        }
+        return response.blob();
+      })
+      // This MUST be blob, not data!! We are workin with audio.
+      .then(blob => {
       // This creates a URL for the adjusted audio files
       const url = URL.createObjectURL(blob);
       // Updates our source audio, player, etc for the new file
-      audioSource.src = url;
-      audioPlayer.load();
-      audioPlayer.play();
+      leftSource.src = url;
+      rightSource.src = url;
+      leftPlayer.load();
+      rightPlayer.load();
       // Hide any previous error message
       // TODO: Make sure this isn't screwing up ever displaying
       errorMessage.style.display = 'none';
     })
-    .catch(error => {
-      console.error('Error:', error);
-      // Handle the error, show a message on page
-      errorMessage.textContent = 'An error occurred while adjusting the audio.';
-      errorMessage.style.display = 'block';
+    // Converts the blob as JSON to get the analysis data from our controller function
+        blob.text().then(text => {
+          const data = JSON.parse(text);
+          console.log('Left channel analysis:', data.left_analysis);
+          console.log('Right channel analysis:', data.right_analysis);
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        errorMessage.textContent = 'An error occurred while adjusting the audio.';
+        errorMessage.style.display = 'block';
     });
   });
 });

@@ -128,9 +128,18 @@ Rails.application.routes.draw do
   #ALLEARS Addition: Trying to fix audio path issues for Week_Ones
   get '/audio_files/:file_name', to: 'audio_files#show', as: :audio_file
 
+  # config for multiple ear players
+  resources :audio_files, only: [] do
+    collection do
+      get 'play_left'
+      get 'play_right'
+      post 'adjust'
+  end
   #config for ffmpeg audio play
-  get 'play', to: 'audio_files#play'
+  #get 'play', to: 'audio_files#play'
   #config for ffmpeg audio decibel controller
-  post 'adjust_audio', to: 'audio_files#adjust'
+  #post 'adjust_audio', to: 'audio_files#adjust'
+  #config for ffmpeg individual ear channels
+  #post 'adjust_channel', to: 'audio_files#adjust_channel'
     
 end
