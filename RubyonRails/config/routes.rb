@@ -126,7 +126,7 @@ Rails.application.routes.draw do
     get 'clients/:client_id/trainings/:id', to: 'trainings#show', as: 'client_training'
 
   #ALLEARS Addition: Trying to fix audio path issues for Week_Ones
-  get '/audio_files/:file_name', to: 'audio_files#show', as: :audio_file
+  # get '/audio_files/:file_name', to: 'audio_files#show', as: :audio_file
 
   # config for multiple ear players
   resources :audio_files, only: [] do
@@ -134,6 +134,7 @@ Rails.application.routes.draw do
       get 'play_left'
       get 'play_right'
       post 'adjust'
+    end
   end
   #config for ffmpeg audio play
   #get 'play', to: 'audio_files#play'

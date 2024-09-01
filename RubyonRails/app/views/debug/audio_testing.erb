@@ -16,14 +16,14 @@
 <!-- Forms for adjusting audio decibel levels -->
 <!-- Form for adjusting both channels -->
 <h3>Adjust Both Channels</h3>
-<%= form_with(url: adjust_audio_path, method: :post, local: false, class: 'adjust-form') do |form| %>
+<%= form_with(url: adjust_audio_files_path, method: :post, local: false, class: 'adjust-form') do |form| %>
   <%= form.number_field :decibel_change, step: 0.1, placeholder: 'Enter decibel change' %>
   <%= form.submit 'Change Both Channels' %>
 <% end %>
 
 <!-- Form for adjusting left ear channel -->
 <h3>Adjust Left Channel</h3>
-<%= form_with(url: adjust_audio_path, method: :post, local: false, class: 'adjust-form') do |form| %>
+<%= form_with(url: adjust_audio_files_path, method: :post, local: false, class: 'adjust-form') do |form| %>
   <%= form.hidden_field :channel, value: 'left' %>
   <%= form.number_field :decibel_change, step: 0.1, placeholder: 'Enter decibel change' %>
   <%= form.submit 'Change Left Channel' %>
@@ -31,7 +31,7 @@
 
 <!-- Form for adjusting right ear channel -->
 <h3>Adjust Right Channel</h3>
-<%= form_with(url: adjust_audio_path, method: :post, local: false, class: 'adjust-form') do |form| %>
+<%= form_with(url: adjust_audio_files_path, method: :post, local: false, class: 'adjust-form') do |form| %>
   <%= form.hidden_field :channel, value: 'right' %>
   <%= form.number_field :decibel_change, step: 0.1, placeholder: 'Enter decibel change' %>
   <%= form.submit 'Change Right Channel' %>
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const formData = new FormData(form);
    
     // This is an AJAX request for when we want to adjust the audio. Goal is to adjust without page refresh.
-    fetch('<%= adjust_audio_path %>', {
+    fetch('<%= adjust_audio_files_path %>', {
         method: 'POST',
         body: formData
       })
