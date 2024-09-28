@@ -25,7 +25,7 @@
   <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
   <div class="container">
   <!-- ALL EARS: LAYTON: Attempted to add POST for cleaner form submission -- not AJAX so need local: true -- changed multipart to not have 'html: { multipart: true }'-->
-    <%= form_with model: [@client, @week_one], method: :post, local: true, multipart: true do |f| %>
+  
     <div class="row">
         <div class="col-sm">
           <div class="form-group row ">
@@ -150,6 +150,7 @@
                   <th>Number</th>
                   <th>Left</th>
                   <th>Right</th>
+                  <th>Neither</th>
                 </tr>
               </thead>
               <tbody>
@@ -210,6 +211,14 @@
                         <% end %>
                       </div>
                     </td>
+                    <td>
+                      <div class="btn-group-toggle" data="buttons">
+                        <label class="btn btn-outline-primary neither-button">
+                          <input type="checkbox" name="neither[<%= i %>]" value="neither">
+                          Neither
+                        </label>
+                      </div>
+                    </td>
                   </tr>
                 <% end %>
               </tbody>
@@ -240,7 +249,7 @@
           <%= f.hidden_field :left_ear_decibel, id: "leftEarDecibelField" %>
           <!--  try a 'test' button that just updates the value to check if this is an issue here - also try to check client.rb, no handler for right_ear mightr be the problem?-->
 
-          <%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel() populateHiddenFields()" %>
+          <<%= f.submit "Submit and Proceed", class: "btn btn-primary btn-block", onclick: "calculateRightEarDecibel(); populateHiddenFields();" %>
           <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
           <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-secondary btn-block"%>
         <% end %>
@@ -289,6 +298,8 @@
         const column2ButtonsGroup1 = document.querySelectorAll(".column2Group1-button input[type='checkbox']");
         const column2ButtonsGroup2 = document.querySelectorAll(".column2Group2-button input[type='checkbox']");
         const column2ButtonsGroup3 = document.querySelectorAll(".column2Group3-button input[type='checkbox']");
+        // new for neither
+        const neitherButtons = document.querySelectorAll(".neither-button input[type='checkbox']");
 
         const allButtons = document.querySelectorAll(".column1Group1-button input[type='checkbox'], .column1Group2-button input[type='checkbox'], .column1Group3-button input[type='checkbox'], .column2Group1-button input[type='checkbox'], .column2Group2-button input[type='checkbox'], .column2Group3-button input[type='checkbox']");
         
@@ -317,9 +328,59 @@
         const readOnly = document.getElementById("read-Only");
         const readOnlyDiag = document.getElementById("read-Only-diag");
         
-
+        // new for neither row
+        let selectedRows = 0;
+        const totalRows = 25; // Assuming there are 25 rows in total
+        const rowSelections = new Array(totalRows).fill(false);
         // Update the counts when a button is clicked
-        
+        const allButtons = document.querySelectorAll(".column1Group1-button input[type='checkbox'], .column1Group2-button input[type='checkbox'], .column1Group3-button input[type='checkbox'], .column2Group1-button input[type='checkbox'], .column2Group2-button input[type='checkbox'], .column2Group3-button input[type='checkbox'], .neither-button input[type='checkbox']");
+  
+  let selectedRows = 0;
+  const totalRows = 25; // Assuming there are 25 rows in total
+  const rowSelections = new Array(totalRows).fill(false);
+
+  function updateRowSelection(rowIndex, isSelected) {
+    if (isSelected && !rowSelections[rowIndex]) {
+      selectedRows++;
+      rowSelections[rowIndex] = true;
+    } else if (!isSelected && rowSelections[rowIndex]) {
+      selectedRows--;
+      rowSelections[rowIndex] = false;
+    }
+
+    if (selectedRows >= 5) {
+      displayMessage();
+    } else {
+      hideMessage();
+    }
+  }
+
+  function displayMessage() {
+    const messageElement = document.getElementById('selectionMessage');
+    if (!messageElement) {
+      const message = document.createElement('div');
+      message.id = 'selectionMessage';
+      message.style.backgroundColor = 'yellow';
+      message.style.padding = '10px';
+      message.style.marginTop = '10px';
+      message.textContent = 'You have selected at least one box in 5 or more rows!';
+      document.querySelector('.container').appendChild(message);
+    }
+  }
+
+  function hideMessage() {
+    const messageElement = document.getElementById('selectionMessage');
+    if (messageElement) {
+      messageElement.remove();
+    }
+  }
+
+  allButtons.forEach(function(button, index) {
+    button.addEventListener("click", function() {
+      const rowIndex = Math.floor(index / 3); // Assuming 3 buttons per row (Left, Right, Neither)
+      const isSelected = this.checked;
+      updateRowSelection(rowIndex, isSelected);
+
         allButtons.forEach(function(button) {
           button.addEventListener("click", function() {
           const checkedCount1Group1 = document.querySelectorAll(".column1Group1-button input[type='checkbox']:checked").length;
@@ -463,7 +524,10 @@
         // Adds to display for debug buttons
         document.getElementById("rightEarDecibelDisplay").innerText = rightEarDecibel;
         document.getElementById("leftEarDecibelDisplay").innerText = leftEarDecibel;
+      
       }
+          });
+        });
       //functions for setting ear dominance
       function setEarDominance(dominance) {
       // Assuming rightEarDecibel changes based on ear dominance

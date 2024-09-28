@@ -48,7 +48,12 @@
 <div id="error-message" style="color: red; display: none;"></div>
 
 <script>
+
+// more error checking
+console.log('JavaScript is running');
+
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM is fully loaded');
   // Get references to the audio player and its source (for the script portion of page)
   // sets up various params for our single player
   const leftPlayer = document.getElementById('left-player');
@@ -62,6 +67,10 @@ document.addEventListener('DOMContentLoaded', function() {
   // Used to display errors in div
   const errorMessage = document.getElementById('error-message');
  
+ //troubleshooting for combined player
+  console.log('Left Player:', leftPlayer);
+  console.log('Right Player:', rightPlayer);
+  console.log('Play/Pause Button:', playPauseButton);
 
   // functions for custom single player with two player channels
   // this should help ensure our two audio players stay in synch!
@@ -90,32 +99,77 @@ document.addEventListener('DOMContentLoaded', function() {
     checkSync();
   }
 
-  playPauseButton.addEventListener('click', function() {
-    if (leftPlayer.paused) {
-      // promise should hopefully ensure these both occur at the same time
-      Promise.all([leftPlayer.play(), rightPlayer.play()]).then(() => {
-        playPauseButton.textContent = 'Pause';
-      }).catch(error => {
-        console.error('Error playing audio:', error);
-      });
-    } else {
-      leftPlayer.pause();
-      rightPlayer.pause();
-      playPauseButton.textContent = 'Play';
-    }
-  });
+  // checks audio source at time of play button press
+  function logAudioSource(player, channel) {
+    console.log(`${channel} channel attempting to play:`, player.src);
+  }
 
   // Sync right player when 'seeking' in left player - left is our master player
   leftPlayer.addEventListener('seeking', function() {
-    rightPlayer.currentTime = leftPlayer.currentTim
+    rightPlayer.currentTime = leftPlayer.currentTime
+
+
+
+  leftPlayer.addEventListener('timeupdate', updateTimeDisplay);
+  leftPlayer.addEventListener('loadedmetadata', updateTimeDisplay);
+
+  // for debug and double checking, here is the ssame for the right
+  rightPlayer.addEventListener('timeupdate', updateTimeDisplay);
+  rightPlayer.addEventListener('loadedmetadata', updateTimeDisplay);
+  
+  if (playPauseButton) {
+    playPauseButton.addEventListener('click', function(event) {
+      console.log('Play button clicked');
+      // Preventing any default button behavior
+      event.preventDefault();
+
+      // Logs player pause states
+      console.log('Left player paused:', leftPlayer.paused);
+      console.log('Right player paused:', rightPlayer.paused);
+
+      // Attempts to play/pause
+      if (leftPlayer.paused && rightPlayer.paused) {
+        console.log('Attempting to play audio');
+        Promise.all([
+          leftPlayer.play().catch(e => console.error('Left player error:', e)),
+          rightPlayer.play().catch(e => console.error('Right player error:', e))
+        ]).then(() => {
+          console.log('Both players started successfully');
+          playPauseButton.textContent = 'Pause';
+        }).catch(error => {
+          console.error('Error playing audio:', error);
+        });
+      } else {
+        console.log('Pausing audio');
+        leftPlayer.pause();
+        rightPlayer.pause();
+        playPauseButton.textContent = 'Play';
+      }
+    });
+
+    console.log('Click event listener added to play button');
+  } else {
+    console.error('Play button not found');
+  }
+
+  // Logs what the audio sources are when play is pressed
+  if (leftPlayer && rightPlayer) {
+    console.log('Initial left audio source:', leftPlayer.src);
+    console.log('Initial right audio source:', rightPlayer.src);
+  } else {
+    console.error('One or both audio players not found');
+  }
 
   volumeControl.addEventListener('input', function() {
     leftPlayer.volume = this.value;
     rightPlayer.volume = this.value;
   });
+});
 
-  leftPlayer.addEventListener('timeupdate', updateTimeDisplay);
-  leftPlayer.addEventListener('loadedmetadata', updateTimeDisplay);
+// Log any errors that didn't fit the above
+window.addEventListener('error', function(event) {
+  console.error('Global error:', event.error);
+});
 
   document.querySelectorAll('.adjust-form').forEach(form => {
     form.addEventListener('submit', function(e) {
@@ -136,23 +190,46 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       // This MUST be blob, not data!! We are workin with audio.
       .then(blob => {
-      // This creates a URL for the adjusted audio files
-      const url = URL.createObjectURL(blob);
-      // Updates our source audio, player, etc for the new file
-      leftSource.src = url;
-      rightSource.src = url;
-      leftPlayer.load();
-      rightPlayer.load();
-      // Hide any previous error message
-      // TODO: Make sure this isn't screwing up ever displaying
-      errorMessage.style.display = 'none';
+        // Log blob information for debugging
+        console.log('Blob type:', blob.type);
+        console.log('Blob size:', blob.size);
+        // This creates a URL for the adjusted audio files
+        const url = URL.createObjectURL(blob);
+
+        // Updates our source audio, player, etc for the new file
+        leftSource.src = url;
+        rightSource.src = url;
+        leftPlayer.load();
+        rightPlayer.load();
+        // Hide any previous error message
+        // TODO: Make sure this isn't screwing up ever displaying
+        errorMessage.style.display = 'none';
     })
     // Converts the blob as JSON to get the analysis data from our controller function
-        blob.text().then(text => {
-          const data = JSON.parse(text);
-          console.log('Left channel analysis:', data.left_analysis);
-          console.log('Right channel analysis:', data.right_analysis);
+        return blob.text().then(text => {
+          try {
+            const data = JSON.parse(text);
+            console.log("JSON data structure:", Object.keys(data));
+            console.log('Left channel analysis:', data.left_analysis);
+            console.log('Right channel analysis:', data.right_analysis);
+
+            // Update UI with analysis results
+            document.getElementById('left-analysis').textContent = JSON.stringify(data.left_analysis);
+            document.getElementById('right-analysis').textContent = JSON.stringify(data.right_analysis);
+            document.getElementById('analysis-results').style.display = 'block';
+
+            return data;
+          } catch (error) {
+            console.error('Error parsing blob as JSON:', error);
+            // If parsing fails, it's likely just audio data without metadata
+            return null;
+          }
         });
+      })
+      .then(() => {
+        // Hide any previous error message
+        // TODO: Make sure this isn't screwing up ever displaying
+        errorMessage.style.display = 'none';
       })
       .catch(error => {
         console.error('Error:', error);

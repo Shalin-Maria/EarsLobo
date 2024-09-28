@@ -3,11 +3,11 @@ class WeekOnesController < ApplicationController
     def rddt_week_one_test1
       #Layton Testing Additions
       # Initialize @week_one with parameters for a new record or find an existing one
-      @week_one = @client.week_ones.build(week_one_params)
       @client = Client.find(params[:client_id])
 
       # This SHOULD trigger when a POST (form submission) occurs
       if request.post?
+        @week_one = @client.week_ones.build(week_one_params)
         # Set additional attributes if necessary
         # all right side of equal need to be defined for submission, might need additions to training view page itself for this
         @week_one.user = current_user 
@@ -16,11 +16,12 @@ class WeekOnesController < ApplicationController
           # WIP: REDIRECT NEEDS ACTUAL PATH CORRECTED - CURRENTLY JUST FOR EXAMPLE -Redirect to the next test or a confirmation page on success
           # try to use their counter implementations? Probably won't work as is.
           # redirect_to submit_with_counter, 
-          notice: 'Test 1 saved successfully.'
+          redirect_to submit_with_counter, notice: 'Test 1 saved successfully.'
         else
           # Render the form again with errors
           render :new
         end
+      else @week_one = @client.week_ones.build
       end
     end
 
@@ -80,10 +81,14 @@ class WeekOnesController < ApplicationController
         render :edit
     end
       
-    def update
-      @client = Client.find(params[:client_id])
-      @week_one = @client.week_ones.find(params[:id])
-      @week_one.assign_attributes(week_one_params)
+    #def update
+      #@client = Client.find(params[:client_id])
+      #@week_one = @client.week_ones.find(params[:id])
+      #@week_one.assign_attributes(week_one_params)
+      def edit
+        @client = Client.find(params[:client_id])
+        @week_one = WeekOne.find(params[:id])  # Changed WeekOnes to WeekOne
+        render :edit
       
       if @week_one.save
         redirect_to edit_client_path(@client)
