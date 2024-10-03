@@ -3,8 +3,9 @@ class WeekOnesController < ApplicationController
     def rddt_week_one_test1
       #Layton Testing Additions
       # Initialize @week_one with parameters for a new record or find an existing one
-      @week_one = @client.week_ones.build(week_one_params)
       @client = Client.find(params[:client_id])
+      @week_one = @client.week_ones.build(week_one_params)
+      
 
       # This SHOULD trigger when a POST (form submission) occurs
       if request.post?
@@ -16,7 +17,7 @@ class WeekOnesController < ApplicationController
           # WIP: REDIRECT NEEDS ACTUAL PATH CORRECTED - CURRENTLY JUST FOR EXAMPLE -Redirect to the next test or a confirmation page on success
           # try to use their counter implementations? Probably won't work as is.
           # redirect_to submit_with_counter, 
-          notice: 'Test 1 saved successfully.'
+          redirect_to submit_with_counter
         else
           # Render the form again with errors
           render :new
@@ -136,7 +137,7 @@ class WeekOnesController < ApplicationController
       private
       #ALLEARS - L - added left and right ear decibel
       def week_one_params
-        params.require(:week_one).permit( :notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score, :counter, :left_ear_decibel, :right_ear_decibel)
+        params.fetch(:week_one, {}).permit(:notes, :client_name, :test_type, :left_score, :right_score, :ear_advantage, :ear_advantage_score, :counter, :left_ear_decibel, :right_ear_decibel)
       end
 
 end
