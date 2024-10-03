@@ -25,9 +25,13 @@
         <div class="col-sm">
           <div class="form-group row ">
             <div>
+            
+              <div id="decibelMessageBox" class="alert alert-info" style="display: none;">
+                  <p>Decibel levels changed: New values are:</p>
+              </div>
               <p>Ear Dominance</p>
-              <button id="setLeftDominance" type="button" class="btn btn-info" onclick="setDominance('left')">Set Left Dominance</button>
-              <button id="setRightDominance" type="button" class="btn btn-info" onclick="setDominance('right')">Set Right Dominance</button>
+              <button id="setLeftDominance" type="button" class="btn btn-info" onclick="setEarDominance('left')">Set Left Dominance</button>
+              <button id="setRightDominance" type="button" class="btn btn-info" onclick="setEarDominance('right')">Set Right Dominance</button>
             </div>
           </div>
           <div class="form-group row ">
@@ -260,19 +264,27 @@
 
 
     <script>
-
-    
-   // Function to count the number of active (checked) checkboxes
-  function countActiveButtons() {
-    // Select all checkboxes that are checked
-    const activeButtons = document.querySelectorAll('input[type="checkbox"]:checked');
-    return activeButtons.length; // Return the count of active buttons
-  }
-
-  // Function to toggle the active class based on the checkbox state
-  function updateCheckboxVisuals() {
-    // Loop through each checkbox and set the 'active' class on its label if checked
-    document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
+    let rightEarDecibel = 30; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
+    let leftEarDecibel = 50; // This is not yet attempted set up for server side at all, unlike right
+    function showDecibelChangeMessage(rightDecibel, leftDecibel) {
+      const messageBox = document.getElementById('decibelMessageBox');
+      // Check if messageBox is not null
+      if (!messageBox) {
+          console.error('Message box not found.');
+          return;
+      }
+      messageBox.style.display = 'block';
+      console.log(messageBox); 
+      console.log('Decibel Message Box:', messageBox);
+      messageBox.style.display = 'block'; // Show the message box
+      messageBox.innerText = `Decibel levels changed: Right Ear = ${rightDecibel} dB, Left Ear = ${leftDecibel} dB`;
+      console.log(messageBox); 
+      console.log('Decibel Message Box:', messageBox);
+      console.log('Decibel Message Box Updated:', messageBox.innerText);
+    }
+   // Function to toggle the active class based on the checkbox state
+   function updateCheckboxVisuals() {
+    document.querySelectorAll('.btn-group-toggle input[type="checkbox"]').forEach(function (checkbox) {
       const label = checkbox.closest('label');
       if (checkbox.checked) {
         label.classList.add('active');
@@ -281,8 +293,16 @@
       }
     });
   }
-
   document.addEventListener('DOMContentLoaded', function() {
+    
+    console.log("DomContent is running!");
+    // Function to count the number of active (checked) checkboxes
+  function countActiveButtons() {
+    const activeButtons = document.querySelectorAll('input[type="checkbox"]:checked');
+    return activeButtons.length;
+  }
+
+ 
     // Create and display the counter element on the page
     const displayElement = document.createElement('div');
     displayElement.id = 'activeButtonCount';
@@ -299,15 +319,24 @@
     updateCheckboxVisuals();
 
     // Add change event listeners to all checkboxes to update the count and visuals dynamically
-    document.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
-      checkbox.addEventListener('change', function() {
+     document.querySelectorAll('.btn-group-toggle input[type="checkbox"]').forEach(function (checkbox) {
+      checkbox.addEventListener('change', function () {
         updateButtonCount();
         updateCheckboxVisuals();
+
+        // Trigger the calculateEarDecibel function if exactly 5 checkboxes are checked
+        if (countActiveButtons() > 0 && countActiveButtons() % 5 === 0) {
+          calculateEarDecibel();
+        }
       });
     });
   });
 
-        //script completes all logic for calculating diagnosis and ear advantage values, It updates the percentages and lists the ear diag and advantage
+  function showDecibelChangePopup(newDecibelValue) {
+    alert(`Decibel levels have changed. New value: ${newDecibelValue}`);
+  }
+
+        //Script completes all logic for calculating diagnosis and ear advantage values, It updates the percentages and lists the ear diag and advantage
         // Get the toggle buttons and count elements
         const column1ButtonsGroup1 = document.querySelectorAll(".column1Group1-button input[type='checkbox']");
         const column1ButtonsGroup2 = document.querySelectorAll(".column1Group2-button input[type='checkbox']");
@@ -382,7 +411,7 @@
           
           //ALLEARS ADDITIONS
           let rightEarDecibel = 30; // Default hardcoded value, CHANGE TO SERVER-side later (SO GET VALUE instead hard code)
-          let leftEarDecibel = 50; // this is not yet attempted set up for server side at all, unlike right
+          let leftEarDecibel = 50; // This is not yet attempted set up for server side at all, unlike right
 
 
           let direction = null;
@@ -431,7 +460,7 @@
 
           })
         })
-      // gets the elements from hidden field submit above and populates them from the results in the script 
+      // Get the elements from hidden field submit above and populates them from the results in the script 
       function populateHiddenFields() {
         document.getElementById("left_score").value = column1Group2Percent.innerText;
         document.getElementById("right_score").value = column2Group2Percent.innerText;
@@ -451,7 +480,7 @@
    
       }
       //ALLEARS ADDITIONS
-      // only works for first group rn, copy paste for more when relevant to test
+      // oOnly works for first group rn, copy paste for more when relevant to test
 
       // This function combines the ear_decibel value and combines it with the audio file name to play the desired decibel level
       function updateAudioSources() {
@@ -467,49 +496,63 @@
         document.getElementById('currentlyPlayingLeftDisplay').innerText = leftEarSource + ", leftEarAudio.src:" + leftEarAudio.src;
         document.getElementById('currentlyPlayingRightDisplay').innerText = rightEarSource + ", rightEarAudio.src:" + rightEarAudio.src;
       }
-      //temo edit line ignore
-      function calculateEarDecibel() {
       
+      function calculateEarDecibel() {
+        console.log("Dominance Field Value: " + document.getElementById("dominanceField").value);
+        console.log("calculateEarDecibel function triggered! 5 checkboxes are checked.");
         const checkedCount1Group1 = document.querySelectorAll(".column1Group1-button input[type='checkbox']:checked").length;
         const checkedCount2Group1 = document.querySelectorAll(".column2Group1-button input[type='checkbox']:checked").length;
 
-        // these are only hardcoded because the first training will start the same for all with matching dominance.
+        // These are only hardcoded because the first training will start the same for all with matching dominance.
+        // TODO: This wont work with threshold, as this was for when test only cared once. Currently only proof of concept
+
         if (document.getElementById("dominanceField").value == 'right') {
+          console.log("Dominance Field Value: " + document.getElementById("dominanceField").value);
           if (checkedCount1Group1 >= (checkedCount2Group1 * 1.1)) {
             rightEarDecibel = 35;
           }
         } else if (document.getElementById("dominanceField").value == 'left') {
+          console.log("Dominance Field Value: " + document.getElementById("dominanceField").value);
           if (checkedCount2Group1 >= (checkedCount1Group1 * 1.1)) {
            leftEarDecibel = 35;
           }
         }
-        // SETS VALUE of hidden field
+
+        
+        console.log("Debug: calculateEarDecibel function occurred. The number of checked boxes is a multiple of 5.");
+        console.log("Decibel values changed.");
+        showDecibelChangeMessage(rightEarDecibel, leftEarDecibel); 
+        // Sets value of hidden field
         document.getElementById("rightEarDecibelField").value = rightEarDecibel;
         document.getElementById("leftEarDecibelField").value = leftEarDecibel;
         // Adds to display for debug buttons
         document.getElementById("rightEarDecibelDisplay").innerText = rightEarDecibel;
         document.getElementById("leftEarDecibelDisplay").innerText = leftEarDecibel;
       }
-      //functions for setting ear dominance
+      //Functions for setting ear dominance
       function setEarDominance(dominance) {
       // Assuming rightEarDecibel changes based on ear dominance
         if (dominance === 'left') {
+          console.log("Dominance set to left.")
           rightEarDecibel = 50;
           leftEarDecibel = 30;
         } else if (dominance === 'right') {
+          console.log("Dominance set to right.")
           rightEarDecibel = 30;
           leftEarDecibel = 50;
         }
         // This dominance portion should be pulled from client in final product
         document.getElementById("dominanceField").value = dominance;
-        document.getElementById("dominanceDisplay").innerText = dominance;
+        console.log("Dominance Field Value: " + document.getElementById("dominanceField").value);
 
+        document.getElementById("dominanceDisplay").innerText = dominance;
+        console.log("Dominance Display Text: " + document.getElementById("dominanceDisplay").innerText);
         document.getElementById("rightEarDecibelField").value = rightEarDecibel;
         document.getElementById("leftEarDecibelField").value = leftEarDecibel;
         document.getElementById('rightEarDecibelDisplay').innerText = document.getElementById("rightEarDecibelField").value;
         document.getElementById('leftEarDecibelDisplay').innerText = document.getElementById("leftEarDecibelField").value;
       }
-      //separate testing function, can be commented/deleted later
+      // Separate testing function, can be commented/deleted later
       // This is working, problem is with the user data then
       function testEarDecibelUpdate() {
         calculateEarDecibel();
@@ -533,7 +576,7 @@
           rightEarAudio.pause();
         });
 
-        //dominacne listeners
+        // Dominacne listeners
         document.getElementById('setLeftDominance').addEventListener('click', function() {
         setEarDominance('left');
         });
@@ -562,7 +605,8 @@
         <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
         <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
         <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
-        <p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>
+        <p>DEBUG: Dominance is set to: <span id="dominanceDisplay"></span></p>
+        <!--<p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>-->
         <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
         <div>
           <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
