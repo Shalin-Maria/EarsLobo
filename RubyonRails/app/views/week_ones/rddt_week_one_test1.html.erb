@@ -20,7 +20,16 @@
   <%= form_with model: [@client, @week_one], local: true, html: { multipart: true } do |f| %>
   <div class="container">
   <!-- ALL EARS: LAYTON: Attempted to add POST for cleaner form submission -- not AJAX so need local: true -- changed multipart to not have 'html: { multipart: true }'-->
-    
+     <div>
+
+        
+        <p>Current Right Ear Decibel Value: <span id="rightEarDecibelDisplay"></span></p>
+        <p>Current Left Ear Decibel Value: <span id="leftEarDecibelDisplay"></span></p>
+        <p>Ear Dominance is set to: <span id="dominanceDisplay"></span></p>
+        <!--<p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>-->
+        <!--<p>Client Name:  <%= @client.first_name %></p>-->
+
+        </div>
     <div class="row">
         <div class="col-sm">
           <div class="form-group row ">
@@ -600,20 +609,7 @@
         <%= link_to "Submit and Exit", "javascript:void(0);", class: "btn btn-primary btn-block", onclick: "submitAndExit();" %>
         <%= link_to "Back",  client_trainings_path(@client), class: "btn btn-secondary btn-block"%>
       </div> -->
-      <div>
-
-        <button id="testButton" type="button" class="btn btn-info" onclick="testRightEarDecibelUpdate()">Test Right Ear Decibel Update</button>
-        <p>DEBUG: Page Value: Right Ear Decibel: <span id="rightEarDecibelDisplay"></span></p>
-        <p>DEBUG: Page Value: Left Ear Decibel: <span id="leftEarDecibelDisplay"></span></p>
-        <p>DEBUG: Dominance is set to: <span id="dominanceDisplay"></span></p>
-        <!--<p>DEBUG: Client Value: Right Ear Decibel: <%= @client.right_ear_decibel %></p>-->
-        <p>DEBUG: Client Name - @client functioning check:  <%= @client.first_name %></p>
-        <div>
-          <button id="setLeftDominance" type="button" class="btn btn-info">Set Left Dominance</button>
-          <button id="setRightDominance" type="button" class="btn btn-info">Set Right Dominance</button>
-        </div>
-
-        </div>
+     
 
       </div>
 
