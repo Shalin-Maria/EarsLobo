@@ -25,6 +25,8 @@ class AudioFilesController < ApplicationController
   def play_audio(channel)
     # finds the latest temp file to play or plays default if not applicable
     Rails.logger.info("Attempting to play audio for channel: #{channel}")
+    Rails.logger.info("Left file path: #{find_latest_temp_file('left') || default_file('left')}")
+    Rails.logger.info("Right file path: #{find_latest_temp_file('right') || default_file('right')}")
     temp_file = find_latest_temp_file(channel)
     Rails.logger.info("Temp file found: #{temp_file || 'None'}")
     
@@ -100,9 +102,13 @@ class AudioFilesController < ApplicationController
   # for adjusting decibels
   # currently hard coded audio!!!
   def adjust
+    Rails.logger.info("Adjustings audio with request params: #{params.inspect}")
     # play the altered file in respective channel OR play default when applicable
     left_input = params[:channel] == 'left' ? find_latest_temp_file('left') : default_file('left')
     right_input = params[:channel] == 'right' ? find_latest_temp_file('right') : default_file('right')
+
+    Rails.logger.info("Left input file path: #{left_input}")
+    Rails.logger.info("Right input file path: #{right_input}")
 
     # Generates a unique filename for the new file
     # output_filename = "adjusted_audio_#{Time.now.to_i}_#{rand(1000)}.wav"
@@ -117,6 +123,8 @@ class AudioFilesController < ApplicationController
     left_output = process_audio(left_input, decibel_change, channel == 'left')
     right_output = process_audio(right_input, decibel_change, channel == 'right')
 
+    Rails.logger.info("Post processsing Left output file path: #{left_output}")
+    Rails.logger.info("Post processsing Right output file path: #{right_output}")
     #this hooks into our method for debugging/checking decibel change
     #original_analysis = analyze_audio(input_file)
     left_analysis = analyze_audio(left_output)
@@ -127,12 +135,16 @@ class AudioFilesController < ApplicationController
 
     cleanup_old_temp_files
 
+    left_url = url_for(action: 'play_left', only_path: true)
+    right_url = url_for(action: 'play_right', only_path: true)
+
     render json: { 
-      left_url: url_for(action: 'play_left'),
-      right_url: url_for(action: 'play_right'),
+      left_url: left_url,
+      right_url: right_url,
       left_analysis: left_analysis,
       right_analysis: right_analysis
     }
+    
     # TODO make this show in console
   end
 
@@ -144,6 +156,7 @@ class AudioFilesController < ApplicationController
     # changes the decibels based on the passed value for that new file
     filter = apply_change ? "volume=#{decibel_change}dB" : 'anull'
     system("ffmpeg", "-i", input.to_s, "-filter:a", filter, output.to_s)
+    Rails.logger.info("Process_Audio generated output file: #{output} (exists? #{File.exist?(output)})")
     output
   end
   # This should hopefully allow for an AJAX request

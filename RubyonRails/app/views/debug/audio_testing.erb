@@ -2,10 +2,10 @@
 <!-- Audio player for WAV files ONLY 
  Dual audio player - two players, one for left and right, appearing as only one in the view-->
 <div id="dichotic-player" class="audio-player">
-  <audio id="left-player" style="display: none;">
+  <audio id="left-player" style="display: block;">
     <source id="left-source" src="<%= url_for(controller: 'audio_files', action: 'play_left') %>" type="audio/wav">
   </audio>
-  <audio id="right-player" style="display: none;">
+  <audio id="right-player" style="display: block;">
     <source id="right-source" src="<%= url_for(controller: 'audio_files', action: 'play_right') %>" type="audio/wav">
   </audio>
   <button id="play-pause">Play</button>
@@ -62,6 +62,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Used to display errors in div
   const errorMessage = document.getElementById('error-message');
  
+  console.log('**********Initial Left Source URL:', leftSource.src);
+  console.log('**********Initial Right Source URL:', rightSource.src);
 
   // functions for custom single player with two player channels
   // this should help ensure our two audio players stay in synch!
@@ -91,10 +93,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   playPauseButton.addEventListener('click', function() {
+    console.log('Play button clicked');
+    console.log('Left player readyState:', leftPlayer.readyState);
+    console.log('Right player readyState:', rightPlayer.readyState);
     if (leftPlayer.paused) {
       // promise should hopefully ensure these both occur at the same time
       Promise.all([leftPlayer.play(), rightPlayer.play()]).then(() => {
         playPauseButton.textContent = 'Pause';
+        console.log('Both players are playing');
       }).catch(error => {
         console.error('Error playing audio:', error);
       });
@@ -102,13 +108,23 @@ document.addEventListener('DOMContentLoaded', function() {
       leftPlayer.pause();
       rightPlayer.pause();
       playPauseButton.textContent = 'Play';
+      console.log('Both players are paused');
     }
+  });
+
+  // debug stugg
+  leftPlayer.addEventListener('error', function(e) {
+    console.error('Error occurred in left audio player:', e);
+  });
+
+  rightPlayer.addEventListener('error', function(e) {
+    console.error('Error occurred in right audio player:', e);
   });
 
   // Sync right player when 'seeking' in left player - left is our master player
   leftPlayer.addEventListener('seeking', function() {
-    rightPlayer.currentTime = leftPlayer.currentTim
-
+    rightPlayer.currentTime = leftPlayer.currentTime
+  });
   volumeControl.addEventListener('input', function() {
     leftPlayer.volume = this.value;
     rightPlayer.volume = this.value;
@@ -116,6 +132,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
   leftPlayer.addEventListener('timeupdate', updateTimeDisplay);
   leftPlayer.addEventListener('loadedmetadata', updateTimeDisplay);
+  rightPlayer.addEventListener('loadedmetadata', updateTimeDisplay);
+
+  leftPlayer.addEventListener('loadedmetadata', () => {
+    console.log('Left player loaded. Duration:', leftPlayer.duration);
+  });
+
+  rightPlayer.addEventListener('loadedmetadata', () => {
+    console.log('Right player loaded. Duration:', rightPlayer.duration);
+  });
 
   document.querySelectorAll('.adjust-form').forEach(form => {
     form.addEventListener('submit', function(e) {
@@ -129,30 +154,62 @@ document.addEventListener('DOMContentLoaded', function() {
         body: formData
       })
       .then(response => {
+        console.log('Response status:', response.status);
         if (!response.ok) {
+          console.error('Network response error:', response);
           throw new Error('Network response error');
         }
-        return response.blob();
+        return response.json(); 
+      })
+      .then(data => {
+        console.log('Received response data:', data);
+
+        // fetches separate blobs using the URLs provided in the JSON response derived from blob
+        const leftFetch = fetch(data.left_url).then(res => res.blob());
+        const rightFetch = fetch(data.right_url).then(res => res.blob());
+
+        return Promise.all([leftFetch, rightFetch]);
       })
       // This MUST be blob, not data!! We are workin with audio.
-      .then(blob => {
-      // This creates a URL for the adjusted audio files
-      const url = URL.createObjectURL(blob);
-      // Updates our source audio, player, etc for the new file
-      leftSource.src = url;
-      rightSource.src = url;
-      leftPlayer.load();
-      rightPlayer.load();
-      // Hide any previous error message
-      // TODO: Make sure this isn't screwing up ever displaying
-      errorMessage.style.display = 'none';
-    })
-    // Converts the blob as JSON to get the analysis data from our controller function
-        blob.text().then(text => {
-          const data = JSON.parse(text);
-          console.log('Left channel analysis:', data.left_analysis);
-          console.log('Right channel analysis:', data.right_analysis);
-        });
+      .then(([leftBlob, rightBlob]) => {
+        console.log('Left Blob size:', leftBlob.size);
+        console.log('Right Blob size:', rightBlob.size);
+
+        if (leftBlob.size === 0 || rightBlob.size === 0) {
+          console.error('One of the blobs is empty. Please check the server response.');
+          errorMessage.textContent = 'Error: Empty file received from server.';
+          errorMessage.style.display = 'block';
+          return;
+        }
+
+        const leftUrl = URL.createObjectURL(leftBlob);
+        const rightUrl = URL.createObjectURL(rightBlob);
+
+        console.log('New left audio URL:', leftUrl);
+        console.log('New right audio URL:', rightUrl);
+
+        // This creates a URL for the adjusted audio files
+        console.log('New left audio URL:', leftUrl);
+        console.log('New right audio URL:', rightUrl);
+        
+        // Updates our source audio, player, etc for the new file
+        leftPlayer.src = leftUrl;
+        rightPlayer.src = rightUrl;
+
+        leftPlayer.load();
+        rightPlayer.load();
+        console.log('******************Updated left source:', leftSource.src);
+        console.log('*****************Updated right source:', rightSource.src);
+        console.log('Left player duration:', leftPlayer.duration);
+        console.log('Right player duration:', rightPlayer.duration);
+        console.log('Left player readyState:', leftPlayer.readyState);
+        console.log('Right player readyState:', rightPlayer.readyState);
+        console.log('Audio players reloaded with separate blobs.');
+        console.log('Audio players reloaded.');
+        
+        // Hide any previous error message
+        // TODO: Make sure this isn't screwing up ever displaying
+        errorMessage.style.display = 'none';
       })
       .catch(error => {
         console.error('Error:', error);
