@@ -96,6 +96,11 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Play button clicked');
     console.log('Left player readyState:', leftPlayer.readyState);
     console.log('Right player readyState:', rightPlayer.readyState);
+
+    console.log('Currently playing files:');
+    console.log('Left File URL:', leftPlayer.currentSrc);
+    console.log('Right File URL:', rightPlayer.currentSrc);
+
     if (leftPlayer.paused) {
       // promise should hopefully ensure these both occur at the same time
       Promise.all([leftPlayer.play(), rightPlayer.play()]).then(() => {
