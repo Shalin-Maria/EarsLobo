@@ -107,7 +107,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Sync right player when 'seeking' in left player - left is our master player
   leftPlayer.addEventListener('seeking', function() {
-    rightPlayer.currentTime = leftPlayer.currentTim
+    rightPlayer.currentTime = leftPlayer.currentTime;
+  });
 
   volumeControl.addEventListener('input', function() {
     leftPlayer.volume = this.value;
