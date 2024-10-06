@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Sync right player when 'seeking' in left player - left is our master player
   leftPlayer.addEventListener('seeking', function() {
-    rightPlayer.currentTime = leftPlayer.currentTime
+    rightPlayer.currentTime = leftPlayer.currentTime;
   });
   volumeControl.addEventListener('input', function() {
     leftPlayer.volume = this.value;
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // overrides any default form behavior for ours
       e.preventDefault();
       const formData = new FormData(form);
-   
+    });
     // This is an AJAX request for when we want to adjust the audio. Goal is to adjust without page refresh.
     fetch('<%= adjust_audio_files_path %>', {
         method: 'POST',
