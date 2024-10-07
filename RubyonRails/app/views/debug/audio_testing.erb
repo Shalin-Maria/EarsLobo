@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // overrides any default form behavior for ours
       e.preventDefault();
       const formData = new FormData(form);
-    });
+    
     // This is an AJAX request for when we want to adjust the audio. Goal is to adjust without page refresh.
     fetch('<%= adjust_audio_files_path %>', {
         method: 'POST',
@@ -231,6 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Error:', error);
         errorMessage.textContent = 'An error occurred while adjusting the audio.';
         errorMessage.style.display = 'block';
+      });
     });
   });
 });
