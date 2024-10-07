@@ -3,7 +3,8 @@
  Dual audio player - two players, one for left and right, appearing as only one in the view-->
 <div id="dichotic-player" class="audio-player">
   <audio id="left-player" style="display: block;">
-    <source id="left-source" src="<%= url_for(controller: 'audio_files', action: 'play_left') %>" type="audio/wav">
+  <!-- Only doing for left right now to test -->
+    <source id="left-source" src="<%= url_for(controller: 'audio_files', action: 'play_left') %>" type="audio/wav" data-file-name="<%= @left_audio_file_name %>">
   </audio>
   <audio id="right-player" style="display: block;">
     <source id="right-source" src="<%= url_for(controller: 'audio_files', action: 'play_right') %>" type="audio/wav">
@@ -94,6 +95,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   playPauseButton.addEventListener('click', function() {
     console.log('Play button clicked');
+
+    // for checking file name passing from controller to blob to player
+    const leftFileName = leftSource.getAttribute('data-file-name') || 'Unknown';
+    const rightFileName = rightSource.getAttribute('data-file-name') || 'Unknown';
+
+
+    const currentFilesElement = document.getElementById('current-files');
+    if (currentFilesElement) {
+      currentFilesElement.textContent = `Left File: ${leftFileName}, Right File: ${rightFileName}`;
+    }
     console.log('Left player readyState:', leftPlayer.readyState);
     console.log('Right player readyState:', rightPlayer.readyState);
 
